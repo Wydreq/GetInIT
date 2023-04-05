@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import Button from '@mui/material/Button';
 import { Checkbox } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import image from '../../assets/i1.png'
+import image from '../../assets/i1.png';
 
 const RegisterPage = () => {
 
@@ -14,7 +14,12 @@ const RegisterPage = () => {
     const passwordRef = useRef();
 
     const formHandler = () => {
-        navigate('/completeRegister');
+
+        if(emailRef.current.value.length < 5 || passwordRef.current.value.length < 5) {
+        }
+        else {
+            navigate('/completeRegister');
+        }
     };
 
     return (
@@ -23,8 +28,8 @@ const RegisterPage = () => {
             <Card className={classes.formContainer}> 
                 <h1 style={{marginBottom: 25, marginTop: 25}}>Register your Company!</h1>
                 <TextField inputRef={emailRef} id="outlined-basic" label="E-mail*" variant="outlined"  sx={{mb: 3, width: 3/5}}/>
-                <TextField inputRef={passwordRef} id="outlined-basic" label="Password*" type='password' variant="outlined"sx={{mb: 3, width: 3/5}}/>
-                <div className={classes.termsContainer}><Checkbox/> <span>I accept <a href="#">terms</a> of service *</span></div>
+                <TextField inputRef={passwordRef} id="outlined-basic2" label="Password*" type='password' variant="outlined"sx={{mb: 3, width: 3/5}}/>
+                <div className={classes.termsContainer}><Checkbox/> <span>I accept <a href="/#">terms</a> of service *</span></div>
                 <Button onClick={formHandler} variant="contained" sx={{mb: 3}}>Register</Button>
             </Card>
         </div>
