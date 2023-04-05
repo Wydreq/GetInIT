@@ -23,6 +23,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .formContainer {
@@ -47,5 +48,14 @@
 }
 
 .imageText {
-    font-size: 50px;
+    font-size: 30px;
+}
+
+.changingText {
+    margin-bottom: 15px;
+    text-decoration: underline;
+}
+
+.changingText:hover {
+    color:#1976d2;
 }
