@@ -1,14 +1,13 @@
+import FilterBar from '../components/FilterBar';
+import OffersList from '../components/OffersList';
+import classes from './HomePage.module.css'
+
 const HomePage = () => {
     return (
-    <div>
-        <h1>Home page</h1>
-        <h1>Home page</h1>
-        <h1>Home page</h1>
-        <h1>Home page</h1>
-        <h1>Home page</h1>
+    <div className={classes.container}>
+        <FilterBar/>
+        <OffersList/>
     </div>
-
-
     );
 };
 

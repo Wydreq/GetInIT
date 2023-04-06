@@ -1,0 +1,7 @@
+.offersContainer {
+    width: 75%;
+    height: 70vh;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-top: 2%;
+}
