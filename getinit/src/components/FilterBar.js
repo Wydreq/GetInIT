@@ -30,7 +30,7 @@ const FilterBar = () => {
              <TextField
                 select
                 label="Select"
-                defaultValue="Java"
+                defaultValue="01"
                 sx={{mb: 3, width: 2/7, margin: 2}}
                 >
                 {currencies.map((option) => (

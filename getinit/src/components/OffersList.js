@@ -39,7 +39,7 @@ const OffersList = () => {
         <div className={classes.offersContainer}>
             {DUMMY_OFFERS.map((offer)=>{
                 return (
-                    <OfferBar/>
+                    <OfferBar key={offer.id}/>
                 )
             })}
         </div>

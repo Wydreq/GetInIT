@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import { Checkbox } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import image from '../assets/i1.png';
+import { registerActions } from '../store/index';
+import { useDispatch } from 'react-redux'
 
 const AuthPage = () => {
 
@@ -15,6 +17,7 @@ const AuthPage = () => {
     const navigate = useNavigate();
     const emailRef = useRef();
     const passwordRef = useRef();
+    const dispatch = useDispatch();
 
     const registerHandler = () => {
 
@@ -33,7 +36,7 @@ const AuthPage = () => {
             }
         }
         else {
-
+            dispatch(registerActions.saveEmailPassword({email: emailRef.current.value, password: passwordRef.current.value}));
             navigate('/completeRegister');
         }
     };
