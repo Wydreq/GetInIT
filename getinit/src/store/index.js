@@ -37,28 +37,30 @@ const registerSlice = createSlice({
             state.street = action.payload.street;
             state.buildingNumber = action.payload.buildingNumber;
             state.postalCode = action.payload.postalCode;
+
+            const preparedForSending = {
+                name: state.name,
+                lastName: state.lastName,
+                email: state.email,
+                password: state.password,
+                companyName: state.companyName,
+                url: state.url,
+                industry: 'IT',
+                nip: state.nip,
+                regon: state.regon,
+                country: state.country,
+                city: state.city,
+                street: state.street,
+                buildingNumber: state.buildingNumber,
+                postalCode: state.postalCode,
+            }
             
             const response = await fetch('http://localhost:5099/api/account', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: {
-                    name: state.name,
-                    lastName: state.lastName,
-                    email: state.email,
-                    password: state.password,
-                    companyName: state.companyName,
-                    url: state.url,
-                    industry: 'IT',
-                    nip: state.nip,
-                    regon: state.regon,
-                    country: state.country,
-                    city: state.city,
-                    street: state.street,
-                    buildingNumber: state.buildingNumber,
-                    postalCode: state.postalCode,
-                }
+                body: JSON.stringify(preparedForSending),
             })
             .then(function (response) {
                 console.log(response);
