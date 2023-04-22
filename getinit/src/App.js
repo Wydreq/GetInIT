@@ -5,16 +5,21 @@ import RootLayout from './pages/Root';
 import './App.module.css';
 import CompleteRegisterPage from './pages/registerPages/CompleteRegisterPage';
 import AuthPage from './pages/AuthPage';
+import {action as logoutAction} from "./pages/Logout";
+import {tokenLoader} from './util/auth';
 
 const router = createBrowserRouter([
   {
-    path: '/', 
+    path: '/',
+    loader: tokenLoader,
     element: <RootLayout/>,
+    id: 'root',
+    errorElement: <NotFoundPage/>,
     children: [
       {path: '/', element: <HomePage/>},
       {path: '/auth', element: <AuthPage/>},
-      {path: '*', element: <NotFoundPage/>},
-      {path: '/completeRegister', element: <CompleteRegisterPage/>}]
+      {path: '/completeRegister', element: <CompleteRegisterPage/>},
+      {path: '/logout', action: logoutAction}]
   }
 ])
 

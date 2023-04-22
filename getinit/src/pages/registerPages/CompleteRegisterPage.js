@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import { registerActions } from '../../store';
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import validator from 'validator';
 
 const CompleteRegisterPage = () => {
 
