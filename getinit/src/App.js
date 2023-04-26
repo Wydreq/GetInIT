@@ -6,7 +6,8 @@ import './App.module.css';
 import CompleteRegisterPage from './pages/registerPages/CompleteRegisterPage';
 import AuthPage from './pages/AuthPage';
 import {action as logoutAction} from "./pages/Logout";
-import {tokenLoader} from './util/auth';
+import {checkAuthLoader, tokenLoader} from './util/auth';
+import CompanyPanel from "./pages/companyPanel/CompanyPanel";
 
 const router = createBrowserRouter([
   {
@@ -17,9 +18,10 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage/>,
     children: [
       {path: '/', element: <HomePage/>},
-      {path: '/auth', element: <AuthPage/>},
-      {path: '/completeRegister', element: <CompleteRegisterPage/>},
-      {path: '/logout', action: logoutAction}]
+      {path: 'auth', element: <AuthPage/>},
+      {path: 'completeRegister', element: <CompleteRegisterPage/>},
+      {path: 'logout', action: logoutAction},
+      {path: 'companyPanel', element: <CompanyPanel/>}]
   }
 ])
 

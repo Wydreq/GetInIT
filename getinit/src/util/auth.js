@@ -21,6 +21,6 @@ export function canSignIn() {
     const token = getAuthToken();
 
     if(token) {
-        return redirect('completeRegister');
+        return redirect('/completeRegister');
     }
 }

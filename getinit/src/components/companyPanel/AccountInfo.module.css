@@ -1,0 +1,11 @@
+.container {
+    width: 40%;
+    height: 15%;
+    background-color: darkgray;
+    margin-top: 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 20px;
+    padding: 10px;
+}
