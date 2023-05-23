@@ -60,6 +60,7 @@ const AuthPage = () => {
         await dispatch(authActions.loginHandler({email: emailRef.current.value, password: passwordRef.current.value}));
         setTimeout(() => {
             navigate('/companyPanel');
+            window.location.reload();
         }, 500);
     };
 
