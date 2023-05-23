@@ -17,7 +17,7 @@ const MainNavigation = () => {
                     {token && <NavLink style={{textDecoration: 'none'}} to='/companyPanel' className={({ isActive }) => (isActive ? classes.active : classes.navElement)} end>Your Panel</NavLink>}
                     {!token && <NavLink style={{textDecoration: 'none'}} to='/auth' className={({ isActive }) => (isActive ? classes.active : classes.navElement)}>Sign In</NavLink>}
                     {token && <Form action="/logout" method="post">
-                        <button>Logout</button>
+                        <button className={classes.btn}>Logout</button>
                     </Form>}
                 </Stack>
             </Toolbar>

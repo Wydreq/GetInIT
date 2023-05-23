@@ -56,8 +56,11 @@ const AuthPage = () => {
             navigate('/completeRegister');
     };
 
-    const signInHandler = () => {
-        dispatch(authActions.loginHandler({email: emailRef.current.value, password: passwordRef.current.value}))
+    async function signInHandler() {
+        await dispatch(authActions.loginHandler({email: emailRef.current.value, password: passwordRef.current.value}));
+        setTimeout(() => {
+            navigate('/companyPanel');
+        }, 500);
     };
 
     return (

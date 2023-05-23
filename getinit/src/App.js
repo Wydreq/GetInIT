@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import RootLayout from './pages/Root';
@@ -6,7 +6,8 @@ import './App.module.css';
 import CompleteRegisterPage from './pages/registerPages/CompleteRegisterPage';
 import AuthPage from './pages/AuthPage';
 import {action as logoutAction} from "./pages/Logout";
-import {checkAuthLoader, tokenLoader} from './util/auth';
+
+import PrivateRoute, {tokenLoader, TokenRoute} from './util/auth';
 import CompanyPanel from "./pages/companyPanel/CompanyPanel";
 
 const router = createBrowserRouter([
@@ -18,10 +19,10 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage/>,
     children: [
       {path: '/', element: <HomePage/>},
-      {path: 'auth', element: <AuthPage/>},
+      {path: 'auth', element: <TokenRoute><AuthPage/></TokenRoute>},
       {path: 'completeRegister', element: <CompleteRegisterPage/>},
       {path: 'logout', action: logoutAction},
-      {path: 'companyPanel', element: <CompanyPanel/>}]
+      {path: 'companyPanel', element: <PrivateRoute><CompanyPanel/></PrivateRoute>}]
   }
 ])
 

@@ -1,4 +1,5 @@
-import {redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
+import React from "react";
 
 export function getAuthToken() {
     const token = localStorage.getItem('token');
@@ -9,18 +10,22 @@ export function tokenLoader() {
     return getAuthToken();
 }
 
-export function checkAuthLoader() {
-    const token = getAuthToken();
+export default function PrivateRoute({ children }) {
 
+    const token = getAuthToken();
     if(!token) {
-        return redirect('/auth');
+        return <Navigate to='/auth'/>
     }
+
+    return children;
 }
 
-export function canSignIn() {
-    const token = getAuthToken();
+export function TokenRoute({ children }) {
 
+    const token = getAuthToken();
     if(token) {
-        return redirect('/completeRegister');
+        return <Navigate to='/companyPanel'/>
     }
+
+    return children;
 }
