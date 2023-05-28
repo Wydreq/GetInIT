@@ -1,0 +1,36 @@
+.offerContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: lightgrey;
+    border: 2px solid gray;
+}
+
+.imageContainer {
+    margin-left: 20px;
+}
+
+.logoImage {
+    border-radius: 30px;
+    width: 125px;
+    height: 125px;
+    padding: 15px;
+}
+
+.offerContainer:hover {
+    background-color: darkgray;
+}
+
+.stack {
+    font-size: 22px;
+    margin-right: 40px;
+}
+.company {
+    font-size: 25px;
+}
+
+.salary {
+    margin-left: auto;
+    margin-right: 20px;
+    font-size: 25px;
+}

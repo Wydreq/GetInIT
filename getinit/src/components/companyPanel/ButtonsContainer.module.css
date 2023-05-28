@@ -1,24 +1,26 @@
 .container {
     display: flex;
     flex-direction: row;
-    width: 50%;
+    width: 70%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .button {
-    width: 20%;
-    border: 1px solid green;
+    width: 40%;
+    border: 1px solid #1976d2;
     border-radius: 10px;
     height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 25px;
 }
 
 .button:hover {
-    background-color: green;
+    background-color: #1976d2;
     color: white;
     cursor: pointer;
 }

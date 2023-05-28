@@ -15,6 +15,7 @@ const AuthPage = () => {
     const [loginError, setLoginError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -22,6 +23,7 @@ const AuthPage = () => {
     const dispatch = useDispatch();
 
     const validationHandler = () => {
+            setLoading(true);
             const validator = require('validator');
 
             if(!validator.isEmail(emailRef.current.value) || !validator.isStrongPassword(passwordRef.current.value)) {
@@ -54,13 +56,16 @@ const AuthPage = () => {
     const registerHandler = () => {
             dispatch(registerActions.saveEmailPassword({email: emailRef.current.value, password: passwordRef.current.value, confirmPassword: confirmPasswordRef.current.value}));
             navigate('/completeRegister');
+            setLoading(false);
     };
 
     async function signInHandler() {
+        setLoading(true);
         await dispatch(authActions.loginHandler({email: emailRef.current.value, password: passwordRef.current.value}));
         setTimeout(() => {
             navigate('/companyPanel');
             window.location.reload();
+            setLoading(false);
         }, 500);
     };
 
@@ -76,8 +81,8 @@ const AuthPage = () => {
                     {!isLogin && <div className={classes.termsContainer}><Checkbox/> <span>I accept <a href="/#">terms</a> of service *</span></div>}
                 {isLogin && <span onClick={()=>{setIsLogin(!isLogin)}} className={classes.changingText}>Dont have an account? Sign up!</span>}
                 {!isLogin && <span onClick={()=>{setIsLogin(!isLogin)}} className={classes.changingText}>Already have an account? Sign in!</span>}
-                {!isLogin && <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>Register</Button>}
-                {isLogin && <Button onClick={signInHandler} variant="contained" sx={{mb: 3}}>Sign In</Button>}
+                {!isLogin && <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Register'}</Button>}
+                {isLogin && <Button onClick={signInHandler} variant="contained" sx={{mb: 3}}>{loading ? `Loading...` : `Sign In`}</Button>}
             </Card>
         </div>
         <div className={classes.rightPanel}>

@@ -29,7 +29,6 @@ const FilterBar = () => {
              <TextField inputRef={keyWordsRef} id="outlined-basic" label="Company, key words etc..." variant="outlined"  sx={{mb: 3, width: 2/7, margin: 2}}/>
              <TextField
                 select
-                label="Select"
                 defaultValue="01"
                 sx={{mb: 3, width: 2/7, margin: 2}}
                 >

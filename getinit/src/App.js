@@ -9,6 +9,7 @@ import {action as logoutAction} from "./pages/Logout";
 
 import PrivateRoute, {tokenLoader, TokenRoute} from './util/auth';
 import CompanyPanel from "./pages/companyPanel/CompanyPanel";
+import CompanyAccountsPage from "./pages/companyPanel/CompanyAccountsPage";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,8 @@ const router = createBrowserRouter([
       {path: 'auth', element: <TokenRoute><AuthPage/></TokenRoute>},
       {path: 'completeRegister', element: <CompleteRegisterPage/>},
       {path: 'logout', action: logoutAction},
-      {path: 'companyPanel', element: <PrivateRoute><CompanyPanel/></PrivateRoute>}]
+      {path: 'companyPanel', element: <PrivateRoute><CompanyPanel/></PrivateRoute>},
+      {path: 'companyAccounts', element: <PrivateRoute><CompanyAccountsPage/></PrivateRoute>}]
   }
 ])
 
