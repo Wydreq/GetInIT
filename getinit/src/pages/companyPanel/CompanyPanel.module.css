@@ -6,3 +6,12 @@
     margin-top: 30px;
     flex-direction: column;
 }
+
+.container2 {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
