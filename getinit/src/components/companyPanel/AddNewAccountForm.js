@@ -51,7 +51,6 @@ const AddNewAccountForm = (props) => {
             }
             if(firstNameRef.current.value.length > 1 && lastNameRef.current.value.length > 1 && validator.isEmail(emailRef.current.value) && validator.isStrongPassword(passwordRef.current.value) && passwordRef.current.value === confirmPasswordRef.current.value) {
                 addNewAccountHandler();
-                props.onModalClose();
             }
     }
 
