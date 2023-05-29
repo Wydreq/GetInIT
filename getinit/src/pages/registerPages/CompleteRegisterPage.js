@@ -30,6 +30,7 @@ const CompleteRegisterPage = () => {
     const buildingNumberRef = useRef();
 
     const [mailError, setMailError] = useState(false);
+    const [mailErrorMessage, setMailErrorMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
@@ -56,6 +57,7 @@ const CompleteRegisterPage = () => {
         setLoading(true);
         const validator = require('validator');
         if(!validator.isEmail(mailRef.current.value)) {
+            setMailErrorMessage('Please insert correct email address!');
             setMailError(true);
         }
         else {
@@ -152,7 +154,7 @@ const CompleteRegisterPage = () => {
             email: mailRef.current.value,
             password: passwordRef.current.value,
             confirmPassword: passwordRef.current.value,
-            role: 'Manager',
+            role: 'ManagerCompanyAccount',
             createCompanyDto: {
                 name: companyNameRef.current.value,
                 url: urlRef.current.value,
@@ -176,10 +178,18 @@ const CompleteRegisterPage = () => {
             body: JSON.stringify(preparedForSending),
         });
         if(!response.ok) {
+            const text = await response.text();
+            if(JSON.parse(text).errors.Email) {
+                setMailErrorMessage('Email is taken, please insert another email address!');
+                setMailError(true);
+            }
+            else {
+                setMailError(false);
+            }
+            throw new Error(text);
             handleOpen();
-            throw new Error('Something went wrong!');
         }
-        navigate('/companyPanel');
+        navigate('/auth');
     }
 
     return (
@@ -187,19 +197,19 @@ const CompleteRegisterPage = () => {
             <Card className={classes.formContainer}> 
                 <h1 style={{marginBottom: 25, marginTop: 25}}>Sign Up!</h1>
                 <div className={classes.inputsContainer}>
-                    <TextField inputRef={mailRef} error={mailError}  helperText={mailError && 'Please insert correct mail!'} id="outlined-basic" label="E-mail*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={passwordRef} error={passwordError} helperText={passwordError && 'Please insert strong password!'} id="outlined-basic" label="Password*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={firstNameRef} error={firstNameError}  helperText={firstNameError && 'Please insert correct firstname!'} id="outlined-basic" label="First name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={lastNameRef} error={lastNameError} helperText={lastNameError && 'Please insert correct lastname!'} id="outlined-basic" label="Last name*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={companyNameRef} error={companyNameError} helperText={companyNameError && 'Please insert correct company name!'} id="outlined-basic" label="Company name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={urlRef} error={urlError} helperText={urlError && 'Please insert correct url!'} id="outlined-basic" label="Company page url" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={nipRef} error={nipError} helperText={nipError && 'Please insert correct nip!'} id="outlined-basic" label="NIP*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={regonRef} error={regonError} helperText={regonError && 'Please insert correct regon!'} id="outlined-basic" label="REGON*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={streetRef} error={streetError} helperText={streetError && 'Please insert correct street name!'} id="outlined-basic" label="Street*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={buildingNumberRef} error={buildingNumberError} helperText={buildingNumberError && 'Please insert correct buildng number!'} id="outlined-basic" label="Building number*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={postalCodeRef} error={postalCodeError} helperText={postalCodeError && 'Please insert correct postal code (00-000)!'} id="outlined-basic" label="Postal code*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={cityRef} error={cityError} helperText={cityError && 'Please insert correct city!'} id="outlined-basic" label="City*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
-                    <TextField inputRef={countryRef} error={countryError} helperText={countryError && 'Please insert correct country!'} id="outlined-basic" label="Country*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
+                    <TextField inputRef={mailRef} error={mailError}  helperText={mailError && mailErrorMessage} label="E-mail*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={passwordRef} error={passwordError} helperText={passwordError && 'Please insert strong password!'} label="Password*" type='password' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={firstNameRef} error={firstNameError}  helperText={firstNameError && 'Please insert correct firstname!'} label="First name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={lastNameRef} error={lastNameError} helperText={lastNameError && 'Please insert correct lastname!'} label="Last name*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={companyNameRef} error={companyNameError} helperText={companyNameError && 'Please insert correct company name!'} label="Company name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={urlRef} error={urlError} helperText={urlError && 'Please insert correct url!'} label="Company page url" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={nipRef} error={nipError} helperText={nipError && 'Please insert correct nip!'} label="NIP*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={regonRef} error={regonError} helperText={regonError && 'Please insert correct regon!'} label="REGON*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={streetRef} error={streetError} helperText={streetError && 'Please insert correct street name!'} label="Street*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={buildingNumberRef} error={buildingNumberError} helperText={buildingNumberError && 'Please insert correct buildng number!'} label="Building number*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={postalCodeRef} error={postalCodeError} helperText={postalCodeError && 'Please insert correct postal code (00-000)!'} label="Postal code*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={cityRef} error={cityError} helperText={cityError && 'Please insert correct city!'} label="City*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
+                    <TextField inputRef={countryRef} error={countryError} helperText={countryError && 'Please insert correct country!'} label="Country*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
                 </div>
                 {!loading && <div>
                     <Button onClick={()=> {navigate('/auth')}} variant="contained" sx={{mb: 3, mt:3, mr: 3}}>Back</Button>

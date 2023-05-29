@@ -1,7 +1,7 @@
 import AccountInfo from "../../components/companyPanel/AccountInfo";
 import classes from './CompanyPanel.module.css';
 import ButtonsContainer from "../../components/companyPanel/ButtonsContainer";
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {TailSpin} from "react-loader-spinner";
 
 
@@ -12,32 +12,33 @@ const CompanyPanel = () => {
         mail: 'Loading...',
         role: 'Loading...'
     });
-    async function fetchUserInfo()
-    {
-        const response = await fetch('http://localhost:5099/api/account/AccountProfile', {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        });
-        if (!response.ok) {
-            throw new Error("Something went wrong!");
-        }
+     const fetchUserInfo = useCallback(async () => {
+         try {
+             const response = await fetch('http://localhost:5099/api/account/AccountProfile', {
+                 headers: {
+                     'Authorization': 'Bearer ' + localStorage.getItem('token')
+                 }
+             });
+             if (!response.ok) {
+                 throw new Error("Something went wrong!");
+             }
 
-        const data = await response.json();
+             const data = await response.json();
 
-        setUser({
-            firstName: data.name,
-            lastName: data.lastName,
-            mail: data.email,
-            role: data.role,
-        })
+             setUser({
+                 firstName: data.name,
+                 lastName: data.lastName,
+                 mail: data.email,
+                 role: data.role,
+             })
 
-            setIsInfoLoaded(true);
-    }
+             setIsInfoLoaded(true);
+         } catch(error) {}
+     })
 
     useEffect(()=> {
         fetchUserInfo();
-    })
+    },[])
 
     return (
         <div className={isInfoLoaded ? classes.container : classes.container2}>

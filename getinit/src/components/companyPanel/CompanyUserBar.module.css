@@ -1,0 +1,54 @@
+.userBarContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: lightgrey;
+    border: 2px solid gray;
+    height: 100px;
+}
+
+.deleteButton {
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid black;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.starContainer {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+
+.deleteButton:hover {
+    border-color: #1976d2;
+}
+
+.userInfo {
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.icon {
+    font-size: 40px;
+    margin-top: 10px;
+}
+
+.iconMain {
+    font-size: 40px;
+    margin-top: 10px;
+    color: yellow;
+}

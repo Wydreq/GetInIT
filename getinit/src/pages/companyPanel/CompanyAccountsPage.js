@@ -1,7 +1,10 @@
 import classes from './CompanyAccountsPage.module.css'
 import {Box, Modal} from "@mui/material";
 import AddNewAccountForm from "../../components/companyPanel/AddNewAccountForm";
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
+import CompanyUserBar from "../../components/companyPanel/CompanyUserBar";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const style = {
     position: 'absolute',
@@ -15,16 +18,68 @@ const style = {
     p: 4,
 };
 const CompanyAccountsPage = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleSnackbarClose = () => setSnackbarOpen(false);
+
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const [fetchedUsers, setFetchedUsers] = useState([])
+
+    const addAccountNotificationHandler = () => {
+        setSnackbarOpen(true);
+        fetchCompanyAccounts();
+    }
+
+    const fetchCompanyAccounts = useCallback(async () => {
+        try{
+            const response = await fetch('http://localhost:5099/api/account/manager/GetAllCompanyAccounts', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
+            if (!response.ok) {
+                throw new Error("Something went wrong!");
+            }
+
+            const data = await response.json();
+
+            const loadedUsers = [];
+
+            for(const key in data) {
+                loadedUsers.push({
+                    id: data[key].id,
+                    companyName: data[key].companyName,
+                    email: data[key].email,
+                    lastName: data[key].lastName,
+                    firstName: data[key].name,
+                    role: data[key].role,
+                })
+            }
+
+            setFetchedUsers(loadedUsers);
+        } catch(error) {}
+    })
+
+    useEffect(()=> {
+        fetchCompanyAccounts();
+    },[])
     return (
         <div className={classes.container}>
             <div className={classes.addAccountContainer} onClick={handleOpen}>
                 Add new company account
             </div>
             <div className={classes.accountsContainer}>
-
+                {fetchedUsers.map((user) => {
+                    return(
+                        <CompanyUserBar key={user.id} user={user}/>
+                    )
+                })}
             </div>
             <Modal
                 open={open}
@@ -33,9 +88,14 @@ const CompanyAccountsPage = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <AddNewAccountForm onModalClose={handleClose}/>
+                    <AddNewAccountForm onAddAccountSuccesful={addAccountNotificationHandler} onModalClose={handleClose}/>
                 </Box>
             </Modal>
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity='success' sx={{ width: '100%' }}>
+                    Account has beed added!
+                </Alert>
+            </Snackbar>
         </div>
     )
 };

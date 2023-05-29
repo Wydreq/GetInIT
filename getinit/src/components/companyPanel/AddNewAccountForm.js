@@ -6,13 +6,16 @@ const AddNewAccountForm = (props) => {
 
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
-    const [loginError, setLoginError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
+    const confirmPasswordRef = useRef();
 
     const validationHandler = () => {
         const validator = require('validator');
@@ -29,19 +32,24 @@ const AddNewAccountForm = (props) => {
                 setLastNameError(false);
             }
             if(!validator.isEmail(emailRef.current.value)) {
-                setLoginError(true);
+                setEmailError(true);
+                setEmailErrorMessage('Please insert correct email address!');
             }
             else {
-                setLoginError(false);
+                setEmailError(false);
             }
             if(!validator.isStrongPassword(passwordRef.current.value)) {
                 setPasswordError(true);
+                setPasswordErrorMessage('Password is not strong!')
             }
             else {
                 setPasswordError(false);
             }
-
-            if(firstNameRef.current.value.length > 1 && lastNameRef.current.value.length > 1 && validator.isEmail(emailRef.current.value) && validator.isStrongPassword(passwordRef.current.value)) {
+            if(confirmPasswordRef.current.value !== passwordRef.current.value) {
+                setPasswordError(true);
+                setPasswordErrorMessage('Passwords are not the same!')
+            }
+            if(firstNameRef.current.value.length > 1 && lastNameRef.current.value.length > 1 && validator.isEmail(emailRef.current.value) && validator.isStrongPassword(passwordRef.current.value) && passwordRef.current.value === confirmPasswordRef.current.value) {
                 addNewAccountHandler();
                 props.onModalClose();
             }
@@ -54,25 +62,33 @@ const AddNewAccountForm = (props) => {
             lastName: lastNameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
-            confirmPassword: passwordRef.current.value,
-            role: 'Employee',
+            confirmPassword: confirmPasswordRef.current.value,
+            role: 'EmployeeAccount',
         }
 
-        const response = await fetch('http://localhost:5099/api/company/EmployeeAccount/RegisterEmployee', {
+        const response = await fetch('http://localhost:5099/api/account/manager/RegisterEmployee', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
             body: JSON.stringify(preparedForSending),
-        })
-            .then(function (response) {
+        });
+        if(!response.ok) {
+            const text = await response.text();
+            if(JSON.parse(text).errors.Email) {
+                setEmailErrorMessage('Email is taken, please insert another email address!');
+                setEmailError(true);
                 setLoading(false);
-                props.onModalClose();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            }
+            else {
+                setEmailError(false);
+                setLoading(false);
+            }
+            throw new Error(text);
+        }
+        props.onAddAccountSuccesful();
+        props.onModalClose();
     }
 
     return (
@@ -80,10 +96,11 @@ const AddNewAccountForm = (props) => {
             <Typography variant="h4" mb={3}>
                 Add new company account
             </Typography>
-            <TextField error={firstNameError} inputRef={firstNameRef} id="outlined-basic" label="First name*" helperText={firstNameError && 'Please insert correct email!'} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
-            <TextField error={lastNameError} inputRef={lastNameRef} id="outlined-basic1" label="Last name*" helperText={lastNameError && 'Please insert correct password!'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
-            <TextField error={loginError} inputRef={emailRef} id="outlined-basic2" label="E-mail*" helperText={loginError && 'Please insert correct email!'} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
-            <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic3" label="Password*" helperText={passwordError && 'Please insert correct password!'} type='password' variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <TextField error={firstNameError} inputRef={firstNameRef} id="outlined-basic" label="First name*" helperText={firstNameError && 'Please insert correct first name (length > 1)'} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
+            <TextField error={lastNameError} inputRef={lastNameRef} id="outlined-basic1" label="Last name*" helperText={lastNameError && 'Please insert correct last name! (length > 1)'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <TextField error={emailError} inputRef={emailRef} id="outlined-basic2" label="E-mail*" helperText={emailError && emailErrorMessage} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
+            <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic3" label="Password*" helperText={passwordError && passwordErrorMessage} type='password' variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <TextField error={passwordError} inputRef={confirmPasswordRef} id="outlined-basic4" label="Confirm password*" helperText={passwordError && 'Please insert correct password!'} type='password' variant="outlined"sx={{mb: 3, width: 4/5}}/>
             <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Add'}</Button>
         </div>
     );

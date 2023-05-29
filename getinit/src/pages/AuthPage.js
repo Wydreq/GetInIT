@@ -50,23 +50,22 @@ const AuthPage = () => {
         if(!validator.isEmail(emailRef.current.value)) {
             setLoginError(true);
             setLoginErrorMessage('Please insert correct email!');
-            setLoading(false);
         }
         else {
             setLoginError(false);
-            setLoading(false);
         }
         if(!validator.isStrongPassword(passwordRef.current.value)) {
             setPasswordError(true);
             setPasswordErrorMessage('Please insert strong password!');
-            setLoading(false);
         }
         else {
             setPasswordError(false);
-            setLoading(false);
         }
         if(validator.isEmail(emailRef.current.value) && validator.isStrongPassword(passwordRef.current.value)) {
             signInHandler();
+        }
+        else {
+            setLoading(false);
         }
     };
 
