@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {path: '/', element: <HomePage/>},
       {path: 'auth', element: <TokenRoute><AuthPage/></TokenRoute>},
-      {path: 'completeRegister', element: <CompleteRegisterPage/>},
+      {path: 'signUp', element: <CompleteRegisterPage/>},
       {path: 'logout', action: logoutAction},
       {path: 'companyPanel', element: <PrivateRoute><CompanyPanel/></PrivateRoute>},
       {path: 'companyAccounts', element: <PrivateRoute><CompanyAccountsPage/></PrivateRoute>},

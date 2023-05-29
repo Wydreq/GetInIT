@@ -1,14 +1,22 @@
 import classes from './CompleteRegisterPage.module.css'
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
-import { useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Button from '@mui/material/Button';
-import { registerActions } from '../../store';
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import {TailSpin} from "react-loader-spinner";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const CompleteRegisterPage = () => {
 
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+
+    const mailRef = useRef();
+    const passwordRef = useRef();
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const companyNameRef = useRef();
@@ -21,9 +29,12 @@ const CompleteRegisterPage = () => {
     const countryRef = useRef();
     const buildingNumberRef = useRef();
 
+    const [mailError, setMailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
     const [companyNameError,setCompanyNameError] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [urlError, setUrlError] = useState(false);
     const [nipError, setNipError] = useState(false);
     const [regonError, setRegonError] = useState(false);
@@ -33,11 +44,29 @@ const CompleteRegisterPage = () => {
     const [countryError, setCountryError] = useState(false);
     const [buildingNumberError, setBuildingNumberError] = useState(false);
 
-    const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     const navigate = useNavigate();
 
+    useEffect(()=>{},[mailError,passwordError,firstNameError,lastNameError,companyNameError,urlError,nipError,regonError,streetError,postalCodeError,cityError,countryError,buildingNumberError])
+
     const validationHandler = () => {
+        setLoading(true);
         const validator = require('validator');
+        if(!validator.isEmail(mailRef.current.value)) {
+            setMailError(true);
+        }
+        else {
+            setMailError(false);
+        }
+        if(!validator.isStrongPassword(passwordRef.current.value)) {
+            setPasswordError(true);
+        }
+        else {
+            setPasswordError(false);
+        }
         if(firstNameRef.current.value.length < 2) {
             setFirstNameError(true);
         }
@@ -70,7 +99,7 @@ const CompleteRegisterPage = () => {
         if(nipRef.current.value.length !== 10) {
             setNipError(true);
         }
-        else {  
+        else {
             setNipError(false);
         }
         if(regonRef.current.value.length < 8 ) {
@@ -109,33 +138,57 @@ const CompleteRegisterPage = () => {
         else {
             setCountryError(false);
         }
-        if(!firstNameError && !lastNameError && !companyNameError && !urlError && !nipError && !regonError && !streetError && !buildingNumberError && !postalCodeError && !cityError && !countryError) {
+        if(!mailError && !passwordError && !firstNameError && !lastNameError && !companyNameError && !urlError && !nipError && !regonError && !streetError && !buildingNumberError && !postalCodeError && !cityError && !countryError) {
             registerAccount();
         }
+        setLoading(false);
     }
 
 
-    const registerAccount = () => {
-        dispatch(registerActions.createAccount({ 
-            firstName: firstNameRef.current.value,
+    async function registerAccount() {
+        const preparedForSending = {
+            name: firstNameRef.current.value,
             lastName: lastNameRef.current.value,
-            companyName: companyNameRef.current.value,
-            url: urlRef.current.value,
-            nip: nipRef.current.value,
-            regon: 0,
-            country: countryRef.current.value,
-            city: cityRef.current.value,
-            street: streetRef.current.value,
-            buildingNumber: buildingNumberRef.current.value,
-            postalCode: postalCodeRef.current.value,
-        }))
+            email: mailRef.current.value,
+            password: passwordRef.current.value,
+            confirmPassword: passwordRef.current.value,
+            role: 'Manager',
+            createCompanyDto: {
+                name: companyNameRef.current.value,
+                url: urlRef.current.value,
+                nip: nipRef.current.value,
+                regon: regonRef.current.value,
+                addressDto: {
+                    country: countryRef.current.value,
+                    city: cityRef.current.value,
+                    street: streetRef.current.value,
+                    buildingNumber: buildingNumberRef.current.value,
+                    postalCode: postalCodeRef.current.value,
+                }
+            }
+        }
+
+        const response = await fetch('http://localhost:5099/api/account/RegisterAccountCompany', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(preparedForSending),
+        });
+        if(!response.ok) {
+            handleOpen();
+            throw new Error('Something went wrong!');
+        }
+        navigate('/companyPanel');
     }
 
     return (
     <div className={classes.container}>
             <Card className={classes.formContainer}> 
-                <h1 style={{marginBottom: 25, marginTop: 25}}>Complete your registration</h1>
+                <h1 style={{marginBottom: 25, marginTop: 25}}>Sign Up!</h1>
                 <div className={classes.inputsContainer}>
+                    <TextField inputRef={mailRef} error={mailError}  helperText={mailError && 'Please insert correct mail!'} id="outlined-basic" label="E-mail*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={passwordRef} error={passwordError} helperText={passwordError && 'Please insert strong password!'} id="outlined-basic" label="Password*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={firstNameRef} error={firstNameError}  helperText={firstNameError && 'Please insert correct firstname!'} id="outlined-basic" label="First name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={lastNameRef} error={lastNameError} helperText={lastNameError && 'Please insert correct lastname!'} id="outlined-basic" label="Last name*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={companyNameRef} error={companyNameError} helperText={companyNameError && 'Please insert correct company name!'} id="outlined-basic" label="Company name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
@@ -148,11 +201,24 @@ const CompleteRegisterPage = () => {
                     <TextField inputRef={cityRef} error={cityError} helperText={cityError && 'Please insert correct city!'} id="outlined-basic" label="City*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
                     <TextField inputRef={countryRef} error={countryError} helperText={countryError && 'Please insert correct country!'} id="outlined-basic" label="Country*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
                 </div>
-                <div>
+                {!loading && <div>
                     <Button onClick={()=> {navigate('/auth')}} variant="contained" sx={{mb: 3, mt:3, mr: 3}}>Back</Button>
-                    <Button onClick={validationHandler} variant="contained" sx={{mb: 3, mt:3}}>Complete registration</Button>
-                </div>
+                    <Button onClick={validationHandler} variant="contained" sx={{mb: 3, mt:3}}>Register</Button>
+                </div>}
+                {loading && <TailSpin
+                    height="50"
+                    width="50"
+                    color="#1976d2"
+                    ariaLabel="tail-spin-loading"
+                    radius="2"
+                    visible={true}
+                />}
             </Card>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
+                Something went wrong!
+            </Alert>
+        </Snackbar>
     </div>
     )
 };
