@@ -56,7 +56,7 @@ const ChangeEmailForm = (props) => {
             throw new Error(text);
         }
         props.onClose();
-        props.onChange();
+        props.onChange(true);
     };
 
     return(

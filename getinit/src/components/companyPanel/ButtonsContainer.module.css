@@ -1,6 +1,6 @@
 .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 70%;
     align-items: center;
     justify-content: space-evenly;
@@ -9,10 +9,10 @@
 }
 
 .button {
-    width: 40%;
+    width: 90%;
     border: 1px solid #1976d2;
-    border-radius: 10px;
-    height: 200px;
+    border-radius: 60px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,4 +23,5 @@
     background-color: #1976d2;
     color: white;
     cursor: pointer;
+    transition: 0.2s;
 }

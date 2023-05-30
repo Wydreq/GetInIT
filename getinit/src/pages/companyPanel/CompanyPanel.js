@@ -24,6 +24,7 @@ const CompanyPanel = () => {
              }
 
              const data = await response.json();
+             console.log(data);
 
              setUser({
                  firstName: data.name,
@@ -34,11 +35,11 @@ const CompanyPanel = () => {
 
              setIsInfoLoaded(true);
          } catch(error) {}
-     })
+     },[])
 
     useEffect(()=> {
         fetchUserInfo();
-    },[])
+    },[fetchUserInfo])
 
     return (
         <div className={isInfoLoaded ? classes.container : classes.container2}>

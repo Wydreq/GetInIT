@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-import img from "../assets/infover.jpg";
 
 const initialState = {
+    isSnackbarOpen: false,
     isModalOpen: false,
     id: '',
     offerName: '',
@@ -16,6 +16,12 @@ const offerModalSlice = createSlice({
     name: 'offerModal',
     initialState: initialState,
     reducers: {
+        openSnackbar (state) {
+            state.isSnackbarOpen = true;
+        },
+        closeSnackbar (state) {
+            state.isSnackbarOpen = false;
+        },
          openModal (state) {
            state.isModalOpen = true;
         },

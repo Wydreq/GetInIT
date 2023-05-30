@@ -11,6 +11,7 @@ import PrivateRoute, {tokenLoader, TokenRoute} from './util/auth';
 import CompanyPanel from "./pages/companyPanel/CompanyPanel";
 import CompanyAccountsPage from "./pages/companyPanel/CompanyAccountsPage";
 import EditInfoPage from "./pages/companyPanel/EditInfoPage";
+import OffersPage from "./pages/companyPanel/OffersPage";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,8 @@ const router = createBrowserRouter([
       {path: 'logout', action: logoutAction},
       {path: 'companyPanel', element: <PrivateRoute><CompanyPanel/></PrivateRoute>},
       {path: 'companyAccounts', element: <PrivateRoute><CompanyAccountsPage/></PrivateRoute>},
-      {path: 'editInfo', element: <PrivateRoute><EditInfoPage/></PrivateRoute>}]
+      {path: 'editInfo', element: <PrivateRoute><EditInfoPage/></PrivateRoute>},
+      {path: 'userOffers', element: <PrivateRoute><OffersPage/></PrivateRoute>}],
   }
 ])
 

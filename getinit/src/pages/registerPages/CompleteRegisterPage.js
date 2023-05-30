@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import {TailSpin} from "react-loader-spinner";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import {offerModalActions} from "../../store";
+import {useDispatch} from "react-redux";
 
 const CompleteRegisterPage = () => {
 
@@ -14,9 +16,10 @@ const CompleteRegisterPage = () => {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
-
+    const dispatch = useDispatch();
     const mailRef = useRef();
     const passwordRef = useRef();
+    const confirmPasswordRef = useRef();
     const firstNameRef = useRef();
     const lastNameRef = useRef();
     const companyNameRef = useRef();
@@ -32,6 +35,7 @@ const CompleteRegisterPage = () => {
     const [mailError, setMailError] = useState(false);
     const [mailErrorMessage, setMailErrorMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
     const [companyNameError,setCompanyNameError] = useState(false);
@@ -63,12 +67,18 @@ const CompleteRegisterPage = () => {
         else {
             setMailError(false);
         }
-        if(!validator.isStrongPassword(passwordRef.current.value)) {
+        if(passwordRef.current.value !== confirmPasswordRef.current.value) {
+            setPasswordErrorMessage('Passwords are not the same!');
             setPasswordError(true);
         }
         else {
             setPasswordError(false);
         }
+        if(!validator.isStrongPassword(passwordRef.current.value)) {
+            setPasswordErrorMessage('Passwords must be strong!');
+            setPasswordError(true);
+        }
+
         if(firstNameRef.current.value.length < 2) {
             setFirstNameError(true);
         }
@@ -143,7 +153,9 @@ const CompleteRegisterPage = () => {
         if(!mailError && !passwordError && !firstNameError && !lastNameError && !companyNameError && !urlError && !nipError && !regonError && !streetError && !buildingNumberError && !postalCodeError && !cityError && !countryError) {
             registerAccount();
         }
-        setLoading(false);
+        else {
+            setLoading(false);
+        }
     }
 
 
@@ -153,7 +165,7 @@ const CompleteRegisterPage = () => {
             lastName: lastNameRef.current.value,
             email: mailRef.current.value,
             password: passwordRef.current.value,
-            confirmPassword: passwordRef.current.value,
+            confirmPassword: confirmPasswordRef.current.value,
             role: 'ManagerCompanyAccount',
             createCompanyDto: {
                 name: companyNameRef.current.value,
@@ -186,9 +198,12 @@ const CompleteRegisterPage = () => {
             else {
                 setMailError(false);
             }
+            setLoading(false);
             throw new Error(text);
             handleOpen();
         }
+        setLoading(false);
+        dispatch(offerModalActions.openSnackbar());
         navigate('/auth');
     }
 
@@ -198,15 +213,16 @@ const CompleteRegisterPage = () => {
                 <h1 style={{marginBottom: 25, marginTop: 25}}>Sign Up!</h1>
                 <div className={classes.inputsContainer}>
                     <TextField inputRef={mailRef} error={mailError}  helperText={mailError && mailErrorMessage} label="E-mail*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={passwordRef} error={passwordError} helperText={passwordError && 'Please insert strong password!'} label="Password*" type='password' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={passwordRef} error={passwordError} helperText={passwordError && passwordErrorMessage} label="Password*" type='password' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={confirmPasswordRef} error={passwordError} helperText={passwordError && passwordErrorMessage} label="Confirm password*" type='password' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={firstNameRef} error={firstNameError}  helperText={firstNameError && 'Please insert correct firstname!'} label="First name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={lastNameRef} error={lastNameError} helperText={lastNameError && 'Please insert correct lastname!'} label="Last name*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={companyNameRef} error={companyNameError} helperText={companyNameError && 'Please insert correct company name!'} label="Company name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={urlRef} error={urlError} helperText={urlError && 'Please insert correct url!'} label="Company page url" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={nipRef} error={nipError} helperText={nipError && 'Please insert correct nip!'} label="NIP*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={regonRef} error={regonError} helperText={regonError && 'Please insert correct regon!'} label="REGON*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={nipRef} error={nipError} helperText={nipError && 'Please insert correct nip!'} label="NIP*" type='number' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={regonRef} error={regonError} helperText={regonError && 'Please insert correct regon!'} label="REGON*" type='number' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={streetRef} error={streetError} helperText={streetError && 'Please insert correct street name!'} label="Street*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={buildingNumberRef} error={buildingNumberError} helperText={buildingNumberError && 'Please insert correct buildng number!'} label="Building number*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={buildingNumberRef} error={buildingNumberError} helperText={buildingNumberError && 'Please insert correct buildng number!'} type='number' label="Building number*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={postalCodeRef} error={postalCodeError} helperText={postalCodeError && 'Please insert correct postal code (00-000)!'} label="Postal code*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={cityRef} error={cityError} helperText={cityError && 'Please insert correct city!'} label="City*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
                     <TextField inputRef={countryRef} error={countryError} helperText={countryError && 'Please insert correct country!'} label="Country*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>

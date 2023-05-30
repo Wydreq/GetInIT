@@ -64,11 +64,11 @@ const CompanyAccountsPage = () => {
 
             setFetchedUsers(loadedUsers);
         } catch(error) {}
-    })
+    },[])
 
     useEffect(()=> {
         fetchCompanyAccounts();
-    },[])
+    },[fetchCompanyAccounts])
     return (
         <div className={classes.container}>
             <div className={classes.addAccountContainer} onClick={handleOpen}>
@@ -86,6 +86,7 @@ const CompanyAccountsPage = () => {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{position: 'fixed', top: '20%'}}
             >
                 <Box sx={style}>
                     <AddNewAccountForm onAddAccountSuccesful={addAccountNotificationHandler} onModalClose={handleClose}/>

@@ -3,15 +3,12 @@ import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import React, { useRef, useState } from 'react';
 import Button from '@mui/material/Button';
-import { Checkbox} from '@mui/material';
-import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import image from '../assets/i1.png';
-import { registerActions } from '../store/index';
-import { useDispatch } from 'react-redux';
-
+import {useDispatch, useSelector} from "react-redux";
+import {offerModalActions} from "../store";
 
 const style = {
     position: 'absolute',
@@ -38,7 +35,8 @@ const AuthPage = () => {
     const navigate = useNavigate();
     const emailRef = useRef();
     const passwordRef = useRef();
-
+    const dispatch = useDispatch();
+    const isSnackbarOpen = useSelector(state => state.offerModal.isSnackbarOpen);
     const registerHandler = () => {
             navigate('/signUp');
             setLoading(false);
@@ -121,6 +119,11 @@ const AuthPage = () => {
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
                Incorrect e-mail or password!
+            </Alert>
+        </Snackbar>
+        <Snackbar open={isSnackbarOpen} autoHideDuration={6000} onClose={()=>{dispatch(offerModalActions.closeSnackbar())}}>
+            <Alert onClose={()=>{dispatch(offerModalActions.closeSnackbar())}} severity='success' sx={{ width: '100%' }}>
+                Account added succesfully!
             </Alert>
         </Snackbar>
     </div>
