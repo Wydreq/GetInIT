@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     isSnackbarOpen: false,
+    isSnackbarOpen2: false,
     isModalOpen: false,
     id: '',
     offerName: '',
@@ -21,6 +22,12 @@ const offerModalSlice = createSlice({
         },
         closeSnackbar (state) {
             state.isSnackbarOpen = false;
+        },
+        openSnackbar2 (state) {
+            state.isSnackbarOpen2 = true;
+        },
+        closeSnackbar2 (state) {
+            state.isSnackbarOpen2 = false;
         },
          openModal (state) {
            state.isModalOpen = true;

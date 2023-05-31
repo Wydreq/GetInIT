@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import StarIcon from '@mui/icons-material/Star';
 const AddNewOfferForm = (props) => {
 
     const [offerTitleError, setOfferTitleError] = useState(false);
@@ -14,9 +15,12 @@ const AddNewOfferForm = (props) => {
     const [emailError, setEmailError] = useState(false);
     const [salaryFromError, setSalaryFromError] = useState(false);
     const [salaryToError, setSalaryToError] = useState(false);
+    const [technologiesError, setTechnologiesError] = useState(false);
     const [level, setLevel] = useState(0);
-
+    const [workingPlace, setWorkingPlace] = useState(0);
+    const [skillLevel, setSkillLevel] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [technologies, setTechnologies] = useState([]);
     const offerTitleRef = useRef();
     const offerDescriptionRef = useRef();
     const primaryLanguageRef = useRef();
@@ -24,17 +28,61 @@ const AddNewOfferForm = (props) => {
     const emailRef = useRef();
     const salaryFromRef = useRef();
     const salaryToRef = useRef();
+    const technologyRef = useRef();
 
-    const handleChange = (event) => {
+    const handleLevelChange = (event) => {
         setLevel(event.target.value);
-        console.log(level);
     };
 
-    const validationHandler = () => {
+    const handlePlaceChange = (event) => {
+        setWorkingPlace(event.target.value);
+    };
 
+    const handleSkillLevelChange = (event) => {
+        setSkillLevel(event.target.value);
+    };
+
+    const addTechnologyHandler = () => {
+        setTechnologies(current => [...current, {
+            skill: technologyRef.current.value,
+            skillLevel: skillLevel
+        }])
+        setSkillLevel(1);
+        technologyRef.current.value = '';
+        console.log(technologies);
     }
 
-    async function addNewAccountHandler() {
+    const validationHandler = () => {
+        addNewOfferHandler();
+    }
+
+    async function addNewOfferHandler() {
+        const preparedForSending = {
+            name: offerTitleRef.current.value,
+            description: offerDescriptionRef.current.value,
+            primarySkill: primaryLanguageRef.current.value,
+            phoneNumber: phoneNumberRef.current.value,
+            email: emailRef.current.value,
+            salaryFrom: salaryFromRef.current.value,
+            salaryTo: salaryToRef.current.value,
+            level: level,
+            place: workingPlace,
+            technologies: technologies,
+        }
+
+        const response = await fetch('http://localhost:5099/api/offer/createOffer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            },
+            body: JSON.stringify(preparedForSending),
+        });
+        if(!response.ok) {
+           throw new Error('Something went wrong!');
+        }
+        props.onAddAccountSuccesful();
+        props.onModalClose();
     }
 
     return (
@@ -47,13 +95,24 @@ const AddNewOfferForm = (props) => {
             <Select
                 id="demo-simple-select"
                 value={level}
-                onChange={handleChange}
+                onChange={handleLevelChange}
                 sx={{mb: 3, width: 4/5}}
             >
                 <MenuItem value={0}>Select level</MenuItem>
                 <MenuItem value={1}>Junior</MenuItem>
                 <MenuItem value={2}>Mid</MenuItem>
                 <MenuItem value={3}>Senior</MenuItem>
+            </Select>
+            <Select
+                id="demo-simple-select2"
+                value={workingPlace}
+                onChange={handlePlaceChange}
+                sx={{mb: 3, width: 4/5}}
+            >
+                <MenuItem value={0}>Select place</MenuItem>
+                <MenuItem value={1}>Home</MenuItem>
+                <MenuItem value={2}>Office</MenuItem>
+                <MenuItem value={3}>Hybrid</MenuItem>
             </Select>
             <TextField error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number'} type='number' variant="outlined"sx={{mb: 3, width: 4/5}}/>
             <TextField error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
@@ -63,6 +122,29 @@ const AddNewOfferForm = (props) => {
                 <TextField error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct mail address!'} type='number' variant="outlined"sx={{mb: 3, width: 2/6}}/>
             </div>
             <TextField multiline={true} rows='5' error={offerDescriptionError} inputRef={offerDescriptionRef} id="outlined-basic1" label="Offer description*" helperText={offerDescriptionError && 'Please insert correct description! (length > 10)'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <div className={classes.technologiesContainer}>
+                <TextField error={technologiesError} inputRef={technologyRef} id="outlined-basic3" label="Technology" helperText={phoneNumberError && 'Insert correct technology'} variant="outlined" sx={{mb: 1, width: 2/6}}/>
+                <Select
+                    id="demo-simple-select3"
+                    value={skillLevel}
+                    onChange={handleSkillLevelChange}
+                    sx={{mb: 1, width: 2/6}}
+                >
+                    <MenuItem value={1}>Begginer</MenuItem>
+                    <MenuItem value={2}>Basic</MenuItem>
+                    <MenuItem value={3}>Intermediate</MenuItem>
+                    <MenuItem value={4}>Advanced</MenuItem>
+                    <MenuItem value={5}>Expert</MenuItem>
+                </Select>
+                <Button onClick={addTechnologyHandler} variant="contained">Add technology</Button>
+            </div>
+            <div className={classes.technologiesList}>
+                {technologies.map((item) => {
+                    return (
+                        <p className={classes.skillItem}>{item.skill} - {item.skillLevel}</p>
+                    )
+                })}
+            </div>
             <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Add'}</Button>
         </div>
     );

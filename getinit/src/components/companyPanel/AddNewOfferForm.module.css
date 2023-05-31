@@ -3,6 +3,9 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    overflow: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
 }
 
 .salaryContainer {
@@ -16,5 +19,29 @@
     font-size: 50px;
     margin-bottom: 20px;
     margin-left: 20px;
+    margin-right: 20px;
+}
+
+.technologiesContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom: 2px solid lightgrey;
+    width: 80%;
+    margin-bottom: 15px;
+}
+
+.technologiesList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: 50px;
+    width: 70%;
+    margin-bottom: 20px;
+}
+
+.skillItem {
     margin-right: 20px;
 }

@@ -5,7 +5,7 @@ import {useState, useEffect, useCallback} from 'react';
 import {TailSpin} from "react-loader-spinner";
 
 
-const CompanyPanel = () => {
+const UserPanel = () => {
     const [isInfoLoaded, setIsInfoLoaded] = useState(false);
     const [user, setUser] = useState({
         firstName: 'Loading...',
@@ -24,7 +24,6 @@ const CompanyPanel = () => {
              }
 
              const data = await response.json();
-             console.log(data);
 
              setUser({
                  firstName: data.name,
@@ -58,4 +57,4 @@ const CompanyPanel = () => {
     )
 }
 
-export default CompanyPanel;
+export default UserPanel;

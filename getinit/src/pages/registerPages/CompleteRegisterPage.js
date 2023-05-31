@@ -9,6 +9,8 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import {offerModalActions} from "../../store";
 import {useDispatch} from "react-redux";
+import {LoginSocialGoogle} from "reactjs-social-login";
+import {GoogleLoginButton} from "react-social-login-buttons";
 
 const CompleteRegisterPage = () => {
 
@@ -182,7 +184,7 @@ const CompleteRegisterPage = () => {
             }
         }
 
-        const response = await fetch('http://localhost:5099/api/account/RegisterAccountCompany', {
+        const response = await fetch('http://localhost:5099/api/account/RegisterAccount', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

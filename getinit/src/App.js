@@ -8,7 +8,7 @@ import AuthPage from './pages/AuthPage';
 import {action as logoutAction} from "./pages/Logout";
 
 import PrivateRoute, {tokenLoader, TokenRoute} from './util/auth';
-import CompanyPanel from "./pages/companyPanel/CompanyPanel";
+import UserPanel from "./pages/companyPanel/UserPanel";
 import CompanyAccountsPage from "./pages/companyPanel/CompanyAccountsPage";
 import EditInfoPage from "./pages/companyPanel/EditInfoPage";
 import OffersPage from "./pages/companyPanel/OffersPage";
@@ -21,11 +21,11 @@ const router = createBrowserRouter([
     id: 'root',
     errorElement: <NotFoundPage/>,
     children: [
-      {path: '/', element: <HomePage/>},
+      {path: '/', element: <PrivateRoute><HomePage/></PrivateRoute>},
       {path: 'auth', element: <TokenRoute><AuthPage/></TokenRoute>},
       {path: 'signUp', element: <CompleteRegisterPage/>},
       {path: 'logout', action: logoutAction},
-      {path: 'companyPanel', element: <PrivateRoute><CompanyPanel/></PrivateRoute>},
+      {path: 'userPanel', element: <PrivateRoute><UserPanel/></PrivateRoute>},
       {path: 'companyAccounts', element: <PrivateRoute><CompanyAccountsPage/></PrivateRoute>},
       {path: 'editInfo', element: <PrivateRoute><EditInfoPage/></PrivateRoute>},
       {path: 'userOffers', element: <PrivateRoute><OffersPage/></PrivateRoute>}],
