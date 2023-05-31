@@ -9,6 +9,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import image from '../assets/i1.png';
 import {useDispatch, useSelector} from "react-redux";
 import {offerModalActions} from "../store";
+import {LoginSocialGoogle} from "reactjs-social-login";
+import {GoogleLoginButton} from "react-social-login-buttons";
 
 const style = {
     position: 'absolute',
@@ -109,7 +111,13 @@ const AuthPage = () => {
                 <TextField error={loginError} inputRef={emailRef} id="outlined-basic" label="E-mail*" helperText={loginError && loginErrorMessage} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
                 <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic2" label="Password*" helperText={passwordError && passwordErrorMessage} type='password' variant="outlined"sx={{mb: 3, width: 4/5}}/>
                 <span onClick={()=>{registerHandler()}} className={classes.changingText}>Dont have an account? Sign up!</span>
-                <Button onClick={signInValidationHandler} variant="contained" sx={{mb: 3}}>{loading ? `Loading...` : `Sign In`}</Button>
+                <LoginSocialGoogle client_id='519616560661-tlaqndhk5u5rcr3ltbu7riaob0anrh11.apps.googleusercontent.com'
+                                   onReject={({error})=>{console.log(error)}}
+                                   onResolve={({provider, data})=>{console.log(provider, data)}}
+                scope='https://www.googleapis.com/auth/userinfo.email'>
+                <GoogleLoginButton/>
+                </LoginSocialGoogle>
+                <Button onClick={signInValidationHandler} variant="contained" sx={{mb: 3, mt: 3}}>{loading ? `Loading...` : `Sign In`}</Button>
             </Card>
         </div>
         <div className={classes.rightPanel}>
