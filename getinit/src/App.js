@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       {path: 'companyAccounts', element: <PrivateRoute><CompanyAccountsPage/></PrivateRoute>},
       {path: 'editInfo', element: <PrivateRoute><EditInfoPage/></PrivateRoute>},
       {path: 'userOffers', element: <PrivateRoute><OffersPage/></PrivateRoute>},
-      {path: '/subscriptionPayment', element: <PrivateRoute><PaymentPage/></PrivateRoute>},
+      {path: '/PaymentPage', element: <PrivateRoute><PaymentPage/></PrivateRoute>},
       {path: '*', element: <PrivateRoute><NotFoundPage/></PrivateRoute>}],
   }
 ])
