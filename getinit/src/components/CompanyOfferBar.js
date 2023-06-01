@@ -32,7 +32,7 @@ const CompanyOfferBar = (props) => {
                 <div className={classes.contButton}>
                     <EditIcon fontSize='inherit'/>
                 </div>
-                <div className={classes.contButton}>
+                <div onClick={deleteHandler} className={classes.contButton}>
                     <DeleteIcon fontSize='inherit'/>
                 </div>
                 <span className={classes.salary}>{props.offer.salaryFrom}$ - {props.offer.salaryTo}$</span>

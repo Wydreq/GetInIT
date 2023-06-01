@@ -105,7 +105,6 @@ const OffersPage = () => {
                     salaryTo: data[key].salaryTo
                 });
             }
-            console.log(loadedOffers);
             setOffersList(loadedOffers);
         } catch(error) {}
     },[])
