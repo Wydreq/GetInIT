@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+
 const ProductDisplay = () => (
   <section>
     <div className="product">
@@ -12,11 +13,12 @@ const ProductDisplay = () => (
       <h5>$20.00</h5>
       </div>
     </div>
-    <form action="http://localhost:5099/create-checkout-session" method="POST">
-      <button type="submit">
-        Checkout
-      </button>
-    </form>
+    <stripe-buy-button
+        buy-button-id="buy_btn_1NEGWzLpkQnyrIfCRJihMeQX"
+        publishable-key="pk_test_51NECXpLpkQnyrIfCIhxXNk4dyWgqohRpEdntOgg1u5F9zR13HjW0oVoXKJ9BEqdBbrzSl0QFgsbsD0sLx58Le2rL00ebdy7gVP"
+        successUrl
+    >
+    </stripe-buy-button>
   </section>
 );
 

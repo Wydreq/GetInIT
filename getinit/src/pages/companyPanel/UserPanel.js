@@ -5,9 +5,11 @@ import {useState, useEffect, useCallback} from 'react';
 import {TailSpin} from "react-loader-spinner";
 import {Alert, AlertTitle} from "@mui/material";
 import {Link} from "react-router-dom";
-
+import {useDispatch} from "react-redux";
+import {userRoleActions} from "../../store";
 
 const UserPanel = () => {
+    const dispatch = useDispatch();
     const [isInfoLoaded, setIsInfoLoaded] = useState(false);
     const [user, setUser] = useState({
         firstName: 'Loading...',
@@ -33,7 +35,7 @@ const UserPanel = () => {
                  mail: data.email,
                  role: data.role,
              })
-
+            dispatch(userRoleActions.setUserRole(data.role));
              setIsInfoLoaded(true);
          } catch(error) {}
      },[])
@@ -45,10 +47,10 @@ const UserPanel = () => {
     return (
         <div className={isInfoLoaded ? classes.container : classes.container2}>
             {isInfoLoaded && <AccountInfo userInfo={user}/>}
-            <Alert severity="error" sx={{width: '60%', borderRadius: '20px'}}>
+            {isInfoLoaded && <Alert severity="error" sx={{width: '60%', borderRadius: '20px'}}>
                 <AlertTitle><strong className={classes.title}>Subscription not found!</strong></AlertTitle>
                 <p className={classes.subError}>No active subscription found. If You want to manage your account <Link to={'/PaymentPage'}>buy it here!</Link></p>
-            </Alert>
+            </Alert>}
             {isInfoLoaded && <ButtonsContainer userInfo={user}/>}
             {!isInfoLoaded &&
                 <TailSpin

@@ -14,7 +14,6 @@ const OffersList = (props) => {
             }
 
             const data = await response.json();
-            console.log(data);
             const loadedOffers = [];
             for (const key in data) {
                 loadedOffers.push({

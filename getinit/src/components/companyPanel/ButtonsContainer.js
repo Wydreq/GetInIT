@@ -7,8 +7,16 @@ const ButtonsContainer = (props) => {
     return (
         <>
         <div className={classes.container}>
-            {props.userInfo.role === 'ManagerCompanyAccount' && <div className={classes.button} onClick={()=>{navigate('/userOffers')}}>Manage your offers</div>}
-            {props.userInfo.role === 'EmployeeAccount' && <div className={classes.button} onClick={()=>{navigate('/userOffers')}}>Manage your offers</div>}
+            {props.userInfo.role === 'ManagerCompanyAccount' && <div className={classes.button} onClick={()=>{navigate('/userOffers', {
+                state: {
+                    userRole: props.userInfo.role,
+                }
+            })}}>Manage your offers</div>}
+            {props.userInfo.role === 'EmployeeAccount' && <div className={classes.button} onClick={()=>{navigate('/userOffers', {
+                state: {
+                    userRole: props.userInfo.role,
+                }
+            })}}>Manage your offers</div>}
             <div className={classes.button} onClick={()=>{navigate('/editInfo')}}>Edit account info</div>
             {props.userInfo.role === 'ManagerCompanyAccount' && <div className={classes.button} onClick={()=>{navigate('/companyAccounts');}}>Manage your company accounts</div>}
             <div className={classes.button}>Delete your account</div>
