@@ -1,8 +1,10 @@
 import AccountInfo from "../../components/companyPanel/AccountInfo";
-import classes from './CompanyPanel.module.css';
+import classes from './UserPanel.module.css';
 import ButtonsContainer from "../../components/companyPanel/ButtonsContainer";
 import {useState, useEffect, useCallback} from 'react';
 import {TailSpin} from "react-loader-spinner";
+import {Alert, AlertTitle} from "@mui/material";
+import {Link} from "react-router-dom";
 
 
 const UserPanel = () => {
@@ -43,6 +45,10 @@ const UserPanel = () => {
     return (
         <div className={isInfoLoaded ? classes.container : classes.container2}>
             {isInfoLoaded && <AccountInfo userInfo={user}/>}
+            <Alert severity="error" sx={{width: '60%', borderRadius: '20px'}}>
+                <AlertTitle><strong className={classes.title}>Subscription not found!</strong></AlertTitle>
+                <p className={classes.subError}>No active subscription found. If You want to manage your account <Link to={'/subscriptionPayment'}>buy it here!</Link></p>
+            </Alert>
             {isInfoLoaded && <ButtonsContainer userInfo={user}/>}
             {!isInfoLoaded &&
                 <TailSpin

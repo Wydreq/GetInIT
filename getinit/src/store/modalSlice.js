@@ -4,13 +4,18 @@ const initialState = {
     isSnackbarOpen: false,
     isSnackbarOpen2: false,
     isModalOpen: false,
-    id: '',
-    offerName: '',
-    city: '',
-    company: '',
-    image: '',
-    salary: '',
+    id: 0,
+    companyName: '',
     description: '',
+    name: '',
+    phoneNumber: '',
+    email: '',
+    city: '',
+    level: 1,
+    place: 1,
+    primarySkill: '',
+    salaryFrom: 0,
+    salaryTo: 0,
 }
 
 const offerModalSlice = createSlice({
@@ -37,12 +42,17 @@ const offerModalSlice = createSlice({
         },
         setModalContent (state, action) {
              state.id = action.payload.id;
-             state.offerName = action.payload.offerName;
+             state.companyName = action.payload.companyName;
+             state.description = action.payload.description;
+             state.name = action.payload.name;
+             state.phoneNumber = action.payload.phoneNumber;
+             state.email = action.payload.email;
              state.city = action.payload.city;
-             state.company = action.payload.company;
-             state.image = action.payload.image;
-             state.salary = action.payload.salary;
-             state.description = action.payload.description
+             state.level = action.payload.level;
+             state.place = action.payload.place;
+             state.primarySkill = action.payload.primarySkill;
+             state.salaryFrom = action.payload.salaryFrom;
+            state.salaryTo = action.payload.salaryTo;
         }
     }
 });

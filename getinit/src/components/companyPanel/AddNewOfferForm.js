@@ -87,16 +87,14 @@ const AddNewOfferForm = (props) => {
 
     return (
         <div className={classes.container}>
-            <Typography variant="h4" mb={3}>
-                Add new offer
-            </Typography>
-            <TextField error={offerTitleError} inputRef={offerTitleRef} id="outlined-basic" label="Offer title*" helperText={offerTitleError && 'Please insert correct offer title (length > 5)'} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
-            <TextField error={primaryLanguageError} inputRef={primaryLanguageRef} id="outlined-basic2" label="Primary language*" helperText={primaryLanguageError && 'Please insert correct primary language'} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
+           <h1 className={classes.title}>Add new offer</h1>
+            <TextField error={offerTitleError} inputRef={offerTitleRef} id="outlined-basic" label="Offer title*" helperText={offerTitleError && 'Please insert correct offer title (length > 5)'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
+            <TextField error={primaryLanguageError} inputRef={primaryLanguageRef} id="outlined-basic2" label="Primary language*" helperText={primaryLanguageError && 'Please insert correct primary language'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
             <Select
                 id="demo-simple-select"
                 value={level}
                 onChange={handleLevelChange}
-                sx={{mb: 3, width: 4/5}}
+                sx={{mb: 3,mr:3, width: 2/5}}
             >
                 <MenuItem value={0}>Select level</MenuItem>
                 <MenuItem value={1}>Junior</MenuItem>
@@ -107,19 +105,19 @@ const AddNewOfferForm = (props) => {
                 id="demo-simple-select2"
                 value={workingPlace}
                 onChange={handlePlaceChange}
-                sx={{mb: 3, width: 4/5}}
+                sx={{mb: 3,mr:3, width: 2/5}}
             >
                 <MenuItem value={0}>Select place</MenuItem>
                 <MenuItem value={1}>Home</MenuItem>
                 <MenuItem value={2}>Office</MenuItem>
                 <MenuItem value={3}>Hybrid</MenuItem>
             </Select>
-            <TextField error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number'} type='number' variant="outlined"sx={{mb: 3, width: 4/5}}/>
-            <TextField error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <TextField error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number'} type='number' variant="outlined"sx={{mb: 3,mr:3, width: 2/5}}/>
+            <TextField error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined"sx={{mb: 3,mr:3, width: 2/5}}/>
             <div className={classes.salaryContainer}>
                 <TextField error={salaryFromError} inputRef={salaryFromRef} id="outlined-basic3" label="Salary from*" helperText={salaryFromError && 'Insert correct phone number'} type='number' variant="outlined"sx={{mb: 3, width: 2/6}}/>
                 <span className={classes.to}>-</span>
-                <TextField error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct mail address!'} type='number' variant="outlined"sx={{mb: 3, width: 2/6}}/>
+                <TextField error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct mail address!'} type='number' variant="outlined"sx={{mb: 3,mr:3, width: 2/6}}/>
             </div>
             <TextField multiline={true} rows='5' error={offerDescriptionError} inputRef={offerDescriptionRef} id="outlined-basic1" label="Offer description*" helperText={offerDescriptionError && 'Please insert correct description! (length > 10)'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
             <div className={classes.technologiesContainer}>
@@ -138,14 +136,19 @@ const AddNewOfferForm = (props) => {
                 </Select>
                 <Button onClick={addTechnologyHandler} variant="contained">Add technology</Button>
             </div>
-            <div className={classes.technologiesList}>
-                {technologies.map((item) => {
-                    return (
-                        <p className={classes.skillItem}>{item.skill} - {item.skillLevel}</p>
-                    )
-                })}
+            <div className={classes.btnContainer}>
+                <div className={classes.technologiesList}>
+                    {technologies.map((item) => {
+                        return (
+                            <div className={classes.itemContainer}>
+                                <p className={classes.skillItem}>{item.skill} - {item.skillLevel}</p>
+
+                            </div>
+                        )
+                    })}
+                </div>
+                <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Add'}</Button>
             </div>
-            <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Add'}</Button>
         </div>
     );
 };

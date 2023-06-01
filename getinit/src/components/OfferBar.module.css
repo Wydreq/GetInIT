@@ -1,9 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
 .offerContainer {
     width: 100%;
     display: flex;
     align-items: center;
     background-color: lightgrey;
     border: 2px solid gray;
+    height: 100px;
+    padding: 20px;
 }
 
 .imageContainer {
@@ -21,16 +28,27 @@
     background-color: darkgray;
 }
 
-.stack {
-    font-size: 22px;
+.offerName {
+    font-size: 30px;
     margin-right: 40px;
+    margin-bottom: 5px;
 }
 .company {
-    font-size: 25px;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.place {
+    display: flex;
+    align-items: center;
+}
+
+.gap {
+    margin-right: 10px;
 }
 
 .salary {
     margin-left: auto;
-    margin-right: 20px;
+    margin-right: 40px;
     font-size: 25px;
 }

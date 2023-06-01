@@ -2,13 +2,14 @@ import FilterBar from '../components/FilterBar';
 import OffersList from '../components/OffersList';
 import classes from './HomePage.module.css'
 import {Box, Modal} from "@mui/material";
-import React from "react";
-import img from "../assets/infover.jpg";
+import React, {useCallback, useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {offerModalActions} from "../store";
 import BusinessIcon from '@mui/icons-material/Business';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Button from "@mui/material/Button";
+import EmailIcon from '@mui/icons-material/Email';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 const style = {
     position: 'absolute',
@@ -25,17 +26,22 @@ const style = {
 const HomePage = () => {
 
     const open = useSelector(state => state.offerModal.isModalOpen);
-    const offerName = useSelector(state => state.offerModal.offerName);
-    const offerImage = useSelector(state => state.offerModal.image);
-    const offerSalary = useSelector(state => state.offerModal.salary);
-    const offerCompany = useSelector(state => state.offerModal.company);
-    const offerDescription = useSelector(state => state.offerModal.description);
-    const offerCity = useSelector(state => state.offerModal.city);
+    const id = useSelector(state => state.offerModal.id);
+    const companyName = useSelector(state => state.offerModal.companyName);
+    const description = useSelector(state => state.offerModal.description);
+    const name = useSelector(state => state.offerModal.name);
+    const phoneNumber = useSelector(state => state.offerModal.phoneNumber);
+    const email = useSelector(state => state.offerModal.email);
+    const city = useSelector(state => state.offerModal.city);
+    const level = useSelector(state => state.offerModal.level);
+    const place = useSelector(state => state.offerModal.place);
+    const primarySkill = useSelector(state => state.offerModal.primarySkill);
+    const salaryFrom = useSelector(state => state.offerModal.salaryFrom);
+    const salaryTo = useSelector(state => state.offerModal.salaryTo);
     const dispatch = useDispatch();
 
     const handleOpen = () => {
         dispatch(offerModalActions.openModal())
-        console.log(offerImage);
     }
     const handleClose = () => {
         dispatch(offerModalActions.closeModal())
@@ -54,25 +60,34 @@ const HomePage = () => {
             <Box sx={style}>
                 <div className={classes.modalContainer}>
                     <div className={classes.titleContainer}>
-                        <img className={classes.companyLogo} src={offerImage} alt='hej'/>
                         <div className={classes.containerTwo}>
-                            <span className={classes.offerName}>{offerName}</span>
-                            <span className={classes.salary}>{offerSalary}$</span>
+                            <span className={classes.offerName}>{name}</span>
+                            <span className={classes.salary}>{salaryFrom}$ - {salaryTo}$</span>
                         </div>
                     </div>
                     <div className={classes.containerThree}>
                         <span className={classes.iconsContainer}>
                               <BusinessIcon fontSize='inherit'/>
-                        <span className={classes.companyTitle}>{offerCompany}</span>
+                        <span className={classes.companyTitle}>{companyName}</span>
                         </span>
                         <span className={classes.iconsContainer}>
                             <LocationOnIcon fontSize='inherit'/>
-                            <span className={classes.companyTitle}>{offerCity}</span>
+                            <span className={classes.companyTitle}>{city}</span>
+                        </span>
+                    </div>
+                    <div className={classes.containerThree}>
+                        <span className={classes.iconsContainer}>
+                              <EmailIcon fontSize='inherit'/>
+                        <span className={classes.companyTitle}>{email}</span>
+                        </span>
+                        <span className={classes.iconsContainer}>
+                            <LocalPhoneIcon fontSize='inherit'/>
+                            <span className={classes.companyTitle}>{phoneNumber}</span>
                         </span>
                     </div>
                     <div className={classes.containerFour}>
-                        <h1>About us</h1>
-                        <span>{offerDescription}</span>
+                        <h1>About offer</h1>
+                        <span>{description}</span>
                     </div>
                     <Box
                         display='flex'

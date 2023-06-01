@@ -4,30 +4,40 @@ import AddNewAccountForm from "./companyPanel/AddNewAccountForm";
 import React from "react";
 import {useDispatch} from "react-redux";
 import {offerModalActions} from "../store";
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import HomeIcon from '@mui/icons-material/Home';
 
 const OfferBar = (props) => {
     const dispatch = useDispatch();
     const handleModal = () => {
         dispatch(offerModalActions.setModalContent({
             id: props.offer.id,
-            offerName: props.offer.offerName,
+            companyName: props.offer.companyName,
+            description: props.offer.description,
+            name: props.offer.name,
+            phoneNumber: props.offer.phoneNumber,
+            email: props.offer.email,
             city: props.offer.city,
-            company: props.offer.company,
-            image: props.offer.image,
-            salary: props.offer.salary,
-            description: props.offer.description
+            level: props.offer.level,
+            place: props.offer.place,
+            primarySkill: props.offer.primarySkill,
+            salaryFrom: props.offer.salaryFrom,
+            salaryTo: props.offer.salaryTo
         }))
         props.onModalOpen();
     }
 
     return (
         <div className={classes.offerContainer} onClick={handleModal}>
-            <div className={classes.imageContainer}>
-                <img className={classes.logoImage} src={props.offer.image} alt='infover'/>
+            <div className={classes.container}>
+                <span className={classes.offerName}>{props.offer.name}</span>
+                <span className={classes.company}>{props.offer.companyName}</span>
+                {props.offer.place === 1 && <span className={classes.place}><span className={classes.gap}>Work from</span> <HomeIcon/></span>}
+                {props.offer.place === 2 && <span className={classes.place}><span className={classes.gap}>Work from</span> <ApartmentIcon/></span>}
+                {props.offer.place === 3 && <span className={classes.place}><span className={classes.gap}>Work from</span> <HomeWorkIcon/></span>}
             </div>
-            <span className={classes.stack}>{props.offer.offerName}</span>
-            <span className={classes.company}>{props.offer.company}</span>
-            <span className={classes.salary}>{props.offer.salary}$</span>
+            <span className={classes.salary}>{props.offer.salaryFrom}$ - {props.offer.salaryTo}$</span>
         </div>
     )
 }
