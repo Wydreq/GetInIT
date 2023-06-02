@@ -13,12 +13,11 @@ const ProductDisplay = () => (
       <h5>$20.00</h5>
       </div>
     </div>
-    <stripe-buy-button
-        buy-button-id="buy_btn_1NEGWzLpkQnyrIfCRJihMeQX"
-        publishable-key="pk_test_51NECXpLpkQnyrIfCIhxXNk4dyWgqohRpEdntOgg1u5F9zR13HjW0oVoXKJ9BEqdBbrzSl0QFgsbsD0sLx58Le2rL00ebdy7gVP"
-        successUrl
-    >
-    </stripe-buy-button>
+    <form action="http://localhost:5099/create-checkout-session" method="POST">
+      <button type="submit">
+        Checkout
+      </button>
+    </form>
   </section>
 );
 
@@ -44,6 +43,7 @@ const PaymentPage = () => {
         "Order canceled -- continue to shop around and checkout when you're ready."
       );
     }
+    console.log(message);
   }, []);
 
   return message ? (
