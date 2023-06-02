@@ -6,8 +6,6 @@ import {TailSpin} from "react-loader-spinner";
 import {Alert, AlertTitle} from "@mui/material";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {userRoleActions} from "../../store";
-
 const UserPanel = () => {
     const dispatch = useDispatch();
     const [isInfoLoaded, setIsInfoLoaded] = useState(false);
@@ -35,7 +33,6 @@ const UserPanel = () => {
                  mail: data.email,
                  role: data.role,
              })
-            dispatch(userRoleActions.setUserRole(data.role));
              setIsInfoLoaded(true);
          } catch(error) {}
      },[])

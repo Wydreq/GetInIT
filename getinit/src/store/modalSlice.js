@@ -16,6 +16,7 @@ const initialState = {
     primarySkill: '',
     salaryFrom: 0,
     salaryTo: 0,
+    technologies: [],
 }
 
 const offerModalSlice = createSlice({
@@ -53,6 +54,7 @@ const offerModalSlice = createSlice({
              state.primarySkill = action.payload.primarySkill;
              state.salaryFrom = action.payload.salaryFrom;
             state.salaryTo = action.payload.salaryTo;
+            state.technologies = action.payload.technologies
         }
     }
 });

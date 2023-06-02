@@ -1,10 +1,9 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import offerModalSlice from "./modalSlice";
-import userRoleSlice from "./userRoleSlice";
 
 
 const store = configureStore({
-    reducer: {offerModal: offerModalSlice.reducer, userRole: userRoleSlice.reducer},
+    reducer: {offerModal: offerModalSlice.reducer},
     middleware: [
         ...getDefaultMiddleware({
             serializableCheck: false
@@ -13,5 +12,4 @@ const store = configureStore({
 })
 
 export const offerModalActions = offerModalSlice.actions;
-export const userRoleActions = userRoleSlice.actions;
 export default store;

@@ -6,7 +6,22 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import StarIcon from '@mui/icons-material/Star';
-const AddNewOfferForm = (props) => {
+import {useSelector} from "react-redux";
+const EditOfferForm = (props) => {
+
+    const fetchedId = useSelector(state => state.offerModal.id);
+    const fetchedCompanyName = useSelector(state => state.offerModal.companyName);
+    const fetchedDescription = useSelector(state => state.offerModal.description);
+    const fetchedName = useSelector(state => state.offerModal.name);
+    const fetchedPhoneNumber = useSelector(state => state.offerModal.phoneNumber);
+    const fetchedEmail = useSelector(state => state.offerModal.email);
+    const fetchedCity = useSelector(state => state.offerModal.city);
+    const fetchedLevel = useSelector(state => state.offerModal.level);
+    const fetchedPlace = useSelector(state => state.offerModal.place);
+    const fetchedPrimarySkill = useSelector(state => state.offerModal.primarySkill);
+    const fetchedSalaryFrom = useSelector(state => state.offerModal.salaryFrom);
+    const fetchedSalaryTo = useSelector(state => state.offerModal.salaryTo);
+    const fetchedTechnologies = useSelector(state => state.offerModal.technologies);
 
     const [offerTitleError, setOfferTitleError] = useState(false);
     const [offerDescriptionError, setOfferDescriptionError] = useState(false);
@@ -16,11 +31,11 @@ const AddNewOfferForm = (props) => {
     const [salaryFromError, setSalaryFromError] = useState(false);
     const [salaryToError, setSalaryToError] = useState(false);
     const [technologiesError, setTechnologiesError] = useState(false);
-    const [level, setLevel] = useState(0);
-    const [workingPlace, setWorkingPlace] = useState(0);
+    const [level, setLevel] = useState(fetchedLevel);
+    const [workingPlace, setWorkingPlace] = useState(fetchedPlace);
     const [skillLevel, setSkillLevel] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [technologies, setTechnologies] = useState([]);
+    const [technologies, setTechnologies] = useState(fetchedTechnologies);
     const offerTitleRef = useRef();
     const offerDescriptionRef = useRef();
     const primaryLanguageRef = useRef();
@@ -52,48 +67,17 @@ const AddNewOfferForm = (props) => {
     }
 
     const validationHandler = () => {
-        addNewOfferHandler();
-    }
-
-    async function addNewOfferHandler() {
-        const preparedForSending = {
-            name: offerTitleRef.current.value,
-            description: offerDescriptionRef.current.value,
-            primarySkill: primaryLanguageRef.current.value,
-            phoneNumber: phoneNumberRef.current.value,
-            email: emailRef.current.value,
-            salaryFrom: salaryFromRef.current.value,
-            salaryTo: salaryToRef.current.value,
-            level: level,
-            place: workingPlace,
-            technologies: technologies,
-        }
-
-        const response = await fetch('http://localhost:5099/api/offer/createOffer', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
-            },
-            body: JSON.stringify(preparedForSending),
-        });
-        if(!response.ok) {
-           throw new Error('Something went wrong!');
-        }
-        props.onAddAccountSuccesful();
-        props.onModalClose();
     }
 
     const clearTechnologyHandler = () => {
         setTechnologies([]);
     }
 
-
     return (
         <div className={classes.container}>
-           <h1 className={classes.title}>Add new offer</h1>
-            <TextField error={offerTitleError} inputRef={offerTitleRef} id="outlined-basic" label="Offer title*" helperText={offerTitleError && 'Please insert correct offer title (length > 5)'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
-            <TextField error={primaryLanguageError} inputRef={primaryLanguageRef} id="outlined-basic2" label="Primary language*" helperText={primaryLanguageError && 'Please insert correct primary language'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
+            <h1 className={classes.title}>Edit existing offer</h1>
+            <TextField defaultValue={fetchedName} error={offerTitleError} inputRef={offerTitleRef} id="outlined-basic" label="Offer title*" helperText={offerTitleError && 'Please insert correct offer title (length > 5)'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
+            <TextField defaultValue={fetchedPrimarySkill} error={primaryLanguageError} inputRef={primaryLanguageRef} id="outlined-basic2" label="Primary language*" helperText={primaryLanguageError && 'Please insert correct primary language'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
             <Select
                 id="demo-simple-select"
                 value={level}
@@ -116,14 +100,14 @@ const AddNewOfferForm = (props) => {
                 <MenuItem value={2}>Office</MenuItem>
                 <MenuItem value={3}>Hybrid</MenuItem>
             </Select>
-            <TextField error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number'} type='number' variant="outlined"sx={{mb: 3,mr:3, width: 2/5}}/>
-            <TextField error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined"sx={{mb: 3,mr:3, width: 2/5}}/>
+            <TextField defaultValue={fetchedPhoneNumber} error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number'} type='number' variant="outlined"sx={{mb: 3,mr:3, width: 2/5}}/>
+            <TextField defaultValue={fetchedEmail} error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined"sx={{mb: 3,mr:3, width: 2/5}}/>
             <div className={classes.salaryContainer}>
-                <TextField error={salaryFromError} inputRef={salaryFromRef} id="outlined-basic3" label="Salary from*" helperText={salaryFromError && 'Insert correct phone number'} type='number' variant="outlined"sx={{mb: 3, width: 2/6}}/>
+                <TextField defaultValue={fetchedSalaryFrom} error={salaryFromError} inputRef={salaryFromRef} id="outlined-basic3" label="Salary from*" helperText={salaryFromError && 'Insert correct phone number'} type='number' variant="outlined"sx={{mb: 3, width: 2/6}}/>
                 <span className={classes.to}>-</span>
-                <TextField error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct mail address!'} type='number' variant="outlined"sx={{mb: 3,mr:3, width: 2/6}}/>
+                <TextField defaultValue={fetchedSalaryTo} error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct mail address!'} type='number' variant="outlined"sx={{mb: 3,mr:3, width: 2/6}}/>
             </div>
-            <TextField multiline={true} rows='5' error={offerDescriptionError} inputRef={offerDescriptionRef} id="outlined-basic1" label="Offer description*" helperText={offerDescriptionError && 'Please insert correct description! (length > 10)'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <TextField defaultValue={fetchedDescription} multiline={true} rows='5' error={offerDescriptionError} inputRef={offerDescriptionRef} id="outlined-basic1" label="Offer description*" helperText={offerDescriptionError && 'Please insert correct description! (length > 10)'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
             <div className={classes.technologiesContainer}>
                 <TextField error={technologiesError} inputRef={technologyRef} id="outlined-basic3" label="Technology" helperText={phoneNumberError && 'Insert correct technology'} variant="outlined" sx={{mb: 1, width: 2/6}}/>
                 <Select
@@ -147,15 +131,14 @@ const AddNewOfferForm = (props) => {
                         return (
                             <div key={index} className={classes.itemContainer}>
                                 <p className={classes.skillItem}>{item.skill} - {item.skillLevel}</p>
-
                             </div>
                         )
                     })}
                 </div>
-                <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Add'}</Button>
+                <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Edit'}</Button>
             </div>
         </div>
     );
 };
 
-export default AddNewOfferForm;
+export default EditOfferForm;

@@ -6,6 +6,7 @@ import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import HomeIcon from '@mui/icons-material/Home';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {offerModalActions} from "../store";
 
 const CompanyOfferBar = (props) => {
     const dispatch = useDispatch();
@@ -29,7 +30,26 @@ const CompanyOfferBar = (props) => {
                 {props.offer.place === 3 && <span className={classes.place}><span className={classes.gap}>Work from</span> <HomeWorkIcon/></span>}
             </div>
             <div className={classes.rightContainer}>
-                <div className={classes.contButton}>
+                <div className={classes.contButton} onClick={()=>{
+                    dispatch(offerModalActions.setModalContent({
+                        id: props.offer.id,
+                        companyName: props.offer.companyName,
+                        description: props.offer.description,
+                        name: props.offer.name,
+                        phoneNumber: props.offer.phoneNumber,
+                        email: props.offer.email,
+                        city: props.offer.city,
+                        level: props.offer.level,
+                        place: props.offer.place,
+                        primarySkill: props.offer.primarySkill,
+                        salaryFrom: props.offer.salaryFrom,
+                        salaryTo: props.offer.salaryTo,
+                        technologies: props.offer.technologies
+                    }))
+                    props.onModalOpen();
+                    props.onEditSet();
+                    props.onModalOpen();
+                }}>
                     <EditIcon fontSize='inherit'/>
                 </div>
                 <div onClick={deleteHandler} className={classes.contButton}>
