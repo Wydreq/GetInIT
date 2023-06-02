@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 const PaymentConfirmedPage = () => {
-    const [counter, setCounter] = useState(10);
+    const [counter, setCounter] = useState(5);
     const navigate = useNavigate();
 
     useEffect(()=>{
