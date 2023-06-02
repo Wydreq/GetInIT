@@ -10,12 +10,10 @@ import {useSelector} from "react-redux";
 const EditOfferForm = (props) => {
 
     const fetchedId = useSelector(state => state.offerModal.id);
-    const fetchedCompanyName = useSelector(state => state.offerModal.companyName);
     const fetchedDescription = useSelector(state => state.offerModal.description);
     const fetchedName = useSelector(state => state.offerModal.name);
     const fetchedPhoneNumber = useSelector(state => state.offerModal.phoneNumber);
     const fetchedEmail = useSelector(state => state.offerModal.email);
-    const fetchedCity = useSelector(state => state.offerModal.city);
     const fetchedLevel = useSelector(state => state.offerModal.level);
     const fetchedPlace = useSelector(state => state.offerModal.place);
     const fetchedPrimarySkill = useSelector(state => state.offerModal.primarySkill);

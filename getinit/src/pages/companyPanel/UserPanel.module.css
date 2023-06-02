@@ -18,8 +18,23 @@
 
 .subError {
     font-size: 20px;
+    display: flex;
+    flex-direction: row;
 }
 
 .title {
     font-size: 20px;
+}
+
+.paymentButton {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    margin-left: 5px;
+    border-bottom: 2px solid black;
+    cursor: pointer;
+}
+
+.paymentButton:hover {
+    color: #5F2120;
 }

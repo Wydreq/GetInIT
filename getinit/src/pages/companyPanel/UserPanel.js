@@ -1,7 +1,7 @@
 import AccountInfo from "../../components/companyPanel/AccountInfo";
 import classes from './UserPanel.module.css';
 import ButtonsContainer from "../../components/companyPanel/ButtonsContainer";
-import {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {TailSpin} from "react-loader-spinner";
 import {Alert, AlertTitle} from "@mui/material";
 import {Link} from "react-router-dom";
@@ -46,7 +46,11 @@ const UserPanel = () => {
             {isInfoLoaded && <AccountInfo userInfo={user}/>}
             {isInfoLoaded && <Alert severity="error" sx={{width: '60%', borderRadius: '20px'}}>
                 <AlertTitle><strong className={classes.title}>Subscription not found!</strong></AlertTitle>
-                <p className={classes.subError}>No active subscription found. If You want to manage your account <Link to={'/PaymentPage'}>buy it here!</Link></p>
+                <p className={classes.subError}>No active subscription found. If You want to manage your account <form action="http://localhost:5099/create-checkout-session" method="POST">
+                    <button className={classes.paymentButton} type="submit">
+                       buy it here
+                    </button>
+                </form></p>
             </Alert>}
             {isInfoLoaded && <ButtonsContainer userInfo={user}/>}
             {!isInfoLoaded &&

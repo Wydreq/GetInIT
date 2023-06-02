@@ -6,13 +6,13 @@ import './App.module.css';
 import CompleteRegisterPage from './pages/registerPages/CompleteRegisterPage';
 import AuthPage from './pages/AuthPage';
 import {action as logoutAction} from "./pages/Logout";
-
 import PrivateRoute, {tokenLoader, TokenRoute} from './util/auth';
 import UserPanel from "./pages/companyPanel/UserPanel";
 import CompanyAccountsPage from "./pages/companyPanel/CompanyAccountsPage";
 import EditInfoPage from "./pages/companyPanel/EditInfoPage";
 import OffersPage from "./pages/companyPanel/OffersPage";
-import PaymentPage from "./pages/companyPanel/PaymentPage";
+import PaymentConfirmedPage from "./pages/paymentPages/PaymentConfirmedPage";
+import PaymentRefusedPage from "./pages/paymentPages/PaymenyRefusedPage";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +29,8 @@ const router = createBrowserRouter([
       {path: 'companyAccounts', element: <PrivateRoute><CompanyAccountsPage/></PrivateRoute>},
       {path: 'editInfo', element: <PrivateRoute><EditInfoPage/></PrivateRoute>},
       {path: 'userOffers', element: <PrivateRoute><OffersPage/></PrivateRoute>},
-      {path: '/PaymentPage', element: <PrivateRoute><PaymentPage/></PrivateRoute>},
+      {path: 'paymentConfirmed', element: <PrivateRoute><PaymentConfirmedPage/></PrivateRoute>},
+      {path: 'paymentRefused', element: <PrivateRoute><PaymentRefusedPage/></PrivateRoute>},
       {path: '*', element: <PrivateRoute><NotFoundPage/></PrivateRoute>}],
   }
 ])
