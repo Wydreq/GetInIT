@@ -1,7 +1,7 @@
 import FilterBar from '../components/FilterBar';
 import OffersList from '../components/OffersList';
 import classes from './HomePage.module.css'
-import {Box, Modal} from "@mui/material";
+import {Box, Modal, TextField, TextareaAutosize} from "@mui/material";
 import React, {useCallback, useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {offerModalActions} from "../store";
@@ -10,6 +10,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Button from "@mui/material/Button";
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import StarRateIcon from '@mui/icons-material/StarRate';
 
 const style = {
     position: 'absolute',
@@ -38,6 +39,7 @@ const HomePage = () => {
     const primarySkill = useSelector(state => state.offerModal.primarySkill);
     const salaryFrom = useSelector(state => state.offerModal.salaryFrom);
     const salaryTo = useSelector(state => state.offerModal.salaryTo);
+    const technologies = useSelector(state => state.offerModal.technologies); 
     const dispatch = useDispatch();
 
     const handleOpen = () => {
@@ -45,6 +47,30 @@ const HomePage = () => {
     }
     const handleClose = () => {
         dispatch(offerModalActions.closeModal())
+    }
+    const starCounter = number => {
+        let stars = [];
+        for(let i=0;i<number;i++)
+        {
+            stars.push(<StarRateIcon fontSize='inherit'/>);
+        }
+        return stars;
+    }
+
+    const levelCheck = level => {
+        let levelName = '';
+        switch(level){
+            case 1: {
+                levelName = 'Junior';
+            }
+            case 2: {
+                levelName = ' ';
+            }
+            case 3: {
+                levelName = 'Senior';
+            }
+        }
+        return levelName;
     }
 
     return (
@@ -61,7 +87,7 @@ const HomePage = () => {
                 <div className={classes.modalContainer}>
                     <div className={classes.titleContainer}>
                         <div className={classes.containerTwo}>
-                            <span className={classes.offerName}>{name}</span>
+                            <span className={classes.offerName}>{levelCheck(level)}  {name}</span>
                             <span className={classes.salary}>{salaryFrom}$ - {salaryTo}$</span>
                         </div>
                     </div>
@@ -87,6 +113,23 @@ const HomePage = () => {
                     </div>
                     <div className={classes.containerFour}>
                         <h1>About offer</h1>
+
+                        {/* asdasdassd */}
+                        <div className={classes.technologiesContainer}>
+                            {technologies.map((technology) => {
+                                return (
+                                    <div className={classes.technologyContainer}>
+                                        <span>
+                                            {technology.skill}
+                                        </span>
+                                        <span>
+                                            {starCounter(technology.skillLevel)}
+                                        </span>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <h1>Description</h1>
                         <span>{description}</span>
                     </div>
                     <Box

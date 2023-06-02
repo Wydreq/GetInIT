@@ -23,15 +23,32 @@ const OfferBar = (props) => {
             place: props.offer.place,
             primarySkill: props.offer.primarySkill,
             salaryFrom: props.offer.salaryFrom,
-            salaryTo: props.offer.salaryTo
+            salaryTo: props.offer.salaryTo,
+            technologies: props.offer.technologies
         }))
         props.onModalOpen();
+    }
+
+    const levelCheck = level => {
+        let levelName = '';
+        switch(level){
+            case 1: {
+                levelName = 'Junior ';
+            }
+            case 2: {
+                levelName = '';
+            }
+            case 3: {
+                levelName = 'Senior ';
+            }
+        }
+        return levelName;
     }
 
     return (
         <div className={classes.offerContainer} onClick={handleModal}>
             <div className={classes.container}>
-                <span className={classes.offerName}>{props.offer.name}</span>
+                <span className={classes.offerName}>{levelCheck(props.offer.level)}{props.offer.name}</span>
                 <span className={classes.company}>{props.offer.companyName}</span>
                 {props.offer.place === 1 && <span className={classes.place}><span className={classes.gap}>Work from</span> <HomeIcon/></span>}
                 {props.offer.place === 2 && <span className={classes.place}><span className={classes.gap}>Work from</span> <ApartmentIcon/></span>}

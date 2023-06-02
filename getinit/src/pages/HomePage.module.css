@@ -65,3 +65,15 @@
 .containerFour {
     margin-top: 30px;
 }
+
+.technologiesContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 15px;
+}
+.technologyContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+}

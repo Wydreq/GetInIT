@@ -28,7 +28,8 @@ const OffersList = (props) => {
                     place: data[key].place,
                     primarySkill: data[key].primarySkill,
                     salaryFrom: data[key].salaryFrom,
-                    salaryTo: data[key].salaryTo
+                    salaryTo: data[key].salaryTo,
+                    technologies: data[key].technologies
                 });
             }
             setOffersList(loadedOffers);
