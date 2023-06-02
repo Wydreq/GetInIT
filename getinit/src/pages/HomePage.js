@@ -52,7 +52,7 @@ const HomePage = () => {
         let stars = [];
         for(let i=0;i<number;i++)
         {
-            stars.push(<StarRateIcon fontSize='inherit'/>);
+            stars.push(<StarRateIcon fontSize='inherit' />);
         }
         return stars;
     }
@@ -61,14 +61,21 @@ const HomePage = () => {
         let levelName = '';
         switch(level){
             case 1: {
-                levelName = 'Junior';
+                levelName = 'Junior ';
+                break;
             }
             case 2: {
-                levelName = ' ';
+                levelName = '';
+                break;
             }
             case 3: {
-                levelName = 'Senior';
+                levelName = 'Senior ';
+                break;
             }
+            default: {
+                levelName = '';
+                break;
+            } 
         }
         return levelName;
     }
@@ -122,7 +129,7 @@ const HomePage = () => {
                                         <span>
                                             {technology.skill}
                                         </span>
-                                        <span>
+                                        <span className={classes.stars}>
                                             {starCounter(technology.skillLevel)}
                                         </span>
                                     </div>

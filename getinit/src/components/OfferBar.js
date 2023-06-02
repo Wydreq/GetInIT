@@ -34,13 +34,20 @@ const OfferBar = (props) => {
         switch(level){
             case 1: {
                 levelName = 'Junior ';
+                break;
             }
             case 2: {
                 levelName = '';
+                break;
             }
             case 3: {
                 levelName = 'Senior ';
+                break;
             }
+            default: {
+                levelName = '';
+                break;
+            } 
         }
         return levelName;
     }
