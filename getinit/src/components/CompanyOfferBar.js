@@ -12,18 +12,37 @@ const CompanyOfferBar = (props) => {
     const dispatch = useDispatch();
 
     const deleteHandler = () => {
-        if(props.role === 'ManagerCompanyAccount') {
-            props.onDeleteCompanyOffer(props.offer.id);
-        }
-        if(props.role === 'EmployeeAccount') {
-            props.onDeleteEmployeeOffer(props.offer.id);
-        }
+            props.onDeleteOffer(props.offer.id);
     }
+
+    const levelCheck = level => {
+        let levelName = '';
+        switch(level){
+            case 1: {
+                levelName = 'Junior ';
+                break;
+            }
+            case 2: {
+                levelName = 'Mid ';
+                break;
+            }
+            case 3: {
+                levelName = 'Senior ';
+                break;
+            }
+            default: {
+                levelName = '';
+                break;
+            }
+        }
+        return levelName;
+    }
+
 
     return (
         <div className={classes.offerContainer}>
             <div className={classes.container}>
-                <span className={classes.offerName}>{props.offer.name}</span>
+                <span className={classes.offerName}>{levelCheck(props.offer.level)}{props.offer.name}</span>
                 <span className={classes.company}>{props.offer.companyName}</span>
                 {props.offer.place === 1 && <span className={classes.place}><span className={classes.gap}>Work from</span> <HomeIcon/></span>}
                 {props.offer.place === 2 && <span className={classes.place}><span className={classes.gap}>Work from</span> <ApartmentIcon/></span>}

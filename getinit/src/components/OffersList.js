@@ -8,7 +8,7 @@ const OffersList = (props) => {
 
     const fetchAllOffers = useCallback(async () => {
         try {
-            const response = await fetch('http://localhost:5099/api/offer/GetAllOffers');
+            const response = await fetch('http://localhost:5099/api/offer/GetEveryExistingOffer');
             if (!response.ok) {
                 throw new Error("Something went wrong!");
             }

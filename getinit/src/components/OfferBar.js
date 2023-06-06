@@ -37,7 +37,7 @@ const OfferBar = (props) => {
                 break;
             }
             case 2: {
-                levelName = '';
+                levelName = 'Mid ';
                 break;
             }
             case 3: {

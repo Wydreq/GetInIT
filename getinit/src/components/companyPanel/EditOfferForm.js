@@ -64,7 +64,33 @@ const EditOfferForm = (props) => {
         technologyRef.current.value = '';
     }
 
-    const validationHandler = () => {
+    async function validationHandler() {
+
+        const preparedForSending = {
+            name: offerTitleRef.current.value,
+            description: offerDescriptionRef.current.value,
+            primarySkill: primaryLanguageRef.current.value,
+            phoneNumber: phoneNumberRef.current.value,
+            email: emailRef.current.value,
+            salaryFrom: salaryFromRef.current.value,
+            salaryTo: salaryToRef.current.value,
+            level: level,
+            place: workingPlace,
+            technologies: technologies,
+        }
+        const response = await fetch(`http://localhost:5099/api/offer/updateOffer/${fetchedId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify(preparedForSending),
+        });
+        if(!response.ok) {
+            throw new Error('Something gone wrong!');
+        }
+        props.onModalClose();
+        props.onEditSuccess();
     }
 
     const clearTechnologyHandler = () => {

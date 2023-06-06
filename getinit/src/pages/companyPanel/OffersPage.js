@@ -23,6 +23,7 @@ const style = {
 const OffersPage = () => {
     const [open, setOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
     const [isAdding, setIsAdding] = useState(true);
     const [offersList, setOffersList] = useState([]);
     const { state } = useLocation();
@@ -36,18 +37,21 @@ const OffersPage = () => {
     });
 
     const addOfferSnackbarHandler = () => {
-        if(state.userRole === 'EmployeeAccount') {
-            fetchOffers('http://localhost:5099/api/offer/GetEmployeeOffers');
-        }
-        if(state.userRole === 'ManagerCompanyAccount') {
-            fetchOffers('http://localhost:5099/api/offer/GetCompanyOffers');
-        }
+        setSnackbarMessage('Offer has been added!');
         setSnackbarOpen(true);
+        fetchOffers();
     }
 
-    const fetchOffers = useCallback(async (url) => {
+    const editOfferSnackbarHandler = () => {
+        setSnackbarMessage('Offer has been edited!');
+        setSnackbarOpen(true);
+        fetchOffers();
+    }
+
+
+    const fetchOffers = useCallback(async () => {
         try {
-            const response = await fetch(url, {
+            const response = await fetch(`http://localhost:5099/api/offer/getOffers`, {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
@@ -80,10 +84,11 @@ const OffersPage = () => {
     },[])
 
 
-    async function deleteCompanyOffer(id) {
-        const response = await fetch('http://localhost:5099/api/offer/DeleteCompanyOffer', {
+    async function deleteOfferHandler(id) {
+        const response = await fetch('http://localhost:5099/api/offer/DeleteOffer', {
             method: 'DELETE',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
             body: JSON.stringify({
@@ -93,33 +98,10 @@ const OffersPage = () => {
         if(!response.ok) {
             throw new Error('Something went wrong!');
         }
-        if(state.userRole === 'EmployeeAccount') {
-            fetchOffers('http://localhost:5099/api/offer/GetEmployeeOffers');
-        }
-        if(state.userRole === 'ManagerCompanyAccount') {
-            fetchOffers('http://localhost:5099/api/offer/GetCompanyOffers');
-        }
-    }
 
-    async function deleteEmployeeOffer(id) {
-        const response = await fetch('http://localhost:5099/api/offer/DeleteEmployeeOffer', {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
-            },
-            body: JSON.stringify({
-                id: id,
-            }),
-        });
-        if(!response.ok) {
-            throw new Error('Something went wrong!');
-        }
-        if(state.userRole === 'EmployeeAccount') {
-            fetchOffers('http://localhost:5099/api/offer/GetEmployeeOffers');
-        }
-        if(state.userRole === 'ManagerCompanyAccount') {
-            fetchOffers('http://localhost:5099/api/offer/GetCompanyOffers');
-        }
+        fetchOffers();
+        setSnackbarMessage("Offer has been deleted!");
+        setSnackbarOpen(true);
     }
 
     const handleEdit = (offer) => {
@@ -127,12 +109,7 @@ const OffersPage = () => {
     }
 
     useEffect(()=> {
-        if(state.userRole === 'EmployeeAccount') {
-            fetchOffers('http://localhost:5099/api/offer/GetEmployeeOffers');
-        }
-        if(state.userRole === 'ManagerCompanyAccount') {
-            fetchOffers('http://localhost:5099/api/offer/GetCompanyOffers');
-        }
+        fetchOffers();
     },[fetchOffers])
 
     return (
@@ -146,7 +123,7 @@ const OffersPage = () => {
             <div className={classes.accountsContainer}>
                 {offersList.map((offer)=>{
                     return (
-                        <CompanyOfferBar key={offer.id} offer={offer} onDeleteCompanyOffer={deleteCompanyOffer} onDeleteEmployeeOffer={deleteEmployeeOffer} onEditSet={()=>{setIsAdding(false)}} onModalOpen={handleOpen} role={state.userRole}/>
+                        <CompanyOfferBar key={offer.id} offer={offer} onDeleteOffer={deleteOfferHandler} onEditSet={()=>{setIsAdding(false)}} onModalOpen={handleOpen} role={state.userRole}/>
                     )
                 })}
             </div>
@@ -159,13 +136,13 @@ const OffersPage = () => {
                     sx={{position: 'fixed', top: '20%'}}
                 >
                     <Box sx={style}>
-                        {isAdding ? <AddNewOfferForm onAddAccountSuccesful={addOfferSnackbarHandler} onModalClose={handleClose}/> : <EditOfferForm onAddAccountSuccesful={addOfferSnackbarHandler} onModalClose={handleClose}/>}
+                        {isAdding ? <AddNewOfferForm onAddAccountSuccesful={addOfferSnackbarHandler} onModalClose={handleClose}/> : <EditOfferForm onEditSuccess={editOfferSnackbarHandler} onModalClose={handleClose}/>}
                     </Box>
                 </Modal>
             </div>
             <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
                 <Alert onClose={handleSnackbarClose} severity='success' sx={{ width: '100%' }}>
-                    Offer has been added!
+                    {snackbarMessage}
                 </Alert>
             </Snackbar>
         </div>

@@ -46,8 +46,8 @@ const UserPanel = () => {
             {isInfoLoaded && <AccountInfo userInfo={user}/>}
             {isInfoLoaded && <Alert severity="error" sx={{width: '60%', borderRadius: '20px'}}>
                 <AlertTitle><strong className={classes.title}>Subscription not found!</strong></AlertTitle>
-                <p className={classes.subError}>No active subscription found. If You want to manage your account <form action="http://localhost:5099/create-checkout-session" method="POST">
-                    <button className={classes.paymentButton} type="submit">
+                <p className={classes.subError}>No active subscription found. If You want to manage your account <form action="http://localhost:5099/CreateCheckoutSession/Payment" method="POST">
+                    <button className={classes.paymentButton}>
                        buy it here
                     </button>
                 </form></p>

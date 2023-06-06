@@ -184,7 +184,7 @@ const CompleteRegisterPage = () => {
             }
         }
 
-        const response = await fetch('http://localhost:5099/api/account/RegisterAccount', {
+        const response = await fetch('http://localhost:5099/api/account/RegisterCompanyAccount', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

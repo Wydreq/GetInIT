@@ -160,7 +160,7 @@ const AuthPage = () => {
             role: 'UserAccount',
         }
 
-        const response = await fetch('http://localhost:5099/api/account/RegisterAccount', {
+        const response = await fetch('http://localhost:5099/api/account/RegisterUserAccount', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
