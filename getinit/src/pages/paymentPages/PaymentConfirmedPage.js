@@ -17,7 +17,7 @@ const PaymentConfirmedPage = () => {
 
     return (
         <div className={classes.container}>
-            <span className={classes.title}>Thank you for buying subscription!</span>
+            <span className={classes.title}>Thank you for donating us!</span>
             <span className={classes.text}>You will be redirected in {counter} seconds</span>
             <img className={classes.image} src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Eo_circle_light-green_checkmark.svg/2048px-Eo_circle_light-green_checkmark.svg.png' alt='checkmark'/>
         </div>

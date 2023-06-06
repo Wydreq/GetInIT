@@ -126,7 +126,7 @@ const HomePage = () => {
                             {technologies.map((technology) => {
                                 return (
                                     <div className={classes.technologyContainer}>
-                                        <span>
+                                        <span className={classes.technologySkill}>
                                             {technology.skill}
                                         </span>
                                         <span className={classes.stars}>
