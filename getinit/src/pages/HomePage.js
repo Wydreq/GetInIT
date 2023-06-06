@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import StarRateIcon from '@mui/icons-material/StarRate';
+import {Link} from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -120,8 +121,6 @@ const HomePage = () => {
                     </div>
                     <div className={classes.containerFour}>
                         <h1>About offer</h1>
-
-                        {/* asdasdassd */}
                         <div className={classes.technologiesContainer}>
                             {technologies.map((technology) => {
                                 return (
@@ -144,7 +143,7 @@ const HomePage = () => {
                         justifyContent='center'
                         alignItems='center'
                     >
-                        <Button variant="contained" sx={{mb: 3, mt:8, width: 1/2}}>Send CV</Button>
+                        <Link to={`/offerApplication/${id}`}> <Button variant="contained" sx={{mb: 3, mt:8, width: 1}}>Send CV</Button></Link>
                     </Box>
                 </div>
             </Box>

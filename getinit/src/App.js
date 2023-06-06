@@ -13,6 +13,7 @@ import EditInfoPage from "./pages/companyPanel/EditInfoPage";
 import OffersPage from "./pages/companyPanel/OffersPage";
 import PaymentConfirmedPage from "./pages/paymentPages/PaymentConfirmedPage";
 import PaymentRefusedPage from "./pages/paymentPages/PaymenyRefusedPage";
+import OfferApplicationPage from "./pages/OfferApplicationPage";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       {path: 'userOffers', element: <PrivateRoute><OffersPage/></PrivateRoute>},
       {path: 'paymentConfirmed', element: <PrivateRoute><PaymentConfirmedPage/></PrivateRoute>},
       {path: 'paymentRefused', element: <PrivateRoute><PaymentRefusedPage/></PrivateRoute>},
+      {path: 'offerApplication/:offerId', element: <PrivateRoute><OfferApplicationPage/></PrivateRoute>},
       {path: '*', element: <PrivateRoute><NotFoundPage/></PrivateRoute>}],
   }
 ])

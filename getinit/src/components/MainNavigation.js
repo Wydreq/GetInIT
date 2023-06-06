@@ -2,17 +2,17 @@ import { AppBar, Toolbar } from "@mui/material"
 import { Stack } from "@mui/system";
 import {NavLink, Form, useRouteLoaderData} from 'react-router-dom'
 import classes from './MainNavigation.module.css'
-import logo from '../assets/navbarLogo.png'
+import logo from '../assets/navbarLogo.png';
 import Button from "@mui/material/Button";
-
+import {useNavigate} from "react-router-dom";
 const MainNavigation = () => {
 
     const token = useRouteLoaderData('root');
-
+    const navigate = useNavigate();
     return (
         <AppBar position='fixed'>
             <Toolbar>
-                <img src={logo} alt='logo' />
+                <img className={classes.logo} src={logo} alt='logo' onClick={()=>{navigate('/')}}/>
                 <form style={{marginRight: 'auto', marginLeft: '20px'}} action="http://localhost:5099/CreateCheckoutSession/Payment" method="POST">
                     <Button variant="contained" color='warning' type='submit' >Donate us!</Button>
                 </form>
