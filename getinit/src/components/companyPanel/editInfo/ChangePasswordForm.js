@@ -11,19 +11,23 @@ const ChangePasswordForm = (props) => {
     const oldPasswordRef = useRef();
     const passwordRef = useRef();
     const confirmPasswordRef = useRef();
-
+    const [loading, setLoading] = useState(false);
     const validationHandler = () => {
+        setLoading(true);
         const validator = require('validator');
         if(!validator.isStrongPassword(passwordRef.current.value)){
             setPasswordErrorMessage('Passwords must be strong!');
             setPasswordError(true);
+            setLoading(false);
         }
         else {
             setPasswordError(false);
+            setLoading(false);
         }
         if(passwordRef.current.value !== confirmPasswordRef.current.value) {
             setPasswordErrorMessage('Passwords are not the same!');
             setPasswordError(true);
+            setLoading(false);
         }
         if(passwordRef.current.value === confirmPasswordRef.current.value && validator.isStrongPassword(passwordRef.current.value)) {
             changePasswordHandler();
@@ -45,6 +49,7 @@ const ChangePasswordForm = (props) => {
         if(!response.ok) {
             throw new Error("Something went wrong!");
         }
+        setLoading(false);
         props.onClose();
         props.onChange(false);
     };
@@ -54,7 +59,7 @@ const ChangePasswordForm = (props) => {
             <TextField error={oldPasswordError} inputRef={oldPasswordRef} id="outlined-basic" label="Old password*" helperText={oldPasswordError && 'Please insert correct current password!'} variant="outlined" type='password'  sx={{mb: 3, width: 4/5}}/>
             <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic2" label="New password*" helperText={passwordError && passwordErrorMessage} variant="outlined" type='password' sx={{mb: 3, width: 4/5}}/>
             <TextField error={passwordError} inputRef={confirmPasswordRef} id="outlined-basic3" label="Confirm new password*" helperText={passwordError && passwordErrorMessage} variant="outlined" type='password' sx={{mb: 3, width: 4/5}}/>
-            <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>Confirm</Button>
+            <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Confirm'}</Button>
         </div>
     )
 }

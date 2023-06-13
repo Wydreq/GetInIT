@@ -63,6 +63,7 @@ const AddNewOfferForm = (props) => {
     }
 
     const validationHandler = () => {
+        setLoading(true);
         const validator = require('validator');
         if(offerTitleRef.current.value.length == 0) {
             setOfferTitleError(true);
@@ -145,6 +146,9 @@ const AddNewOfferForm = (props) => {
         if(offerTitleRef.current.value.length > 0 && primaryLanguageRef.current.value.length > 0 && !level == 0 && !workingPlace == 0 && phoneNumberRef.current.value.length === 9 && validator.isEmail(emailRef.current.value) && salaryFromRef.current.value.length > 0 && salaryToRef.current.value.length > 0 && salaryFromRef.current.value < salaryToRef.current.value && offerDescriptionRef.current.value.length > 10 && technologies.length > 0) {
             addNewOfferHandler();
         }
+        else {
+            setLoading(false);
+        }
     }
 
     async function addNewOfferHandler() {
@@ -171,7 +175,9 @@ const AddNewOfferForm = (props) => {
         });
         if(!response.ok) {
            throw new Error('Something went wrong!');
+           setLoading(false);
         }
+        setLoading(false);
         props.onAddAccountSuccesful();
         props.onModalClose();
     }

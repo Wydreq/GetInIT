@@ -8,6 +8,7 @@ import {useLocation} from "react-router-dom";
 import OfferBar from "../../components/OfferBar";
 import CompanyOfferBar from "../../components/CompanyOfferBar";
 import EditOfferForm from "../../components/companyPanel/EditOfferForm";
+import {TailSpin} from "react-loader-spinner";
 
 const style = {
     position: 'absolute',
@@ -22,6 +23,7 @@ const style = {
 };
 const OffersPage = () => {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [isAdding, setIsAdding] = useState(true);
@@ -50,6 +52,7 @@ const OffersPage = () => {
 
 
     const fetchOffers = useCallback(async () => {
+        setLoading(true);
         try {
             const response = await fetch(`http://localhost:5099/api/offer/getOffers`, {
                 headers: {
@@ -58,8 +61,8 @@ const OffersPage = () => {
             });
             if (!response.ok) {
                 throw new Error("Something went wrong!");
+                setLoading(false);
             }
-
             const data = await response.json();
             const loadedOffers = [];
             for (const key in data) {
@@ -80,6 +83,7 @@ const OffersPage = () => {
                 });
             }
             setOffersList(loadedOffers);
+            setLoading(false);
         } catch(error) {}
     },[])
 
@@ -120,7 +124,16 @@ const OffersPage = () => {
             }}>
                 Add new offer
             </div>
-            <div className={classes.accountsContainer}>
+            <div className={!loading ? classes.offersContainer : classes.offersContainerLoading}>
+                {loading &&
+                    <TailSpin
+                        height="200"
+                        width="200"
+                        color="#1976d2"
+                        ariaLabel="tail-spin-loading"
+                        radius="2"
+                        visible={true}
+                    />}
                 {offersList.map((offer)=>{
                     return (
                         <CompanyOfferBar key={offer.id} offer={offer} onDeleteOffer={deleteOfferHandler} onEditSet={()=>{setIsAdding(false)}} onModalOpen={handleOpen} role={state.userRole}/>

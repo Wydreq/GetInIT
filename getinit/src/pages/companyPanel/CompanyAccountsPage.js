@@ -5,6 +5,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import CompanyUserBar from "../../components/companyPanel/CompanyUserBar";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import {TailSpin} from "react-loader-spinner";
 
 const style = {
     position: 'absolute',
@@ -20,6 +21,7 @@ const style = {
 const CompanyAccountsPage = () => {
     const [open, setOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -37,6 +39,7 @@ const CompanyAccountsPage = () => {
     }
 
     const fetchCompanyAccounts = useCallback(async () => {
+        setLoading(true);
         try{
             const response = await fetch('http://localhost:5099/api/account/manager/GetAllCompanyAccounts', {
                 headers: {
@@ -45,6 +48,7 @@ const CompanyAccountsPage = () => {
             });
             if (!response.ok) {
                 throw new Error("Something went wrong!");
+                setLoading(false);
             }
 
             const data = await response.json();
@@ -61,7 +65,7 @@ const CompanyAccountsPage = () => {
                     role: data[key].role,
                 })
             }
-
+            setLoading(false);
             setFetchedUsers(loadedUsers);
         } catch(error) {}
     },[])
@@ -74,7 +78,16 @@ const CompanyAccountsPage = () => {
             <div className={classes.addAccountContainer} onClick={handleOpen}>
                 Add new company account
             </div>
-            <div className={classes.accountsContainer}>
+            <div className={!loading ? classes.accountsContainer : classes.accountsContainerLoading}>
+                {loading &&
+                    <TailSpin
+                        height="200"
+                        width="200"
+                        color="#1976d2"
+                        ariaLabel="tail-spin-loading"
+                        radius="2"
+                        visible={true}
+                    />}
                 {fetchedUsers.map((user) => {
                     return(
                         <CompanyUserBar key={user.id} user={user}/>

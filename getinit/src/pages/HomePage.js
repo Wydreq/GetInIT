@@ -124,7 +124,7 @@ const HomePage = () => {
                         <div className={classes.technologiesContainer}>
                             {technologies.map((technology) => {
                                 return (
-                                    <div className={classes.technologyContainer}>
+                                    <div key={Math.floor(Math.random())} className={classes.technologyContainer}>
                                         <span className={classes.technologySkill}>
                                             {technology.skill}
                                         </span>

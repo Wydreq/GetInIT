@@ -1,14 +1,40 @@
 import OfferBar from './OfferBar'
 import classes from './OffersList.module.css'
-import {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
+import {TailSpin} from "react-loader-spinner";
+import {useSelector} from "react-redux";
 
 const OffersList = (props) => {
 
     const [offersList, setOffersList] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const fetchedOfferName = useSelector(state => state.filter.offerName);
+    const fetchedPrimarySkill = useSelector(state => state.filter.primarySkill);
+    const fetchedLevel = useSelector(state => state.filter.level);
+    const fetchedPlace = useSelector(state => state.filter.place);
+    const fetchedCompanyName = useSelector(state => state.filter.companyName);
+    const fetchedCity = useSelector(state => state.filter.city);
 
     const fetchAllOffers = useCallback(async () => {
+        setLoading(true);
+        console.log(fetchedCity);
+        const preparedForSending = {
+            Name: '',
+            PrimarySkill: '',
+            CompanyName: '',
+            City: '',
+            Level: '',
+            Place: ''
+        }
         try {
-            const response = await fetch('http://localhost:5099/api/offer/GetEveryExistingOffer');
+            const response = await fetch('http://localhost:5099/api/offer/SearchOffer', {
+                method: 'GET',
+                    headers: {
+                    'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify(preparedForSending),
+            });
             if (!response.ok) {
                 throw new Error("Something went wrong!");
             }
@@ -33,6 +59,7 @@ const OffersList = (props) => {
                 });
             }
             setOffersList(loadedOffers);
+            setLoading(false);
         } catch(error) {}
     },[])
 
@@ -42,7 +69,16 @@ const OffersList = (props) => {
 
 
     return (
-        <div className={classes.offersContainer}>
+        <div className={!loading ? classes.offersContainer : classes.offersContainerLoading}>
+            {loading &&
+                <TailSpin
+                    height="200"
+                    width="200"
+                    color="#1976d2"
+                    ariaLabel="tail-spin-loading"
+                    radius="2"
+                    visible={true}
+                />}
             {offersList.map((offer)=>{
                 return (
                     <OfferBar key={offer.id} offer={offer} onModalOpen={props.onModalOpen}/>

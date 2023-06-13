@@ -63,7 +63,7 @@ const ChangeEmailForm = (props) => {
         <div className={classes.container}>
             <TextField error={emailError} inputRef={emailRef} id="outlined-basic" label="New e-mail*" helperText={emailError && emailErrorMessage} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
             <TextField error={emailError} inputRef={confirmEmailRef} id="outlined-basic" label="Confirm new e-mail*" helperText={emailError && emailErrorMessage} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
-            <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>Confirm</Button>
+            <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Confirm'}</Button>
         </div>
     )
 }

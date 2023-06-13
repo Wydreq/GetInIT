@@ -8,7 +8,7 @@ import MuiAlert from "@mui/material/Alert";
 import validator from "validator";
 
 const OfferApplicationPage = () => {
-    const params = useParams();
+    const { offerId } = useParams();
     const [file, setFile] = useState();
     const [repoUrlError, setRepoUrlError] = useState(false);
     const repoRef = useRef();
@@ -57,8 +57,39 @@ const OfferApplicationPage = () => {
         }
     }
 
-    const sendCvHandler = () => {
-        //http request for send application
+    function readFile(file) {
+        return new Promise((resolve, reject) => {
+            // Create file reader
+            let reader = new FileReader()
+
+            // Register event listeners
+            reader.addEventListener("loadend", e => resolve(e.target.result))
+            reader.addEventListener("error", reject)
+
+            // Read file
+            reader.readAsArrayBuffer(file)
+        })
+    }
+    async function getAsByteArray(file) {
+        return new Uint8Array(await readFile(file))
+    }
+    async function sendCvHandler() {
+        const byteFile = await getAsByteArray(file);
+        const response = await fetch(`http://localhost:5099/api/JobApplications/CreateApplication/${offerId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            },
+            body: JSON.stringify({
+                message: noteRef.current.value,
+                urlLink: repoRef.current.value,
+                resume: byteFile,
+            }),
+        });
+        if(!response.ok) {
+            throw new Error('Something went wrong!');
+        }
     }
 
     return (

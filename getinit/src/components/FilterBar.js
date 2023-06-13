@@ -1,44 +1,103 @@
 import classes from './FilterBar.module.css'
-import { TextField, MenuItem } from '@mui/material';
-import { useRef } from 'react';
+import { TextField, MenuItem, Button } from '@mui/material';
+import React, {useRef, useState} from 'react';
+import {filterActions} from "../store";
+import {useDispatch} from "react-redux";
 
-const currencies = [
+const levels = [
+    {
+        value: '00',
+        label: 'Choose level',
+    },
     {
       value: '01',
-      label: 'Java',
+      label: 'Junior',
     },
     {
       value: '02',
-      label: 'JavaScript',
+      label: 'Mid',
     },
     {
       value: '03',
-      label: 'C#',
-    },
-    {
-      value: '04',
-      label: 'C++',
+      label: 'Senior',
     },
   ];
 
+const places = [
+    {
+        value: '00',
+        label: 'Choose place',
+    },
+    {
+        value: '01',
+        label: 'Home',
+    },
+    {
+        value: '02',
+        label: 'Office',
+    },
+    {
+        value: '03',
+        label: 'Hybrid',
+    },
+];
 const FilterBar = () => {
-    const keyWordsRef = useRef();
+    const offerNameRef = useRef();
+    const primarySkillRef = useRef();
+    const companyNameRef = useRef();
     const cityRef = useRef();
+    const dispatch = useDispatch();
+    const [place, setPlace] = useState();
+    const [level, setLevel] = useState();
+    const handleFilter = () => {
+        dispatch(filterActions.setFilterData({
+            companyName: companyNameRef.current.value,
+            offerName: offerNameRef.current.value,
+            city: cityRef.current.value,
+            level: level,
+            place: place,
+            primarySkill: primarySkillRef.current.value,
+        }))
+    }
+
+
     return (
         <div className={classes.bar}>
-             <TextField inputRef={keyWordsRef} id="outlined-basic" label="Company, key words etc..." variant="outlined"  sx={{mb: 3, width: 2/7, margin: 2}}/>
+             <TextField inputRef={offerNameRef} id="outlined-basic" label="Offer name" variant="outlined"  sx={{mb: 3, width: 2/7, margin: 2}}/>
+            <TextField inputRef={primarySkillRef} id="outlined-basic" label="Primary skill" variant="outlined"  sx={{mb: 3, width: 2/7, margin: 2}}/>
              <TextField
+                 onChange={(event) => {
+                     setLevel(event.target.value);
+                    }
+                }
                 select
-                defaultValue="01"
+                defaultValue="00"
                 sx={{mb: 3, width: 2/7, margin: 2}}
                 >
-                {currencies.map((option) => (
+                {levels.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
                     {option.label}
                     </MenuItem>
                 ))}
             </TextField>
+            <TextField
+                onChange={(event) => {
+                    setPlace(event.target.value);
+                }
+                }
+                select
+                defaultValue="00"
+                sx={{mb: 3, width: 2/7, margin: 2}}
+            >
+                {places.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
+            <TextField inputRef={companyNameRef} id="outlined-basic" label="Company name" variant="outlined"  sx={{mb: 3, width: 2/7, margin: 2}}/>
              <TextField inputRef={cityRef} id="outlined-basic" label="City" variant="outlined"  sx={{mb: 3, width: 2/7, margin: 2}}/>
+            <Button variant="contained" sx={{mb: 3, mt:2, width: 1/4}} onClick={handleFilter}>Filter</Button>
         </div>
     )
 }
