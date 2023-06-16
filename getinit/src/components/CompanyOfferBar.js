@@ -6,17 +6,20 @@ import HomeWorkIcon from '@mui/icons-material/HomeWork';
 import HomeIcon from '@mui/icons-material/Home';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import {offerModalActions} from "../store";
+import {useNavigate} from "react-router-dom";
 
 const CompanyOfferBar = (props) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const deleteHandler = () => {
             props.onDeleteOffer(props.offer.id);
     }
 
     const levelCheck = level => {
-        let levelName = '';
+        let levelName;
         switch(level){
             case 1: {
                 levelName = 'Junior ';
@@ -70,6 +73,11 @@ const CompanyOfferBar = (props) => {
                     props.onModalOpen();
                 }}>
                     <EditIcon fontSize='inherit'/>
+                </div>
+                <div onClick={()=>{
+                    navigate(`applications/${props.offer.id}`);
+                }} className={classes.contButton}>
+                    <DocumentScannerIcon fontSize='inherit'/>
                 </div>
                 <div onClick={deleteHandler} className={classes.contButton}>
                     <DeleteIcon fontSize='inherit'/>

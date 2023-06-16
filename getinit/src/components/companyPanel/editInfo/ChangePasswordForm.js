@@ -17,6 +17,7 @@ const ChangePasswordForm = (props) => {
         const validator = require('validator');
         if(!validator.isStrongPassword(passwordRef.current.value)){
             setPasswordErrorMessage('Passwords must be strong!');
+            setOldPasswordError('Passwords must be strong!');
             setPasswordError(true);
             setLoading(false);
         }
@@ -52,7 +53,7 @@ const ChangePasswordForm = (props) => {
         setLoading(false);
         props.onClose();
         props.onChange(false);
-    };
+    }
 
     return(
         <div className={classes.container}>

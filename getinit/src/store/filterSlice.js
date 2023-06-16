@@ -3,8 +3,8 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     offerName: '',
     primarySkill: '',
-    level: '',
-    place: '',
+    level: 1,
+    place: 2,
     companyName: '',
     city: '',
 }

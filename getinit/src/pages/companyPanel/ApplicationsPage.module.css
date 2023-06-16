@@ -1,0 +1,59 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.accountsContainer {
+    width: 80%;
+    height: 70vh;
+    border: 4px solid #1976d2;
+    border-radius: 30px;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+.accountsContainerLoading {
+    width: 80%;
+    height: 70vh;
+    border: 4px solid #1976d2;
+    border-radius: 30px;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.firstInfoContainer {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.firstInfoTitle {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.accordionShow {
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.message {
+    margin-bottom: 20px;
+}

@@ -1,6 +1,4 @@
 import classes from './OfferBar.module.css'
-import {Box, Modal} from "@mui/material";
-import AddNewAccountForm from "./companyPanel/AddNewAccountForm";
 import React from "react";
 import {useDispatch} from "react-redux";
 import {offerModalActions} from "../store";
@@ -30,7 +28,7 @@ const OfferBar = (props) => {
     }
 
     const levelCheck = level => {
-        let levelName = '';
+        let levelName;
         switch(level){
             case 1: {
                 levelName = 'Junior ';

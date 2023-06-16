@@ -1,12 +1,10 @@
 import classes from './OfferApplicationPage.module.css'
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {TextField} from "@mui/material";
 import React, {useRef, useState} from "react";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import validator from "validator";
-
 const OfferApplicationPage = () => {
     const { offerId } = useParams();
     const [file, setFile] = useState();
@@ -14,7 +12,7 @@ const OfferApplicationPage = () => {
     const repoRef = useRef();
     const noteRef = useRef();
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const navigation = useNavigate();
     const handleClose = () => setOpen(false);
 
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -56,40 +54,23 @@ const OfferApplicationPage = () => {
             }
         }
     }
-
-    function readFile(file) {
-        return new Promise((resolve, reject) => {
-            // Create file reader
-            let reader = new FileReader()
-
-            // Register event listeners
-            reader.addEventListener("loadend", e => resolve(e.target.result))
-            reader.addEventListener("error", reject)
-
-            // Read file
-            reader.readAsArrayBuffer(file)
-        })
-    }
-    async function getAsByteArray(file) {
-        return new Uint8Array(await readFile(file))
-    }
     async function sendCvHandler() {
-        const byteFile = await getAsByteArray(file);
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("Message", noteRef.current.value);
+        formData.append("UrlLink", repoRef.current.value);
+
         const response = await fetch(`http://localhost:5099/api/JobApplications/CreateApplication/${offerId}`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
-            body: JSON.stringify({
-                message: noteRef.current.value,
-                urlLink: repoRef.current.value,
-                resume: byteFile,
-            }),
+            body: formData
         });
         if(!response.ok) {
             throw new Error('Something went wrong!');
         }
+        navigation('/');
     }
 
     return (
@@ -97,7 +78,7 @@ const OfferApplicationPage = () => {
             <div className={classes.formContainer}>
                 <p className={classes.title}>Send an application</p>
                     <TextField error={repoUrlError} helperText={repoUrlError && 'Please insert correct url address!'} inputRef={repoRef} id="outlined-basic" label="Repository url" variant="outlined"  sx={{mt: 3, width: 1}}/>
-                    <TextField multiline={true} rows='10' inputRef={noteRef} id="outlined-basic1" label="Why we should choose you?" variant="outlined"sx={{mb: 3,mt: 3, width:1}}/>
+                    <TextField multiline={true} rows='10' inputRef={noteRef} id="outlined-basic1" label="Why we should choose you?" variant="outlined" sx={{mb: 3,mt: 3, width:1}}/>
                 <div className={classes.inputContainer}><input type='file' onChange={filesChangeHandler} accept='application/pdf'/><span className={classes.star}>*</span></div>
                 <Button onClick={validationHandler} variant="contained" sx={{mb: 3, mt: 4}}>Send</Button>
             </div>

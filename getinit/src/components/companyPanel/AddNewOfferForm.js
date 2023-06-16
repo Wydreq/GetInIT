@@ -1,12 +1,9 @@
 import classes from './AddNewOfferForm.module.css';
 import { useRef, useState } from 'react';
-import { TextField, Typography } from '@mui/material';
+import { TextField } from '@mui/material';
 import Button from "@mui/material/Button";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import StarIcon from '@mui/icons-material/Star';
-import validator from "validator";
 const AddNewOfferForm = (props) => {
 
     const [offerTitleError, setOfferTitleError] = useState(false);
@@ -65,25 +62,25 @@ const AddNewOfferForm = (props) => {
     const validationHandler = () => {
         setLoading(true);
         const validator = require('validator');
-        if(offerTitleRef.current.value.length == 0) {
+        if(offerTitleRef.current.value.length === 0) {
             setOfferTitleError(true);
         }
         else {
             setOfferTitleError(false);
         }
-        if(primaryLanguageRef.current.value.length == 0) {
+        if(primaryLanguageRef.current.value.length === 0) {
             setPrimaryLanguageError(true);
         }
         else {
             setPrimaryLanguageError(false);
         }
-        if(level == 0) {
+        if(level === 0) {
             setLevelError(true);
         }
         else {
             setLevelError(false);
         }
-        if(workingPlace == 0) {
+        if(workingPlace === 0) {
             setPlaceError(true);
         }
         else {
@@ -101,13 +98,13 @@ const AddNewOfferForm = (props) => {
         else {
             setEmailError(false);
         }
-        if(salaryFromRef.current.value.length == 0) {
+        if(salaryFromRef.current.value.length === 0) {
             setSalaryFromError(true);
         }
         else {
             setSalaryFromError(false);
         }
-        if(salaryToRef.current.value.length == 0) {
+        if(salaryToRef.current.value.length === 0) {
             setSalaryToError(true);
         }
         else {
@@ -118,13 +115,13 @@ const AddNewOfferForm = (props) => {
             setSalaryFromError(true);
         }
         else {
-            if(salaryFromRef.current.value.length == 0) {
+            if(salaryFromRef.current.value.length === 0) {
                 setSalaryFromError(true);
             }
             else {
                 setSalaryFromError(false);
             }
-            if(salaryToRef.current.value.length == 0) {
+            if(salaryToRef.current.value.length === 0) {
                 setSalaryToError(true);
             }
             else {
@@ -137,13 +134,13 @@ const AddNewOfferForm = (props) => {
         else {
             setOfferDescriptionError(false);
         }
-        if(technologies.length == 0) {
+        if(technologies.length === 0) {
             setTechnologiesError(true)
         }
         else {
             setTechnologiesError(false);
         }
-        if(offerTitleRef.current.value.length > 0 && primaryLanguageRef.current.value.length > 0 && !level == 0 && !workingPlace == 0 && phoneNumberRef.current.value.length === 9 && validator.isEmail(emailRef.current.value) && salaryFromRef.current.value.length > 0 && salaryToRef.current.value.length > 0 && salaryFromRef.current.value < salaryToRef.current.value && offerDescriptionRef.current.value.length > 10 && technologies.length > 0) {
+        if(offerTitleRef.current.value.length > 0 && primaryLanguageRef.current.value.length > 0 && !level === 0 && !workingPlace === 0 && phoneNumberRef.current.value.length === 9 && validator.isEmail(emailRef.current.value) && salaryFromRef.current.value.length > 0 && salaryToRef.current.value.length > 0 && salaryFromRef.current.value < salaryToRef.current.value && offerDescriptionRef.current.value.length > 10 && technologies.length > 0) {
             addNewOfferHandler();
         }
         else {
@@ -174,8 +171,8 @@ const AddNewOfferForm = (props) => {
             body: JSON.stringify(preparedForSending),
         });
         if(!response.ok) {
+            setLoading(false);
            throw new Error('Something went wrong!');
-           setLoading(false);
         }
         setLoading(false);
         props.onAddAccountSuccesful();
@@ -216,14 +213,14 @@ const AddNewOfferForm = (props) => {
                 <MenuItem value={2}>Office</MenuItem>
                 <MenuItem value={3}>Hybrid</MenuItem>
             </Select>
-            <TextField error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number (length = 9)'} type='number' variant="outlined"sx={{mb: 3,mr:3, width: 2/5}}/>
-            <TextField error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined"sx={{mb: 3,mr:3, width: 2/5}}/>
+            <TextField error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number (length = 9)'} type='number' variant="outlined" sx={{mb: 3,mr:3, width: 2/5}}/>
+            <TextField error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined" sx={{mb: 3,mr:3, width: 2/5}}/>
             <div className={classes.salaryContainer}>
-                <TextField error={salaryFromError} inputRef={salaryFromRef} id="outlined-basic3" label="Salary from*" helperText={salaryFromError && 'Please insert correct amount!'} type='number' variant="outlined"sx={{mb: 3, width: 2/6}}/>
+                <TextField error={salaryFromError} inputRef={salaryFromRef} id="outlined-basic3" label="Salary from*" helperText={salaryFromError && 'Please insert correct amount!'} type='number' variant="outlined" sx={{mb: 3, width: 2/6}}/>
                 <span className={classes.to}>-</span>
-                <TextField error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct amount!'} type='number' variant="outlined"sx={{mb: 3,mr:3, width: 2/6}}/>
+                <TextField error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct amount!'} type='number' variant="outlined" sx={{mb: 3,mr:3, width: 2/6}}/>
             </div>
-            <TextField multiline={true} rows='5' error={offerDescriptionError} inputRef={offerDescriptionRef} id="outlined-basic1" label="Offer description*" helperText={offerDescriptionError && 'Please insert correct description! (length > 10)'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <TextField multiline={true} rows='5' error={offerDescriptionError} inputRef={offerDescriptionRef} id="outlined-basic1" label="Offer description*" helperText={offerDescriptionError && 'Please insert correct description! (length > 10)'} variant="outlined" sx={{mb: 3, width: 4/5}}/>
             <div className={classes.technologiesContainer}>
                 <TextField error={technologiesError || technologyInputError} inputRef={technologyRef} id="outlined-basic3" label="Technology" variant="outlined" sx={{mb: 1, width: 2/6}}/>
                 <Select

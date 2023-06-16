@@ -11,23 +11,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {offerModalActions} from "../store";
 import {LoginSocialGoogle} from "reactjs-social-login";
 import {GoogleLoginButton} from "react-social-login-buttons";
-
-const style = {
-    position: 'absolute',
-    top: '40%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '70%',
-    bgcolor: 'background.paper',
-    borderRadius: 15,
-    boxShadow: 24,
-    p: 4,
-};
-
 const AuthPage = () => {
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [loginError, setLoginError] = useState(false);
     const [loginErrorMessage, setLoginErrorMessage] = useState('');
@@ -148,7 +134,7 @@ const AuthPage = () => {
             setLoading(false);
             navigate('/userPanel');
             window.location.reload();
-    };
+    }
 
     async function registerAccount(name, lastName, email, password) {
         const preparedForSending = {
@@ -189,19 +175,19 @@ const AuthPage = () => {
             <Card className={classes.formContainer}>
                 <h1 style={{marginBottom: 25, marginTop: 25}}>{isSignInMode ? 'Sign In!' : 'Sign Up!'}</h1>
                 <TextField error={loginError} inputRef={emailRef} id="outlined-basic" label="E-mail*" helperText={loginError && loginErrorMessage} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
-                <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic2" label="Password*" helperText={passwordError && passwordErrorMessage} type='password' variant="outlined"sx={{mb: 3, width: 4/5}}/>
+                <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic2" label="Password*" helperText={passwordError && passwordErrorMessage} type='password' variant="outlined" sx={{mb: 3, width: 4/5}}/>
                 {!isSignInMode && <TextField error={firstNameError} inputRef={firstNameRef} id="outlined-basic" label="First name*" helperText={firstNameError && 'Please insert correct first name'} variant="outlined"  sx={{mb: 3, width: 4/5}}/>}
-                {!isSignInMode && <TextField error={lastNameError} inputRef={lastNameRef} id="outlined-basic2" label="Last name*" helperText={lastNameError && 'Please insert correct last name'} variant="outlined"sx={{mb: 3, width: 4/5}}/>}
+                {!isSignInMode && <TextField error={lastNameError} inputRef={lastNameRef} id="outlined-basic2" label="Last name*" helperText={lastNameError && 'Please insert correct last name'} variant="outlined" sx={{mb: 3, width: 4/5}}/>}
                 <span onClick={()=>{changeAuthMode()}} className={classes.changingText}>{isSignInMode ? 'Dont have an account? Sign up!' : 'Do you have and account? Sign in!'}</span>
                 {isSignInMode && <LoginSocialGoogle client_id='519616560661-tlaqndhk5u5rcr3ltbu7riaob0anrh11.apps.googleusercontent.com'
                                    onReject={({error})=>{console.log(error)}}
-                                   onResolve={({provider, data})=>{signInHandler(data.email, data.sub)}}
+                                   onResolve={({ data})=>{signInHandler(data.email, data.sub)}}
                 scope='https://www.googleapis.com/auth/userinfo.email'>
                 <GoogleLoginButton><span>Sign in with google</span></GoogleLoginButton>
                 </LoginSocialGoogle>}
                 {!isSignInMode && <LoginSocialGoogle client_id='519616560661-tlaqndhk5u5rcr3ltbu7riaob0anrh11.apps.googleusercontent.com'
                                                     onReject={({error})=>{console.log(error)}}
-                                                    onResolve={({provider, data})=>{registerAccount(data.given_name, data.family_name,data.email, data.sub)}}
+                                                    onResolve={({data})=>{registerAccount(data.given_name, data.family_name,data.email, data.sub)}}
                                                     scope='https://www.googleapis.com/auth/userinfo.email'>
                     <GoogleLoginButton><span>Sign up with google</span></GoogleLoginButton>
                 </LoginSocialGoogle>}

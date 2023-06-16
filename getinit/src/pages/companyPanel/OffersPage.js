@@ -5,7 +5,6 @@ import React, {useCallback, useEffect, useState} from "react";
 import MuiAlert from "@mui/material/Alert";
 import AddNewOfferForm from "../../components/companyPanel/AddNewOfferForm";
 import {useLocation} from "react-router-dom";
-import OfferBar from "../../components/OfferBar";
 import CompanyOfferBar from "../../components/CompanyOfferBar";
 import EditOfferForm from "../../components/companyPanel/EditOfferForm";
 import {TailSpin} from "react-loader-spinner";
@@ -60,8 +59,8 @@ const OffersPage = () => {
                 }
             });
             if (!response.ok) {
-                throw new Error("Something went wrong!");
                 setLoading(false);
+                // throw new Error("Something went wrong!");
             }
             const data = await response.json();
             const loadedOffers = [];
@@ -106,10 +105,6 @@ const OffersPage = () => {
         fetchOffers();
         setSnackbarMessage("Offer has been deleted!");
         setSnackbarOpen(true);
-    }
-
-    const handleEdit = (offer) => {
-        console.log(offer);
     }
 
     useEffect(()=> {

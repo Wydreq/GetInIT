@@ -96,10 +96,10 @@ const AddNewAccountForm = (props) => {
                 Add new company account
             </Typography>
             <TextField error={firstNameError} inputRef={firstNameRef} id="outlined-basic" label="First name*" helperText={firstNameError && 'Please insert correct first name (length > 1)'} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
-            <TextField error={lastNameError} inputRef={lastNameRef} id="outlined-basic1" label="Last name*" helperText={lastNameError && 'Please insert correct last name! (length > 1)'} variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <TextField error={lastNameError} inputRef={lastNameRef} id="outlined-basic1" label="Last name*" helperText={lastNameError && 'Please insert correct last name! (length > 1)'} variant="outlined" sx={{mb: 3, width: 4/5}}/>
             <TextField error={emailError} inputRef={emailRef} id="outlined-basic2" label="E-mail*" helperText={emailError && emailErrorMessage} variant="outlined"  sx={{mb: 3, width: 4/5}}/>
-            <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic3" label="Password*" helperText={passwordError && passwordErrorMessage} type='password' variant="outlined"sx={{mb: 3, width: 4/5}}/>
-            <TextField error={passwordError} inputRef={confirmPasswordRef} id="outlined-basic4" label="Confirm password*" helperText={passwordError && 'Please insert correct password!'} type='password' variant="outlined"sx={{mb: 3, width: 4/5}}/>
+            <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic3" label="Password*" helperText={passwordError && passwordErrorMessage} type='password' variant="outlined" sx={{mb: 3, width: 4/5}}/>
+            <TextField error={passwordError} inputRef={confirmPasswordRef} id="outlined-basic4" label="Confirm password*" helperText={passwordError && 'Please insert correct password!'} type='password' variant="outlined" sx={{mb: 3, width: 4/5}}/>
             <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Add'}</Button>
         </div>
     );

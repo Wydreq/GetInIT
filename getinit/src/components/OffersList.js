@@ -18,25 +18,25 @@ const OffersList = (props) => {
 
     const fetchAllOffers = useCallback(async () => {
         setLoading(true);
-        console.log(fetchedCity);
         const preparedForSending = {
-            Name: '',
-            PrimarySkill: '',
-            CompanyName: '',
-            City: '',
-            Level: '',
-            Place: ''
+            Name: fetchedOfferName,
+            PrimarySkill: fetchedPrimarySkill,
+            CompanyName: fetchedCompanyName,
+            City: fetchedCity,
+            Level: fetchedLevel,
+            Place: fetchedPlace
         }
         try {
             const response = await fetch('http://localhost:5099/api/offer/SearchOffer', {
-                method: 'GET',
+                method: 'POST',
                     headers: {
                     'Content-Type': 'application/json'
                 },
-                // body: JSON.stringify(preparedForSending),
+                body: JSON.stringify(preparedForSending),
             });
             if (!response.ok) {
-                throw new Error("Something went wrong!");
+                setLoading(false);
+                // throw new Error("Something went wrong!");
             }
 
             const data = await response.json();
@@ -65,7 +65,7 @@ const OffersList = (props) => {
 
     useEffect(()=> {
         fetchAllOffers();
-    },[fetchAllOffers])
+    },[fetchAllOffers, fetchedOfferName, fetchedPlace, fetchedLevel, fetchedCity, fetchedCompanyName, fetchedPrimarySkill])
 
 
     return (
@@ -79,7 +79,7 @@ const OffersList = (props) => {
                     radius="2"
                     visible={true}
                 />}
-            {offersList.map((offer)=>{
+            {!loading && offersList.map((offer)=>{
                 return (
                     <OfferBar key={offer.id} offer={offer} onModalOpen={props.onModalOpen}/>
                 )

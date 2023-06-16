@@ -2,8 +2,7 @@ import {Navigate} from "react-router-dom";
 import React from "react";
 
 export function getAuthToken() {
-    const token = localStorage.getItem('token');
-    return token;
+    return localStorage.getItem('token');
 }
 
 export function tokenLoader() {

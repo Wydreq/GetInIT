@@ -6,38 +6,38 @@ import {useDispatch} from "react-redux";
 
 const levels = [
     {
-        value: '00',
+        value: 0,
         label: 'Choose level',
     },
     {
-      value: '01',
+      value: 1,
       label: 'Junior',
     },
     {
-      value: '02',
+      value: 2,
       label: 'Mid',
     },
     {
-      value: '03',
+      value: 3,
       label: 'Senior',
     },
   ];
 
 const places = [
     {
-        value: '00',
+        value: 0,
         label: 'Choose place',
     },
     {
-        value: '01',
+        value: 1,
         label: 'Home',
     },
     {
-        value: '02',
+        value: 2,
         label: 'Office',
     },
     {
-        value: '03',
+        value: 3,
         label: 'Hybrid',
     },
 ];
@@ -71,7 +71,7 @@ const FilterBar = () => {
                     }
                 }
                 select
-                defaultValue="00"
+                defaultValue="0"
                 sx={{mb: 3, width: 2/7, margin: 2}}
                 >
                 {levels.map((option) => (
@@ -86,7 +86,7 @@ const FilterBar = () => {
                 }
                 }
                 select
-                defaultValue="00"
+                defaultValue="0"
                 sx={{mb: 3, width: 2/7, margin: 2}}
             >
                 {places.map((option) => (

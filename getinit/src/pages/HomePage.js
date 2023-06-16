@@ -1,7 +1,7 @@
 import FilterBar from '../components/FilterBar';
 import OffersList from '../components/OffersList';
 import classes from './HomePage.module.css'
-import {Box, Modal, TextField, TextareaAutosize} from "@mui/material";
+import {Box, Modal} from "@mui/material";
 import React, {useCallback, useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {offerModalActions} from "../store";
@@ -36,12 +36,33 @@ const HomePage = () => {
     const email = useSelector(state => state.offerModal.email);
     const city = useSelector(state => state.offerModal.city);
     const level = useSelector(state => state.offerModal.level);
-    const place = useSelector(state => state.offerModal.place);
-    const primarySkill = useSelector(state => state.offerModal.primarySkill);
     const salaryFrom = useSelector(state => state.offerModal.salaryFrom);
     const salaryTo = useSelector(state => state.offerModal.salaryTo);
     const technologies = useSelector(state => state.offerModal.technologies); 
     const dispatch = useDispatch();
+
+    const [role, setRole] = useState('');
+    const fetchUserInfo = useCallback(async () => {
+        try {
+            const response = await fetch('http://localhost:5099/api/account/AccountProfile', {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
+            if (!response.ok) {
+                // throw new Error("Something went wrong!");
+            }
+
+            const data = await response.json();
+
+            setRole(data.role);
+        } catch(error) {}
+    },[])
+
+    useEffect(()=> {
+        fetchUserInfo();
+    },[fetchUserInfo])
+
 
     const handleOpen = () => {
         dispatch(offerModalActions.openModal())
@@ -59,7 +80,7 @@ const HomePage = () => {
     }
 
     const levelCheck = level => {
-        let levelName = '';
+        let levelName;
         switch(level){
             case 1: {
                 levelName = 'Junior ';
@@ -143,7 +164,7 @@ const HomePage = () => {
                         justifyContent='center'
                         alignItems='center'
                     >
-                        <Link to={`/offerApplication/${id}`}> <Button variant="contained" sx={{mb: 3, mt:8, width: 1}}>Send CV</Button></Link>
+                        {role === 'UserAccount' && <Link to={`/offerApplication/${id}`}> <Button onClick={handleClose} variant="contained" sx={{mb: 3, mt:8, width: 1}}>Send CV</Button></Link>}
                     </Box>
                 </div>
             </Box>

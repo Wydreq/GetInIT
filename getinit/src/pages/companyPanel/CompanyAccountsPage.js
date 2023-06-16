@@ -47,7 +47,7 @@ const CompanyAccountsPage = () => {
                 }
             });
             if (!response.ok) {
-                throw new Error("Something went wrong!");
+                // throw new Error("Something went wrong!");
                 setLoading(false);
             }
 

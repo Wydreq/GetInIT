@@ -57,7 +57,7 @@ const ChangeEmailForm = (props) => {
         }
         props.onClose();
         props.onChange(true);
-    };
+    }
 
     return(
         <div className={classes.container}>

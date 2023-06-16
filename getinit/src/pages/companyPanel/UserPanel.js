@@ -3,11 +3,7 @@ import classes from './UserPanel.module.css';
 import ButtonsContainer from "../../components/companyPanel/ButtonsContainer";
 import React, {useState, useEffect, useCallback} from 'react';
 import {TailSpin} from "react-loader-spinner";
-import {Alert, AlertTitle} from "@mui/material";
-import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
 const UserPanel = () => {
-    const dispatch = useDispatch();
     const [isInfoLoaded, setIsInfoLoaded] = useState(false);
     const [user, setUser] = useState({
         firstName: 'Loading...',
@@ -22,7 +18,7 @@ const UserPanel = () => {
                  }
              });
              if (!response.ok) {
-                 throw new Error("Something went wrong!");
+                 // throw new Error("Something went wrong!");
              }
 
              const data = await response.json();
