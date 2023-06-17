@@ -68,6 +68,7 @@ const FilterBar = (props) => {
              <TextField inputRef={offerNameRef} id="outlined-basic" label="Offer name" variant="outlined"  sx={{mb: 3, width: 2/7, margin: 2}}/>
             <TextField inputRef={primarySkillRef} id="outlined-basic" label="Primary skill" variant="outlined"  sx={{mb: 3, width: 2/7, margin: 2}}/>
              <TextField
+                inputProps={{"data-testid":"level"}}
                  onChange={(event) => {
                      setLevel(event.target.value);
                     }
@@ -83,6 +84,7 @@ const FilterBar = (props) => {
                 ))}
             </TextField>
             <TextField
+                inputProps={{"data-testid":"place"}}
                 onChange={(event) => {
                     setPlace(event.target.value);
                 }
