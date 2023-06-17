@@ -198,9 +198,10 @@ const AddNewOfferForm = (props) => {
     return (
         <div className={classes.container}>
            <h1 className={classes.title}>Add new offer</h1>
-            <TextField error={offerTitleError} inputRef={offerTitleRef} id="outlined-basic" label="Offer title*" helperText={offerTitleError && 'Please insert correct offer title (length > 0)'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
-            <TextField error={primaryLanguageError} inputRef={primaryLanguageRef} id="outlined-basic2" label="Primary language*" helperText={primaryLanguageError && 'Please insert correct primary language'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
+            <TextField role='title' error={offerTitleError} inputRef={offerTitleRef} id="outlined-basic" label="Offer title*" helperText={offerTitleError && 'Please insert correct offer title (length > 0)'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
+            <TextField role='primary' error={primaryLanguageError} inputRef={primaryLanguageRef} id="outlined-basic2" label="Primary language*" helperText={primaryLanguageError && 'Please insert correct primary language'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
             <Select
+                role='level' 
                 id="demo-simple-select"
                 value={level}
                 onChange={handleLevelChange}
@@ -213,6 +214,7 @@ const AddNewOfferForm = (props) => {
                 <MenuItem value={3}>Senior</MenuItem>
             </Select>
             <Select
+                role='place' 
                 id="demo-simple-select2"
                 value={workingPlace}
                 onChange={handlePlaceChange}
@@ -224,17 +226,18 @@ const AddNewOfferForm = (props) => {
                 <MenuItem value={2}>Office</MenuItem>
                 <MenuItem value={3}>Hybrid</MenuItem>
             </Select>
-            <TextField error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number (length = 9)'} type='number' variant="outlined" sx={{mb: 3,mr:3, width: 2/5}}/>
-            <TextField error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined" sx={{mb: 3,mr:3, width: 2/5}}/>
+            <TextField role='phone' error={phoneNumberError} inputRef={phoneNumberRef} id="outlined-basic3" label="Contact phone number*" helperText={phoneNumberError && 'Insert correct phone number (length = 9)'} type='number' variant="outlined" sx={{mb: 3,mr:3, width: 2/5}}/>
+            <TextField role='email' error={emailError} inputRef={emailRef} id="outlined-basic4" label="Contact mail address*" helperText={emailError && 'Please insert correct mail address!'} variant="outlined" sx={{mb: 3,mr:3, width: 2/5}}/>
             <div className={classes.salaryContainer}>
-                <TextField error={salaryFromError} inputRef={salaryFromRef} id="outlined-basic3" label="Salary from*" helperText={salaryFromError && 'Please insert correct amount!'} type='number' variant="outlined" sx={{mb: 3, width: 2/6}}/>
+                <TextField role='salaryf' error={salaryFromError} inputRef={salaryFromRef} id="outlined-basic3" label="Salary from*" helperText={salaryFromError && 'Please insert correct amount!'} type='number' variant="outlined" sx={{mb: 3, width: 2/6}}/>
                 <span className={classes.to}>-</span>
-                <TextField error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct amount!'} type='number' variant="outlined" sx={{mb: 3,mr:3, width: 2/6}}/>
+                <TextField role='salaryt' error={salaryToError} inputRef={salaryToRef} id="outlined-basic4" label="Salary to*" helperText={salaryToError && 'Please insert correct amount!'} type='number' variant="outlined" sx={{mb: 3,mr:3, width: 2/6}}/>
             </div>
-            <TextField multiline={true} rows='5' error={offerDescriptionError} inputRef={offerDescriptionRef} id="outlined-basic1" label="Offer description*" helperText={offerDescriptionError && 'Please insert correct description! (length > 10)'} variant="outlined" sx={{mb: 3, width: 4/5}}/>
+            <TextField role='desc' multiline={true} rows='5' error={offerDescriptionError} inputRef={offerDescriptionRef} id="outlined-basic1" label="Offer description*" helperText={offerDescriptionError && 'Please insert correct description! (length > 10)'} variant="outlined" sx={{mb: 3, width: 4/5}}/>
             <div className={classes.technologiesContainer}>
-                <TextField error={technologiesError || technologyInputError} inputRef={technologyRef} id="outlined-basic3" label="Technology" variant="outlined" sx={{mb: 1, width: 2/6}}/>
+                <TextField inputProps={{"role" : "technology"}} error={technologiesError || technologyInputError} inputRef={technologyRef} id="outlined-basic3" label="Technology" variant="outlined" sx={{mb: 1, width: 2/6}}/>
                 <Select
+                    inputProps={{"data-testid":"skill"}} 
                     id="demo-simple-select3"
                     value={skillLevel}
                     onChange={handleSkillLevelChange}
@@ -246,8 +249,8 @@ const AddNewOfferForm = (props) => {
                     <MenuItem value={4}>Advanced</MenuItem>
                     <MenuItem value={5}>Expert</MenuItem>
                 </Select>
-                <Button onClick={addTechnologyHandler} variant="contained">Add technology</Button>
-                <Button onClick={clearTechnologyHandler} variant="contained">Clear</Button>
+                <Button role='addTechnology' onClick={addTechnologyHandler} variant="contained">Add technology</Button>
+                <Button role='clear' onClick={clearTechnologyHandler} variant="contained">Clear</Button>
             </div>
             <div className={classes.btnContainer}>
                 <div className={!technologiesError ? classes.technologiesList : classes.errorTechnologiesList}>
@@ -261,7 +264,7 @@ const AddNewOfferForm = (props) => {
                     })}
                 </div>
                 {technologiesError && <span className={classes.technologyErrorSpan}>Insert technology!</span>}
-                <Button onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Add'}</Button>
+                <Button role='add' onClick={validationHandler} variant="contained" sx={{mb: 3}}>{loading ? 'Loading...' : 'Add'}</Button>
             </div>
         </div>
     );
