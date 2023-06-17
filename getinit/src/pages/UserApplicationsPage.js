@@ -51,8 +51,9 @@ const UserApplicationsPage = () => {
 
     return(
         <div className={classes.container}>
-            <div className={!loading ? classes.accountsContainer : classes.accountsContainerLoading}>
+            <div className={!loading && loadedUserApplications.length !== 0 ? classes.accountsContainer : classes.accountsContainerLoading}>
 
+                {!loading && loadedUserApplications.length === 0 && <p className={classes.notFound}>Applications not found!</p>}
                 {loading &&
                     <TailSpin
                         height="200"

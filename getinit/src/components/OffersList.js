@@ -53,7 +53,7 @@ const OffersList = (props) => {
 
     return (
         <div className={loading || offersList.length === 0 ? classes.offersContainerLoading : classes.offersContainer}>
-            {offersList.length === 0 && <p className={classes.notFound}>Offers not found!</p>}
+            {!loading && offersList.length === 0 && <p className={classes.notFound}>Offers not found!</p>}
             {loading &&
                 <TailSpin
                     height="200"

@@ -54,6 +54,26 @@ const ApplicationsPage = () => {
         fetchOfferApplications();
     },[fetchOfferApplications])
 
+    const downloadCVHandler = async (resumePath) => {
+
+        let splicedString = resumePath.split("wwwroot/")[1];
+        console.log(splicedString);
+        const filePath = splicedString.replace(/\\/g, '/');
+        const response = await fetch('http://localhost:5099/api/JobApplications/DownloadFile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                filePath: filePath
+            }),
+        });
+        if(!response.ok) {
+            throw new Error("Something gone wrong!");
+        }
+    }
+
     return(
         <div className={classes.container}>
             <div className={ loadedUserApplications.length !== 0 ? classes.accountsContainer : classes.accountsContainerLoading}>
@@ -88,7 +108,9 @@ const ApplicationsPage = () => {
                                         <h2 className={classes.title}>Page url</h2>
                                         <p className={classes.message}>{item.urlLink}</p>
                                    </span>
-                                   <Button onClick={() => {}} variant="contained" sx={{justifyContent: 'center'}}>Download CV</Button>
+                                   <Button onClick={() => {
+                                       downloadCVHandler(item.resumePath);
+                                   }} variant="contained" sx={{justifyContent: 'center'}}>Download CV</Button>
                                </div>
                             </AccordionDetails>
                         </Accordion>

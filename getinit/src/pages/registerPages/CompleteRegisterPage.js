@@ -9,8 +9,6 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import {offerModalActions} from "../../store";
 import {useDispatch} from "react-redux";
-import {LoginSocialGoogle} from "reactjs-social-login";
-import {GoogleLoginButton} from "react-social-login-buttons";
 
 const CompleteRegisterPage = () => {
 
@@ -201,8 +199,8 @@ const CompleteRegisterPage = () => {
                 setMailError(false);
             }
             setLoading(false);
-            throw new Error(text);
             handleOpen();
+            throw new Error(text);
         }
         setLoading(false);
         dispatch(offerModalActions.openSnackbar());
@@ -215,19 +213,19 @@ const CompleteRegisterPage = () => {
                 <h1 style={{marginBottom: 25, marginTop: 25}}>Sign Up!</h1>
                 <div className={classes.inputsContainer}>
                     <TextField inputRef={mailRef} error={mailError}  helperText={mailError && mailErrorMessage} label="E-mail*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={passwordRef} error={passwordError} helperText={passwordError && passwordErrorMessage} label="Password*" type='password' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={confirmPasswordRef} error={passwordError} helperText={passwordError && passwordErrorMessage} label="Confirm password*" type='password' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={firstNameRef} error={firstNameError}  helperText={firstNameError && 'Please insert correct firstname!'} label="First name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={lastNameRef} error={lastNameError} helperText={lastNameError && 'Please insert correct lastname!'} label="Last name*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={passwordRef} error={passwordError} helperText={passwordError && passwordErrorMessage} label="Password*" type='password' variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={confirmPasswordRef} error={passwordError} helperText={passwordError && passwordErrorMessage} label="Confirm password*" type='password' variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={firstNameRef} error={firstNameError}  helperText={firstNameError && 'Please insert correct firstname!'} label="First name*" variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={lastNameRef} error={lastNameError} helperText={lastNameError && 'Please insert correct lastname!'} label="Last name*" variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
                     <TextField inputRef={companyNameRef} error={companyNameError} helperText={companyNameError && 'Please insert correct company name!'} label="Company name*" variant="outlined"  sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={urlRef} error={urlError} helperText={urlError && 'Please insert correct url!'} label="Company page url" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={nipRef} error={nipError} helperText={nipError && 'Please insert correct nip!'} label="NIP*" type='number' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={regonRef} error={regonError} helperText={regonError && 'Please insert correct regon!'} label="REGON*" type='number' variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={streetRef} error={streetError} helperText={streetError && 'Please insert correct street name!'} label="Street*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={buildingNumberRef} error={buildingNumberError} helperText={buildingNumberError && 'Please insert correct buildng number!'} type='number' label="Building number*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={postalCodeRef} error={postalCodeError} helperText={postalCodeError && 'Please insert correct postal code (00-000)!'} label="Postal code*" variant="outlined"sx={{mb: 3, width: 2/5, margin: 2}}/>
-                    <TextField inputRef={cityRef} error={cityError} helperText={cityError && 'Please insert correct city!'} label="City*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
-                    <TextField inputRef={countryRef} error={countryError} helperText={countryError && 'Please insert correct country!'} label="Country*" variant="outlined"sx={{mb: 3, width:2/5, margin: 2}}/>
+                    <TextField inputRef={urlRef} error={urlError} helperText={urlError && 'Please insert correct url!'} label="Company page url" variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={nipRef} error={nipError} helperText={nipError && 'Please insert correct nip!'} label="NIP*" type='number' variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={regonRef} error={regonError} helperText={regonError && 'Please insert correct regon!'} label="REGON*" type='number' variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={streetRef} error={streetError} helperText={streetError && 'Please insert correct street name!'} label="Street*" variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={buildingNumberRef} error={buildingNumberError} helperText={buildingNumberError && 'Please insert correct buildng number!'} type='number' label="Building number*" variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={postalCodeRef} error={postalCodeError} helperText={postalCodeError && 'Please insert correct postal code (00-000)!'} label="Postal code*" variant="outlined" sx={{mb: 3, width: 2/5, margin: 2}}/>
+                    <TextField inputRef={cityRef} error={cityError} helperText={cityError && 'Please insert correct city!'} label="City*" variant="outlined" sx={{mb: 3, width:2/5, margin: 2}}/>
+                    <TextField inputRef={countryRef} error={countryError} helperText={countryError && 'Please insert correct country!'} label="Country*" variant="outlined" sx={{mb: 3, width:2/5, margin: 2}}/>
                 </div>
                 {!loading && <div>
                     <Button onClick={()=> {navigate('/auth')}} variant="contained" sx={{mb: 3, mt:3, mr: 3}}>Back</Button>
