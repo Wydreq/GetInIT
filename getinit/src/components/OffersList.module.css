@@ -21,6 +21,11 @@
     justify-content: center;
 }
 
+.notFound {
+    font-size: 30px;
+    font-weight: bold;
+
+}
 
 .offersContainer::-webkit-scrollbar{
     display: none;

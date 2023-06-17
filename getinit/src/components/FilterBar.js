@@ -1,9 +1,6 @@
 import classes from './FilterBar.module.css'
 import { TextField, MenuItem, Button } from '@mui/material';
 import React, {useRef, useState} from 'react';
-import {filterActions} from "../store";
-import {useDispatch} from "react-redux";
-
 const levels = [
     {
         value: 0,
@@ -41,23 +38,28 @@ const places = [
         label: 'Hybrid',
     },
 ];
-const FilterBar = () => {
+const FilterBar = (props) => {
     const offerNameRef = useRef();
     const primarySkillRef = useRef();
     const companyNameRef = useRef();
     const cityRef = useRef();
-    const dispatch = useDispatch();
     const [place, setPlace] = useState();
     const [level, setLevel] = useState();
     const handleFilter = () => {
-        dispatch(filterActions.setFilterData({
+        if(level === 0) {
+            setLevel('');
+        }
+        if(place === 0) {
+            setPlace('');
+        }
+       props.onFilterSave({
             companyName: companyNameRef.current.value,
             offerName: offerNameRef.current.value,
             city: cityRef.current.value,
             level: level,
             place: place,
             primarySkill: primarySkillRef.current.value,
-        }))
+        })
     }
 
 

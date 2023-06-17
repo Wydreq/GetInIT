@@ -7,6 +7,11 @@ const ButtonsContainer = (props) => {
     return (
         <>
         <div className={classes.container}>
+            {props.userInfo.role === 'UserAccount' && <div className={classes.button} onClick={()=>{navigate('/userApplications', {
+                state: {
+                    userRole: props.userInfo.role,
+                }
+            })}}>Your job applications</div>}
             {props.userInfo.role === 'ManagerCompanyAccount' && <div className={classes.button} onClick={()=>{navigate('/userOffers', {
                 state: {
                     userRole: props.userInfo.role,

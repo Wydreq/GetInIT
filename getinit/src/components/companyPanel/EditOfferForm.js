@@ -145,7 +145,7 @@ const EditOfferForm = (props) => {
         else {
             setTechnologiesError(false);
         }
-        if(offerTitleRef.current.value.length > 0 && primaryLanguageRef.current.value.length > 0 && !level === 0 && !workingPlace === 0 && phoneNumberRef.current.value.length === 9 && validator.isEmail(emailRef.current.value) && salaryFromRef.current.value.length > 0 && salaryToRef.current.value.length > 0 && !salaryFromError && !salaryToError && offerDescriptionRef.current.value.length > 10 && technologies.length > 0) {
+        if(offerTitleRef.current.value.length > 0 && primaryLanguageRef.current.value.length > 0 && !level !== 0 && !workingPlace !== 0 && phoneNumberRef.current.value.length === 9 && validator.isEmail(emailRef.current.value) && salaryFromRef.current.value.length > 0 && salaryToRef.current.value.length > 0 && !salaryFromError && !salaryToError && offerDescriptionRef.current.value.length > 10 && technologies.length > 0) {
             editOfferHandler();
         }
         else {

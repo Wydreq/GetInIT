@@ -1,6 +1,5 @@
-import classes from './ApplicationsPage.module.css'
+import classes from './UserApplicationsPage.module.css'
 import React, {useCallback, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -8,24 +7,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from "@mui/material/Button";
 import {TailSpin} from "react-loader-spinner";
 
-const ApplicationsPage = () => {
+const UserApplicationsPage = () => {
 
-    const { offerId } = useParams();
     const [loading, setLoading] = useState(false);
     const [loadedUserApplications, setLoadedUserApplication] = useState([]);
 
     const fetchOfferApplications = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:5099/api/JobApplications/SearchApplications`, {
-                method: 'POST',
+            const response = await fetch(`http://localhost:5099/api/JobApplications/GetAllApplications`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
-                body: JSON.stringify({
-                    offerId: offerId
-                }),
             });
             if (!response.ok) {
                 setLoading(false);
@@ -48,7 +43,7 @@ const ApplicationsPage = () => {
             setLoadedUserApplication(loadedApplications);
             setLoading(false);
         } catch(error) {}
-    },[offerId])
+    },[])
 
     useEffect(()=> {
         fetchOfferApplications();
@@ -56,8 +51,8 @@ const ApplicationsPage = () => {
 
     return(
         <div className={classes.container}>
-            <div className={ loadedUserApplications.length !== 0 ? classes.accountsContainer : classes.accountsContainerLoading}>
-                {!loading && loadedUserApplications.length === 0 && <p className={classes.notFound}>Applications not found!</p>}
+            <div className={!loading ? classes.accountsContainer : classes.accountsContainerLoading}>
+
                 {loading &&
                     <TailSpin
                         height="200"
@@ -81,15 +76,15 @@ const ApplicationsPage = () => {
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails>
-                               <div className={classes.accordionShow}>
+                                <div className={classes.accordionShow}>
                                    <span style={{marginRight: 'auto'}}>
                                        <h2 className={classes.title}>About yourself</h2>
                                        <p className={classes.message}>{item.message}</p>
                                         <h2 className={classes.title}>Page url</h2>
                                         <p className={classes.message}>{item.urlLink}</p>
                                    </span>
-                                   <Button onClick={() => {}} variant="contained" sx={{justifyContent: 'center'}}>Download CV</Button>
-                               </div>
+                                    <Button onClick={() => {}} variant="contained" sx={{justifyContent: 'center'}}>Download CV</Button>
+                                </div>
                             </AccordionDetails>
                         </Accordion>
                     )
@@ -99,4 +94,4 @@ const ApplicationsPage = () => {
     )
 }
 
-export default ApplicationsPage;
+export default UserApplicationsPage;

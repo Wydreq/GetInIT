@@ -2,43 +2,26 @@ import OfferBar from './OfferBar'
 import classes from './OffersList.module.css'
 import React, {useCallback, useEffect, useState} from "react";
 import {TailSpin} from "react-loader-spinner";
-import {useSelector} from "react-redux";
 
 const OffersList = (props) => {
 
     const [offersList, setOffersList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const fetchedOfferName = useSelector(state => state.filter.offerName);
-    const fetchedPrimarySkill = useSelector(state => state.filter.primarySkill);
-    const fetchedLevel = useSelector(state => state.filter.level);
-    const fetchedPlace = useSelector(state => state.filter.place);
-    const fetchedCompanyName = useSelector(state => state.filter.companyName);
-    const fetchedCity = useSelector(state => state.filter.city);
-
     const fetchAllOffers = useCallback(async () => {
         setLoading(true);
-        const preparedForSending = {
-            Name: fetchedOfferName,
-            PrimarySkill: fetchedPrimarySkill,
-            CompanyName: fetchedCompanyName,
-            City: fetchedCity,
-            Level: fetchedLevel,
-            Place: fetchedPlace
-        }
         try {
             const response = await fetch('http://localhost:5099/api/offer/SearchOffer', {
                 method: 'POST',
                     headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(preparedForSending),
+                body: JSON.stringify(props.filterSettings),
             });
             if (!response.ok) {
                 setLoading(false);
-                // throw new Error("Something went wrong!");
+                setOffersList([]);
             }
-
             const data = await response.json();
             const loadedOffers = [];
             for (const key in data) {
@@ -61,15 +44,16 @@ const OffersList = (props) => {
             setOffersList(loadedOffers);
             setLoading(false);
         } catch(error) {}
-    },[])
+    },[props.filterSettings])
 
     useEffect(()=> {
         fetchAllOffers();
-    },[fetchAllOffers, fetchedOfferName, fetchedPlace, fetchedLevel, fetchedCity, fetchedCompanyName, fetchedPrimarySkill])
+    },[fetchAllOffers, props.filterSettings])
 
 
     return (
-        <div className={!loading ? classes.offersContainer : classes.offersContainerLoading}>
+        <div className={loading || offersList.length === 0 ? classes.offersContainerLoading : classes.offersContainer}>
+            {offersList.length === 0 && <p className={classes.notFound}>Offers not found!</p>}
             {loading &&
                 <TailSpin
                     height="200"

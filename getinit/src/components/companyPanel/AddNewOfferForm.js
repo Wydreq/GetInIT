@@ -135,15 +135,26 @@ const AddNewOfferForm = (props) => {
             setOfferDescriptionError(false);
         }
         if(technologies.length === 0) {
-            setTechnologiesError(true)
+            setTechnologiesError(true);
         }
         else {
             setTechnologiesError(false);
         }
-        if(offerTitleRef.current.value.length > 0 && primaryLanguageRef.current.value.length > 0 && !level === 0 && !workingPlace === 0 && phoneNumberRef.current.value.length === 9 && validator.isEmail(emailRef.current.value) && salaryFromRef.current.value.length > 0 && salaryToRef.current.value.length > 0 && salaryFromRef.current.value < salaryToRef.current.value && offerDescriptionRef.current.value.length > 10 && technologies.length > 0) {
+        if(offerTitleRef.current.value.length > 0 && primaryLanguageRef.current.value.length > 0 && !level !== 0 && !workingPlace !== 0 && phoneNumberRef.current.value.length === 9 && validator.isEmail(emailRef.current.value) && salaryFromRef.current.value.length > 0 && salaryToRef.current.value.length > 0 && salaryFromRef.current.value < salaryToRef.current.value && offerDescriptionRef.current.value.length > 10 && technologies.length > 0) {
             addNewOfferHandler();
         }
         else {
+            console.log(offerTitleRef.current.value.length > 0);
+            console.log(primaryLanguageRef.current.value.length > 0);
+            console.log(!level !== 0);
+            console.log(!workingPlace !== 0);
+            console.log(phoneNumberRef.current.value.length === 9);
+            console.log(validator.isEmail(emailRef.current.value));
+            console.log(salaryFromRef.current.value.length > 0);
+            console.log(salaryToRef.current.value.length > 0);
+            console.log(salaryFromRef.current.value < salaryToRef.current.value);
+            console.log(offerDescriptionRef.current.value.length > 10);
+            console.log(technologies.length > 0);
             setLoading(false);
         }
     }

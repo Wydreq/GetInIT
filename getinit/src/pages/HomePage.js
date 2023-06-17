@@ -38,10 +38,30 @@ const HomePage = () => {
     const level = useSelector(state => state.offerModal.level);
     const salaryFrom = useSelector(state => state.offerModal.salaryFrom);
     const salaryTo = useSelector(state => state.offerModal.salaryTo);
-    const technologies = useSelector(state => state.offerModal.technologies); 
+    const technologies = useSelector(state => state.offerModal.technologies);
+    const [filterSettings, setFilterSettings] = useState({
+        companyName: '',
+        offerName: '',
+        city: '',
+        level: '',
+        place: '',
+        primarySkill: '',
+    });
     const dispatch = useDispatch();
 
     const [role, setRole] = useState('');
+    const filterSaveHandler = (props) => {
+        setFilterSettings({
+            companyName: props.companyName,
+            name: props.offerName,
+            city: props.city,
+            level: props.level,
+            place: props.place,
+            primarySkill: props.primarySkill,
+        })
+    }
+
+
     const fetchUserInfo = useCallback(async () => {
         try {
             const response = await fetch('http://localhost:5099/api/account/AccountProfile', {
@@ -104,8 +124,8 @@ const HomePage = () => {
 
     return (
     <div className={classes.container}>
-        <FilterBar/>
-        <OffersList onModalOpen={handleOpen}/>
+        <FilterBar onFilterSave={filterSaveHandler}/>
+        <OffersList onModalOpen={handleOpen} filterSettings={filterSettings}/>
         <Modal
             open={open}
             onClose={handleClose}
@@ -145,7 +165,7 @@ const HomePage = () => {
                         <div className={classes.technologiesContainer}>
                             {technologies.map((technology) => {
                                 return (
-                                    <div key={Math.floor(Math.random())} className={classes.technologyContainer}>
+                                    <div className={classes.technologyContainer}>
                                         <span className={classes.technologySkill}>
                                             {technology.skill}
                                         </span>
