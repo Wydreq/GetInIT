@@ -53,7 +53,10 @@ const OffersList = (props) => {
 
     return (
         <div className={loading || offersList.length === 0 ? classes.offersContainerLoading : classes.offersContainer}>
+            <div  data-testid='not-found' >
             {!loading && offersList.length === 0 && <p className={classes.notFound}>Offers not found!</p>}
+            </div>
+            
             {loading &&
                 <TailSpin
                     height="200"
@@ -65,7 +68,7 @@ const OffersList = (props) => {
                 />}
             {!loading && offersList.map((offer)=>{
                 return (
-                    <OfferBar key={offer.id} offer={offer} onModalOpen={props.onModalOpen}/>
+                    <OfferBar key={offer.id} offer={offer} onModalOpen={props.onModalOpen} data-testid="offer-bar" />
                 )
             })}
         </div>
