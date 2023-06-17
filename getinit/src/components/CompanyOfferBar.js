@@ -52,7 +52,7 @@ const CompanyOfferBar = (props) => {
                 {props.offer.place === 3 && <span className={classes.place}><span className={classes.gap}>Work from</span> <HomeWorkIcon/></span>}
             </div>
             <div className={classes.rightContainer}>
-                <div className={classes.contButton} onClick={()=>{
+                <div data-testid="edit-button" className={classes.contButton} onClick={()=>{
                     dispatch(offerModalActions.setModalContent({
                         id: props.offer.id,
                         companyName: props.offer.companyName,

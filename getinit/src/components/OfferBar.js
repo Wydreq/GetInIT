@@ -51,12 +51,12 @@ const OfferBar = (props) => {
     }
 
     return (
-        <div className={classes.offerContainer} onClick={handleModal}>
+        <div className={classes.offerContainer} onClick={handleModal} data-testid="offer-container">
             <div className={classes.container}>
                 <span className={classes.offerName}>{levelCheck(props.offer.level)}{props.offer.name}</span>
                 <span className={classes.company}>{props.offer.companyName}</span>
                 {props.offer.place === 1 && <span className={classes.place}><span className={classes.gap}>Work from</span> <HomeIcon/></span>}
-                {props.offer.place === 2 && <span className={classes.place}><span className={classes.gap}>Work from</span> <ApartmentIcon/></span>}
+                {props.offer.place === 2 && <span className={classes.place}><span className={classes.gap}>Work from</span> <ApartmentIcon data-testid="apartment-icon"/></span>}
                 {props.offer.place === 3 && <span className={classes.place}><span className={classes.gap}>Work from</span> <HomeWorkIcon/></span>}
             </div>
             <span className={classes.salary}>{props.offer.salaryFrom}$ - {props.offer.salaryTo}$</span>
