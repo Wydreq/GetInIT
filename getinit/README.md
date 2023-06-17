@@ -1,70 +1,77 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# GetInIT
 
-## Available Scripts
+Web App that allows companies to add their job offers and users can send CV to a specific offer.
 
-In the project directory, you can run:
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Admin
+- Save manual payments to the database
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Manager
 
-### `npm test`
+- Adding employees' accounts
+- Deleting employees' accounts
+- Adding offers
+- Removing or editing offers (all company offers)
+- Viewing applications from users (all company offers)
+- Downloading users CV
+- Editing account mail and password
+- Deleting account
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Employee
 
-### `npm run build`
+- Adding offers
+- Removing or editing offers (only his offers)
+- Viewing applications from users (only his offers)
+- Downloading users CV
+- Editing account mail and password
+- Deleting account
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### User
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Sending CV to specific offers
+- Viewing sent applications
+- Editing account mail and password
+- Deleting account
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Other Features
 
-### `npm run eject`
+- Signing In/Up with google account
+- Donate payments made with Stripe
+- Filtering offers
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ - JavaScript
+ - React
+ - HTML/CSS
+ - Redux
+ - React router
+ - Material UI
+ - Stripe payments
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Install Node.js and GIT
 
-### Code Splitting
+- Clone the repo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Clone the backend repo 
+ = [GetInIT backend](https://github.com/jakubWojnowski/GetInItBackEnd) = 
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Enter the client directory and type
 
-### Making a Progressive Web App
+```bash
+  npm install
+  npm start
+```
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+[MIT](https://choosealicense.com/licenses/mit/)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
