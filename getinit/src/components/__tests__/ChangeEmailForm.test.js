@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen} from '@testing-library/react';
 import ChangeEmailForm from '../companyPanel/editInfo/ChangeEmailForm';
 
 describe('ChangeEmailForm', () => {
@@ -9,5 +8,6 @@ describe('ChangeEmailForm', () => {
 
     expect(screen.getByLabelText('New e-mail*')).toBeInTheDocument();
     expect(screen.getByLabelText('Confirm new e-mail*')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
   });
 });
