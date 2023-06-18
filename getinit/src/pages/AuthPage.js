@@ -178,7 +178,7 @@ const AuthPage = () => {
                 <TextField error={passwordError} inputRef={passwordRef} id="outlined-basic2" label="Password*" helperText={passwordError && passwordErrorMessage} type='password' variant="outlined" sx={{mb: 3, width: 4/5}}/>
                 {!isSignInMode && <TextField error={firstNameError} inputRef={firstNameRef} id="outlined-basic" label="First name*" helperText={firstNameError && 'Please insert correct first name'} variant="outlined"  sx={{mb: 3, width: 4/5}}/>}
                 {!isSignInMode && <TextField error={lastNameError} inputRef={lastNameRef} id="outlined-basic2" label="Last name*" helperText={lastNameError && 'Please insert correct last name'} variant="outlined" sx={{mb: 3, width: 4/5}}/>}
-                <span onClick={()=>{changeAuthMode()}} className={classes.changingText}>{isSignInMode ? 'Dont have an account? Sign up!' : 'Do you have and account? Sign in!'}</span>
+                <span data-testid='auth-mode-text' onClick={()=>{changeAuthMode()}} className={classes.changingText}>{isSignInMode ? 'Dont have an account? Sign up!' : 'Do you have and account? Sign in!'}</span>
                 {isSignInMode && <LoginSocialGoogle client_id='519616560661-tlaqndhk5u5rcr3ltbu7riaob0anrh11.apps.googleusercontent.com'
                                    onReject={({error})=>{console.log(error)}}
                                    onResolve={({ data})=>{signInHandler(data.email, data.sub)}}
