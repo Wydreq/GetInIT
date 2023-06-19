@@ -31,6 +31,7 @@ const AuthPage = () => {
     const dispatch = useDispatch();
     const isSnackbarOpen = useSelector(state => state.offerModal.isSnackbarOpen);
     const isSnackbarOpen2 = useSelector(state => state.offerModal.isSnackbarOpen2);
+    const deleteAccountSnackbarOpen = useSelector(state => state.offerModal.deleteAccountSnackbar);
     const registerHandler = () => {
             navigate('/signUp');
             setLoading(false);
@@ -213,6 +214,11 @@ const AuthPage = () => {
         <Snackbar open={isSnackbarOpen2} autoHideDuration={6000} onClose={()=>{dispatch(offerModalActions.closeSnackbar2())}}>
             <Alert onClose={()=>{dispatch(offerModalActions.closeSnackbar2())}} severity='error' sx={{ width: '100%' }}>
                 We found account with this email address!
+            </Alert>
+        </Snackbar>
+        <Snackbar open={deleteAccountSnackbarOpen} autoHideDuration={6000} onClose={()=>{dispatch(offerModalActions.deleteCloseSnackbar())}}>
+            <Alert onClose={()=>{dispatch(offerModalActions.closeSnackbar2())}} severity='success' sx={{ width: '100%' }}>
+                Account deleted succesfully!
             </Alert>
         </Snackbar>
     </div>

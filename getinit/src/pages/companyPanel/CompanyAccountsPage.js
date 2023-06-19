@@ -22,6 +22,7 @@ const CompanyAccountsPage = () => {
     const [open, setOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -34,6 +35,7 @@ const CompanyAccountsPage = () => {
     const [fetchedUsers, setFetchedUsers] = useState([])
 
     const addAccountNotificationHandler = () => {
+        setSnackbarMessage('Account has been added!');
         setSnackbarOpen(true);
         fetchCompanyAccounts();
     }
@@ -65,6 +67,7 @@ const CompanyAccountsPage = () => {
                     role: data[key].role,
                 })
             }
+            console.log(loadedUsers);
             setLoading(false);
             setFetchedUsers(loadedUsers);
         } catch(error) {}
@@ -90,7 +93,11 @@ const CompanyAccountsPage = () => {
                     />}
                 {fetchedUsers.map((user) => {
                     return(
-                        <CompanyUserBar key={user.id} user={user}/>
+                        <CompanyUserBar key={user.id} user={user} onDelete={()=>{
+                            setSnackbarMessage('Account has been deleted!');
+                            setSnackbarOpen(true);
+                            fetchCompanyAccounts();
+                        }}/>
                     )
                 })}
             </div>
@@ -107,7 +114,7 @@ const CompanyAccountsPage = () => {
             </Modal>
             <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
                 <Alert onClose={handleSnackbarClose} severity='success' sx={{ width: '100%' }}>
-                    Account has beed added!
+                    {snackbarMessage}
                 </Alert>
             </Snackbar>
         </div>

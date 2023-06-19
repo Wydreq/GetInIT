@@ -4,6 +4,7 @@ const initialState = {
     isSnackbarOpen: false,
     isSnackbarOpen2: false,
     isModalOpen: false,
+    deleteAccountSnackbar: false,
     id: 0,
     companyName: '',
     description: '',
@@ -23,6 +24,12 @@ const offerModalSlice = createSlice({
     name: 'offerModal',
     initialState: initialState,
     reducers: {
+        openDeleteSnackbar (state) {
+            state.deleteAccountSnackbar = true;
+        },
+        deleteCloseSnackbar (state) {
+            state.deleteAccountSnackbar = false;
+        },
         openSnackbar (state) {
             state.isSnackbarOpen = true;
         },
