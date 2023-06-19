@@ -7,6 +7,10 @@ jest.mock('react-router-dom', () => ({
   useNavigate: jest.fn(),
 }));
 
+jest.mock('react-redux', () => ({
+  useDispatch: jest.fn(),
+}));
+
 describe('Buttons Container', () => {
   test('renders "Add manual payment" button for Admin role', () => {
     const mockNavigate = jest.fn();

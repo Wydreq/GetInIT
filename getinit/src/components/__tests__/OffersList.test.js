@@ -9,8 +9,9 @@ describe('OffersList', () => {
         expect(loadingSpinner).toBeInTheDocument();
     });
     test('renders "Offers not found!" message when offersList is empty', () => {
-        const emptyOffersList = [];
-    
+        let emptyOffersList;
+        emptyOffersList = []
+
         const { getByTestId } = render(<OffersList offersList={emptyOffersList} loading={false} />);
     
         const messageElement = getByTestId('not-found');

@@ -1,9 +1,7 @@
 import classes from './CompanyUserBar.module.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import StarsIcon from '@mui/icons-material/Stars';
-
 import React from "react";
-import {redirect} from "react-router-dom";
 
 const CompanyUserBar = (props) => {
 

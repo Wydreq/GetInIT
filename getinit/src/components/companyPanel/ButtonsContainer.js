@@ -68,7 +68,7 @@ const ButtonsContainer = (props) => {
             })}}>Manage your offers</div>}
             <div className={classes.button} role='button-edit' onClick={()=>{navigate('/editInfo')}}>Edit account info</div>
             {props.userInfo.role === 'ManagerCompanyAccount' && <div className={classes.button} role='button-accounts' onClick={()=>{navigate('/companyAccounts');}}>Manage your company accounts</div>}
-            <div className={classes.button}role='button-delete' onClick={()=>{
+            <div className={classes.button} role='button-delete' onClick={()=>{
                 if(props.userInfo.role === 'ManagerCompanyAccount') {
                     deletingManagerAccount();
                 }
