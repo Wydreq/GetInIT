@@ -15,7 +15,9 @@ const CompanyOfferBar = (props) => {
     const navigate = useNavigate();
 
     const deleteHandler = () => {
+        if (window.confirm('Are you sure you want delete this offer?')) {
             props.onDeleteOffer(props.offer.id);
+        }
     }
 
     const levelCheck = level => {

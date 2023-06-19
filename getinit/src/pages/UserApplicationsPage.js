@@ -37,9 +37,13 @@ const UserApplicationsPage = () => {
                     message: data[key].message,
                     resumePath: data[key].resumePath,
                     urlLink: data[key].urlLink,
-                    email: data[key].email
+                    email: data[key].email,
+                    companyName: data[key].companyName,
+                    offerName: data[key].offerName,
+                    level: data[key].level,
                 });
             }
+            console.log(loadedApplications);
             setLoadedUserApplication(loadedApplications);
             setLoading(false);
         } catch(error) {}
@@ -48,6 +52,35 @@ const UserApplicationsPage = () => {
     useEffect(()=> {
         fetchOfferApplications();
     },[fetchOfferApplications])
+
+    const downloadCVHandler = async (resumePath, firstName, lastName) => {
+        const response = await fetch('http://localhost:5099/api/JobApplications/DownloadFile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                relativePathFromDb: resumePath
+            }),
+        });
+        if(!response.ok) {
+            throw new Error("Something gone wrong!");
+        }
+        const filename = `CV_${firstName}_${lastName}`;
+
+        const blob = await response.blob();
+
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = filename;
+
+        downloadLink.click();
+
+        URL.revokeObjectURL(downloadLink.href);
+        downloadLink.remove();
+    }
+
 
     return(
         <div className={classes.container}>
@@ -72,8 +105,8 @@ const UserApplicationsPage = () => {
                                 id="panel1a-header"
                             >
                                 <div className={classes.firstInfoContainer}>
-                                    <p className={classes.firstInfoTitle}>{item.firstName} {item.lastName}</p>
-                                    <p className={classes.firstInfoTitle}>{item.email}</p>
+                                    <p className={classes.firstInfoTitle}>{item.level === 1 && 'Junior'}{item.level === 2 && 'Mid'}{item.level === 3 && 'Senior'} {item.offerName}</p>
+                                    <p className={classes.firstInfoTitle}>{item.companyName}</p>
                                 </div>
                             </AccordionSummary>
                             <AccordionDetails>
@@ -84,7 +117,9 @@ const UserApplicationsPage = () => {
                                         <h2 className={classes.title}>Page url</h2>
                                         <p className={classes.message}>{item.urlLink}</p>
                                    </span>
-                                    <Button onClick={() => {}} variant="contained" sx={{justifyContent: 'center'}}>Download CV</Button>
+                                    <Button onClick={() => {
+                                        downloadCVHandler(item.resumePath, item.firstName, item.lastName);
+                                    }} variant="contained" sx={{justifyContent: 'center'}}>Download CV</Button>
                                 </div>
                             </AccordionDetails>
                         </Accordion>
