@@ -12,6 +12,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import {Link} from 'react-router-dom';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const style = {
     position: 'absolute',
@@ -39,6 +41,7 @@ const HomePage = () => {
     const salaryFrom = useSelector(state => state.offerModal.salaryFrom);
     const salaryTo = useSelector(state => state.offerModal.salaryTo);
     const technologies = useSelector(state => state.offerModal.technologies);
+    const open2 = useSelector(state => state.offerModal.isApplicationSnackbar);
     const [filterSettings, setFilterSettings] = useState({
         companyName: '',
         offerName: '',
@@ -60,6 +63,10 @@ const HomePage = () => {
             primarySkill: props.primarySkill,
         })
     }
+
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
 
 
     const fetchUserInfo = useCallback(async () => {
@@ -126,6 +133,11 @@ const HomePage = () => {
     <div className={classes.container}>
         <FilterBar onFilterSave={filterSaveHandler}/>
         <OffersList onModalOpen={handleOpen} filterSettings={filterSettings}/>
+        <Snackbar open={open2} autoHideDuration={6000} onClose={()=>{dispatch(offerModalActions.closeApplicationSnackbar())}}>
+            <Alert onClose={()=>{dispatch(offerModalActions.closeApplicationSnackbar())}} severity='success' sx={{ width: '100%' }}>
+                Application sended succesfully!
+            </Alert>
+        </Snackbar>
         <Modal
             open={open}
             onClose={handleClose}

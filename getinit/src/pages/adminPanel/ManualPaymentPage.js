@@ -3,12 +3,17 @@ import React, {useRef, useState} from "react";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import validator from "validator";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {offerModalActions} from "../../store";
 
 const ManualPaymentPage = () => {
 
     const emailRef = useRef();
     const lastnameRef = useRef();
     const amountRef = useRef();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [emailError, setEmailError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
@@ -60,6 +65,8 @@ const ManualPaymentPage = () => {
         if (!response.ok) {
             setLoading(false);
         }
+        dispatch(offerModalActions.openPaymentSnackbar());
+        navigate('/userPanel');
         setLoading(false);
     }
     return(

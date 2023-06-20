@@ -3,8 +3,10 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     isSnackbarOpen: false,
     isSnackbarOpen2: false,
+    isSnackbarOpenPayment: false,
     isModalOpen: false,
     deleteAccountSnackbar: false,
+    isApplicationSnackbar: false,
     id: 0,
     companyName: '',
     description: '',
@@ -24,6 +26,18 @@ const offerModalSlice = createSlice({
     name: 'offerModal',
     initialState: initialState,
     reducers: {
+        openApplicationSnackbar (state) {
+            state.isApplicationSnackbar = true;
+        },
+        closeApplicationSnackbar (state) {
+            state.isApplicationSnackbar = false;
+        },
+        openPaymentSnackbar (state) {
+            state.isSnackbarOpenPayment = true;
+        },
+        closePaymentSnackbar (state) {
+            state.isSnackbarOpenPayment = false;
+        },
         openDeleteSnackbar (state) {
             state.deleteAccountSnackbar = true;
         },

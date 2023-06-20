@@ -5,6 +5,8 @@ import React, {useRef, useState} from "react";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import {useDispatch} from "react-redux";
+import {offerModalActions} from "../store";
 const OfferApplicationPage = () => {
     const { offerId } = useParams();
     const [file, setFile] = useState();
@@ -13,6 +15,7 @@ const OfferApplicationPage = () => {
     const noteRef = useRef();
     const [open, setOpen] = useState(false);
     const navigation = useNavigate();
+    const dispatch = useDispatch();
     const handleClose = () => setOpen(false);
 
     const Alert = React.forwardRef(function Alert(props, ref) {
@@ -70,6 +73,7 @@ const OfferApplicationPage = () => {
         if(!response.ok) {
             throw new Error('Something went wrong!');
         }
+        dispatch(offerModalActions.openApplicationSnackbar());
         navigation('/');
     }
 
