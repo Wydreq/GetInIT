@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 const PaymentConfirmedPage = () => {
-    const [counter, setCounter] = useState(5);
+    const [counter, setCounter] = useState(3);
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -11,9 +11,25 @@ const PaymentConfirmedPage = () => {
             setCounter(counter-1);
         }, 1000)
         if(counter === 0) {
+            paymentHandler();
             navigate('/userPanel');
         }
     },[counter])
+
+
+    const paymentHandler = async () => {
+        const response = await fetch('http://localhost:5099/CreateCheckoutSession/PaymentToDataBase', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            },
+        });
+        if (!response.ok) {
+            console.log("ERROR");
+        }
+    }
+
 
     return (
         <div className={classes.container}>

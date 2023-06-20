@@ -6,20 +6,28 @@ import validator from "validator";
 
 const ManualPaymentPage = () => {
 
-    const mailRef = useRef();
+    const emailRef = useRef();
+    const lastnameRef = useRef();
     const amountRef = useRef();
 
     const [emailError, setEmailError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
     const [amountError, setAmountError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const validationHandler = () => {
         setLoading(true);
-        if(!validator.isEmail(mailRef.current.value)) {
+        if(!validator.isEmail(emailRef.current.value)) {
             setEmailError(true);
         }
         else {
             setEmailError(false);
+        }
+        if(lastnameRef.current.value.length === 0) {
+            setLastNameError(true);
+        }
+        else {
+            setLastNameError(false);
         }
         if(amountRef.current.value < 2) {
             setAmountError(true);
@@ -27,7 +35,7 @@ const ManualPaymentPage = () => {
         else {
             setAmountError(false);
         }
-        if (validator.isEmail(mailRef.current.value) && amountRef.current.value >= 2) {
+        if (validator.isEmail(emailRef.current.value) && lastnameRef.current.value.length !== 0 && amountRef.current.value >= 2) {
             addManualPaymentHandler();
         }
         else {
@@ -36,13 +44,29 @@ const ManualPaymentPage = () => {
     }
 
     const addManualPaymentHandler = async () => {
+        const preparedForSending = {
+            email: emailRef.current.value,
+            name: lastnameRef.current.value,
+            amount: amountRef.current.value,
+        }
+        const response = await fetch('http://localhost:5099/CreateCheckoutSession/OfflinePayment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            },
+            body: JSON.stringify(preparedForSending),
+        });
+        if (!response.ok) {
+            setLoading(false);
+        }
         setLoading(false);
     }
-
     return(
         <div className={classes.container}>
             <h1 className={classes.title}>Add new manual payment</h1>
-            <TextField error={emailError} inputRef={mailRef} id="outlined-basic" label="User email*" helperText={emailError && 'Please insert correct email'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
+            <TextField error={emailError} inputRef={emailRef} id="outlined-basic" label="Email*" helperText={emailError && 'Please insert correct email!'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
+            <TextField error={lastNameError} inputRef={lastnameRef} id="outlined-basic" label="Name*" helperText={lastNameError && 'Please insert correct last name!'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
             <TextField error={amountError} inputRef={amountRef} id="outlined-basic2" label="Amount*" helperText={amountError && 'Please insert correct amount > 2'} variant="outlined"  sx={{mb: 3,mt:3,mr:3, width: 2/5}}/>
             <Button onClick={validationHandler} variant="contained" sx={{mt: 3, width: 1/5}}>{loading ? 'Loading...' : 'Add'}</Button>
         </div>
