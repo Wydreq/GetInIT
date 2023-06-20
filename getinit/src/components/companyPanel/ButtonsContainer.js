@@ -44,13 +44,17 @@ const ButtonsContainer = (props) => {
         }
     }
     return (
-        <>
         <div className={classes.container}>
             {props.userInfo.role === 'Admin' && <div className={classes.button} role='button-add' onClick={()=>{navigate('/manualPayment', {
                 state: {
                     userRole: props.userInfo.role,
                 }
             })}}>Add manual payment</div>}
+            {props.userInfo.role === 'Admin' && <div className={classes.button} onClick={()=>{navigate('/allPayments', {
+                state: {
+                    userRole: props.userInfo.role,
+                }
+            })}}>All payments</div>}
             {props.userInfo.role === 'UserAccount' && <div className={classes.button} role='button-applications' onClick={()=>{navigate('/userApplications', {
                 state: {
                     userRole: props.userInfo.role,
@@ -77,7 +81,6 @@ const ButtonsContainer = (props) => {
                 }
             }}>Delete your account</div>
         </div>
-        </>
     )
 }
 
