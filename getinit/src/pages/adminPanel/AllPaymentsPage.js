@@ -82,7 +82,7 @@ const AllPaymentsPage = () => {
                                        <h2 className={classes.title}>Amount</h2>
                                        <p className={classes.message}>{item.amount}PLN</p>
                                         <h2 className={classes.title}>Status</h2>
-                                        <p className={classes.message}>{item.paymentStatus}</p>
+                                        <p className={classes.message}>{item.paymentStatus === 'Paid' ? 'Paid by stripe' : 'Offline paid'}</p>
                                    </span>
                                 </div>
                             </AccordionDetails>
