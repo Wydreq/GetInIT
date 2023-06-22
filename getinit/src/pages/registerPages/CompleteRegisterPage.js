@@ -150,7 +150,7 @@ const CompleteRegisterPage = () => {
         else {
             setCountryError(false);
         }
-        if(!mailError && !passwordError && !firstNameError && !lastNameError && !companyNameError && !urlError && !nipError && !regonError && !streetError && !buildingNumberError && !postalCodeError && !cityError && !countryError) {
+        if(validator.isEmail(mailRef.current.value) && passwordRef.current.value === confirmPasswordRef.current.value && validator.isStrongPassword(passwordRef.current.value) && firstNameRef.current.value.length >= 2 && lastNameRef.current.value.length >= 2 && companyNameRef.current.value.length >= 3 && !urlError && nipRef.current.value.length === 10 && regonRef.current.value.length >= 8  && streetRef.current.value.length >= 3 && buildingNumberRef.current.value.length >= 1 && validator.isPostalCode(postalCodeRef.current.value,'PL') && cityRef.current.value.length >= 3 && countryRef.current.value.length >= 3) {
             registerAccount();
         }
         else {
